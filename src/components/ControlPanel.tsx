@@ -38,7 +38,7 @@ export const ControlPanel: React.FC = () => {
   };
 
   return (
-    <div className="w-96 bg-zinc-950 text-white border-r border-white/10 flex flex-col h-full">
+    <div className="w-96 shrink-0 bg-zinc-950 text-white border-r border-white/10 flex flex-col h-full">
       <div className="p-6 border-b border-white/10">
         <h2 className="text-xl font-bold tracking-tight">Configuration</h2>
       </div>

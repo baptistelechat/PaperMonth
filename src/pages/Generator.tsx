@@ -40,12 +40,12 @@ export const Generator: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-black text-white overflow-hidden font-sans">
+    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
       {/* Sidebar */}
       <ControlPanel />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col relative bg-zinc-950">
+      <div className="flex-1 min-w-0 flex flex-col relative bg-zinc-950">
         
         {/* Header */}
         <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-zinc-900/50 backdrop-blur-md">

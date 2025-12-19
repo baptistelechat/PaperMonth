@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDaysInMonth, getFirstDayOfMonth, DAYS_FR, DAYS_EN } from '@/utils/dates';
+import { getDaysInMonth, getFirstDayOfMonth, DAYS_FR, DAYS_FR_SUNDAY_START } from '@/utils/dates';
 import { CalendarConfig } from '@/types/calendar';
 import { cn } from '@/lib/utils';
 
@@ -17,7 +17,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const blanks = Array.from({ length: firstDay }, (_, i) => i);
 
-  const weekDays = weekStart === 'monday' ? DAYS_FR : DAYS_EN; // Using FR for Monday start as default for this app context, logic can be improved
+  const weekDays = weekStart === 'monday' ? DAYS_FR : DAYS_FR_SUNDAY_START;
 
   // Helper to check if a day is a holiday
   const getHoliday = (day: number) => {

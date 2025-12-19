@@ -9,7 +9,7 @@ interface CalendarGridProps {
 }
 
 export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) => {
-  const { month, year, weekStart, showWeekends, showHolidays, accentColor } = config;
+  const { month, year, weekStart, showWeekends, showHolidays } = config;
   
   const daysInMonth = getDaysInMonth(month, year);
   const firstDay = getFirstDayOfMonth(month, year, weekStart);
@@ -66,16 +66,15 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
               key={day} 
               className={cn(
                 "h-10 flex flex-col items-center justify-center relative rounded-md transition-colors",
-                showWeekends && isWknd ? "bg-white/5 text-white/70" : "text-white",
-                holiday && "font-bold"
+                // Base styles
+                "text-white",
+                // Weekend styling (dimmed text, slight bg)
+                showWeekends && isWknd && "bg-white/5 text-white/70",
+                // Holiday styling (stronger bg, bright text, bold) - overrides weekend style if conflicting
+                holiday && "bg-white/10 font-bold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]"
               )}
             >
-              <span className={cn(
-                "text-lg leading-none",
-                holiday && `text-${accentColor}` // Note: Dynamic classes might not work with Tailwind unless safelisted or using style. Using style for color.
-              )}
-              style={holiday ? { color: 'var(--accent-color)' } : {}}
-              >
+              <span className="text-lg leading-none">
                 {day}
               </span>
               

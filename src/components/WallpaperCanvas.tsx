@@ -38,7 +38,6 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
       style={{
         ...backgroundStyle,
         fontFamily: typography.fontFamily,
-        ["--accent-color" as string]: calendar.accentColor, // Pass accent color as CSS var
       }}
     >
       {/* Overlay */}

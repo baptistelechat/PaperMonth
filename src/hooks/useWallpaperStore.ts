@@ -27,7 +27,6 @@ const getInitialConfig = (): WallpaperConfig => ({
     titleFormat: "full",
     showWeekends: true,
     showHolidays: true,
-    accentColor: "blue-500", // Tailwind color
   },
   background: {
     type: "gradient",

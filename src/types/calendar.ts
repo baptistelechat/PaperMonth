@@ -9,7 +9,6 @@ export interface CalendarConfig {
   titleFormat: TitleFormat;
   showWeekends: boolean;
   showHolidays: boolean;
-  accentColor: string;
 }
 
 export interface BackgroundConfig {

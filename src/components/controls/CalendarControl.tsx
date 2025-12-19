@@ -127,34 +127,6 @@ export const CalendarControl: React.FC = () => {
             }
           />
         </div>
-
-        <div className="space-y-2 pt-2">
-          <Label className="text-xs text-zinc-500">
-            Couleur d'accent
-          </Label>
-          <div className="flex gap-2 flex-wrap">
-            {[
-              "#3b82f6",
-              "#ef4444",
-              "#10b981",
-              "#f59e0b",
-              "#8b5cf6",
-              "#ec4899",
-              "#ffffff",
-            ].map((color) => (
-              <button
-                key={color}
-                onClick={() => setCalendarConfig({ accentColor: color })}
-                className={`w-6 h-6 rounded-full border border-white/10 transition-transform hover:scale-110 ${
-                  calendar.accentColor === color
-                    ? "ring-2 ring-white scale-110"
-                    : ""
-                }`}
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

@@ -1,7 +1,12 @@
-import { create } from 'zustand';
-import { WallpaperConfig, CalendarConfig, BackgroundConfig, TypographyConfig } from '@/types/calendar';
-import { WidgetConfig } from '@/types/widgets';
-import { GRADIENT_PRESETS } from '@/utils/gradients';
+import {
+  BackgroundConfig,
+  CalendarConfig,
+  TypographyConfig,
+  WallpaperConfig,
+} from "@/types/calendar";
+import { WidgetConfig } from "@/types/widgets";
+import { GRADIENT_PRESETS } from "@/utils/gradients";
+import { create } from "zustand";
 
 interface WallpaperStore {
   config: WallpaperConfig;
@@ -14,7 +19,7 @@ interface WallpaperStore {
   resetConfig: () => void;
 }
 
-const DEFAULT_CONFIG: WallpaperConfig = {
+const getInitialConfig = (): WallpaperConfig => ({
   calendar: {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
@@ -34,10 +39,10 @@ const DEFAULT_CONFIG: WallpaperConfig = {
     fontSize: "md",
   },
   widgets: [],
-};
+});
 
 export const useWallpaperStore = create<WallpaperStore>((set) => ({
-  config: DEFAULT_CONFIG,
+  config: getInitialConfig(),
   setCalendarConfig: (updates) =>
     set((state) => ({
       config: {
@@ -82,5 +87,5 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
         widgets: state.config.widgets.filter((w) => w.id !== id),
       },
     })),
-  resetConfig: () => set({ config: DEFAULT_CONFIG }),
+  resetConfig: () => set({ config: getInitialConfig() }),
 }));

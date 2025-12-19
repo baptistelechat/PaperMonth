@@ -1,10 +1,12 @@
 import { WidgetConfig } from "./widgets";
 
+export type TitleFormat = "full" | "numeric" | "uppercase" | "abbreviated";
+
 export interface CalendarConfig {
   month: number; // 0-11
   year: number;
   weekStart: "monday" | "sunday";
-  titleFormat: "full" | "numeric" | "uppercase" | "abbreviated";
+  titleFormat: TitleFormat;
   showWeekends: boolean;
   showHolidays: boolean;
   accentColor: string;

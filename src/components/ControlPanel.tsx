@@ -1,5 +1,5 @@
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
-import { MONTH_NAMES_FR } from "@/utils/dates";
+import { formatMonthTitle, MONTH_NAMES_FR } from "@/utils/dates";
 import { FONT_PRESETS, GRADIENT_PRESETS } from "@/utils/gradients";
 import { Upload } from "lucide-react";
 import React from "react";
@@ -18,6 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { TitleFormat } from "@/types/calendar";
 
 export const ControlPanel: React.FC = () => {
   const {
@@ -43,7 +44,7 @@ export const ControlPanel: React.FC = () => {
   };
 
   return (
-    <div className="w-96 shrink-0 bg-zinc-950 text-white border-r border-white/10 flex flex-col h-screen">
+    <div className="w-96 shrink-0 bg-zinc-900/50 border-r border-white/10 flex flex-col h-screen">
       <div className="p-6 border-b border-white/10">
         <h2 className="text-xl font-bold tracking-tight">Configuration</h2>
       </div>
@@ -66,7 +67,7 @@ export const ControlPanel: React.FC = () => {
                     setCalendarConfig({ month: parseInt(val) })
                   }
                 >
-                  <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Sélectionner le mois" />
                   </SelectTrigger>
                   <SelectContent>
@@ -87,13 +88,12 @@ export const ControlPanel: React.FC = () => {
                   onChange={(e) =>
                     setCalendarConfig({ year: parseInt(e.target.value) })
                   }
-                  className="bg-zinc-900 border-zinc-800"
                 />
               </div>
             </div>
           </section>
 
-          <Separator className="bg-white/10" />
+          <Separator />
 
           {/* Calendar Options */}
           <section className="space-y-4">
@@ -106,25 +106,44 @@ export const ControlPanel: React.FC = () => {
                 <Label className="text-sm">Format du titre</Label>
                 <Select
                   value={calendar.titleFormat}
-                  onValueChange={(val: any) =>
+                  onValueChange={(val: TitleFormat) =>
                     setCalendarConfig({ titleFormat: val })
                   }
                 >
-                  <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
+                  <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="full">
-                      Complet (Décembre 2025)
+                      Complet (
+                      {formatMonthTitle(calendar.month, calendar.year, "full")})
                     </SelectItem>
                     <SelectItem value="numeric">
-                      Numérique (12 / 2025)
+                      Numérique (
+                      {formatMonthTitle(
+                        calendar.month,
+                        calendar.year,
+                        "numeric"
+                      )}
+                      )
                     </SelectItem>
                     <SelectItem value="uppercase">
-                      Majuscule (DECEMBER 2025)
+                      Majuscule (
+                      {formatMonthTitle(
+                        calendar.month,
+                        calendar.year,
+                        "uppercase"
+                      )}
+                      )
                     </SelectItem>
                     <SelectItem value="abbreviated">
-                      Abrégé (DEC. 2025)
+                      Abrégé (
+                      {formatMonthTitle(
+                        calendar.month,
+                        calendar.year,
+                        "abbreviated"
+                      )}
+                      )
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -218,7 +237,7 @@ export const ControlPanel: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="bg-white/10" />
+          <Separator />
 
           {/* Background Section */}
           <section className="space-y-4">
@@ -314,7 +333,7 @@ export const ControlPanel: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="bg-white/10" />
+          <Separator />
 
           {/* Typography Section */}
           <section className="space-y-4">

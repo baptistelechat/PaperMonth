@@ -3,15 +3,46 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
-import { TitleFormat } from "@/types/calendar";
+import { SchoolZone, TitleFormat } from "@/types/calendar";
 import { formatMonthTitle } from "@/utils/dates";
 import React from "react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
+import { CircleHelp } from "lucide-react";
+
+const ACADEMY_ZONES = {
+  "Zone A": [
+    "Besançon",
+    "Bordeaux",
+    "Clermont-Ferrand",
+    "Dijon",
+    "Grenoble",
+    "Limoges",
+    "Lyon",
+    "Poitiers",
+  ],
+  "Zone B": [
+    "Aix-Marseille",
+    "Amiens",
+    "Lille",
+    "Nancy-Metz",
+    "Nantes",
+    "Nice",
+    "Normandie",
+    "Orléans-Tours",
+    "Reims",
+    "Rennes",
+    "Strasbourg",
+  ],
+  "Zone C": ["Créteil", "Montpellier", "Paris", "Toulouse", "Versailles"],
+};
 
 export const CalendarControl: React.FC = () => {
   const { config, setCalendarConfig } = useWallpaperStore();
@@ -116,21 +147,105 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-          <div className="flex items-center justify-between">
-            <Label
-              className="text-sm cursor-pointer"
-              htmlFor="show-holiday-names"
-            >
-              Afficher le noms des dates
-            </Label>
-            <Switch
-              id="show-holiday-names"
-              checked={calendar.showHolidayNames}
-              onCheckedChange={(checked) =>
-                setCalendarConfig({ showHolidayNames: checked })
+        <div className="flex items-center justify-between">
+          <Label
+            className="text-sm cursor-pointer"
+            htmlFor="show-school-holidays"
+          >
+            Vacances scolaires
+          </Label>
+          <Switch
+            id="show-school-holidays"
+            checked={calendar.showSchoolHolidays}
+            onCheckedChange={(checked) =>
+              setCalendarConfig({ showSchoolHolidays: checked })
+            }
+          />
+        </div>
+
+          {calendar.showSchoolHolidays && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Label className="text-sm">Zone scolaire</Label>
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <CircleHelp className="h-4 w-4 text-muted-foreground cursor-help" />
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80" side="right" align="start">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-sm">Zones Académiques</h4>
+                    <div className="grid gap-3">
+                      {Object.entries(ACADEMY_ZONES).map(([zone, academies]) => (
+                        <div key={zone} className="space-y-1">
+                          <p className="text-sm font-medium text-primary">
+                            {zone}
+                          </p>
+                          <p className="text-xs text-muted-foreground leading-snug">
+                            {academies.join(", ")}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+            </div>
+            <Select
+              value={calendar.schoolZone}
+              onValueChange={(val: SchoolZone) =>
+                setCalendarConfig({ schoolZone: val })
               }
-            />
+            >
+              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Zones Académiques</SelectLabel>
+                  <SelectItem value="Zone A">Zone A</SelectItem>
+                  <SelectItem value="Zone B">Zone B</SelectItem>
+                  <SelectItem value="Zone C">Zone C</SelectItem>
+                </SelectGroup>
+
+                <SelectGroup>
+                  <SelectLabel>Régions Spécifiques</SelectLabel>
+                  <SelectItem value="Corse">Corse</SelectItem>
+                  <SelectItem value="Guadeloupe">Guadeloupe</SelectItem>
+                  <SelectItem value="Guyane">Guyane</SelectItem>
+                  <SelectItem value="Martinique">Martinique</SelectItem>
+                  <SelectItem value="Mayotte">Mayotte</SelectItem>
+                  <SelectItem value="Nouvelle Calédonie">
+                    Nouvelle Calédonie
+                  </SelectItem>
+                  <SelectItem value="Polynésie">Polynésie</SelectItem>
+                  <SelectItem value="Réunion">Réunion</SelectItem>
+                  <SelectItem value="Saint Pierre et Miquelon">
+                    Saint Pierre et Miquelon
+                  </SelectItem>
+                  <SelectItem value="Wallis et Futuna">
+                    Wallis et Futuna
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
+        )}
+
+        <div className="flex items-center justify-between">
+          <Label
+            className="text-sm cursor-pointer"
+            htmlFor="show-holiday-names"
+          >
+            Afficher le noms des dates
+          </Label>
+          <Switch
+            id="show-holiday-names"
+            checked={calendar.showHolidayNames}
+            onCheckedChange={(checked) =>
+              setCalendarConfig({ showHolidayNames: checked })
+            }
+          />
+        </div>
       </div>
     </section>
   );

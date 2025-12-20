@@ -2,13 +2,15 @@ import React from 'react';
 import { getDaysInMonth, getFirstDayOfMonth, DAYS_FR, DAYS_FR_SUNDAY_START } from '@/utils/dates';
 import { CalendarConfig } from '@/types/calendar';
 import { cn } from '@/lib/utils';
+import { SchoolHoliday } from '@/hooks/useHolidays';
 
 interface CalendarGridProps {
   config: CalendarConfig;
   holidays: Array<{ date: string; localName: string }>;
+  schoolHolidays?: SchoolHoliday[];
 }
 
-export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) => {
+export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays, schoolHolidays }) => {
   const {
     month,
     year,
@@ -16,6 +18,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
     showWeekends,
     showHolidays,
     showHolidayNames,
+    showSchoolHolidays,
   } = config;
 
   const daysInMonth = getDaysInMonth(month, year);
@@ -31,6 +34,22 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
     if (!showHolidays) return null;
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     return holidays.find(h => h.date === dateStr);
+  };
+
+  // Helper to check if a day is a school holiday
+  const getSchoolHoliday = (day: number) => {
+    if (!showSchoolHolidays || !schoolHolidays) return null;
+    
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    
+    return schoolHolidays.find(h => {
+        // Extract YYYY-MM-DD
+        const start = h.start_date.split('T')[0];
+        const end = h.end_date.split('T')[0];
+        
+        // Holiday is strictly between start (end of class) and end (resumption of class)
+        return dateStr > start && dateStr < end;
+    });
   };
 
   // Helper to check if day is weekend
@@ -67,6 +86,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
           const absoluteIndex = i + firstDay;
           const isWknd = isWeekend(absoluteIndex);
           const holiday = getHoliday(day);
+          const schoolHoliday = getSchoolHoliday(day);
           
           return (
             <div 
@@ -75,9 +95,18 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
                 "h-10 flex flex-col items-center justify-center relative rounded-md transition-colors",
                 // Base styles
                 "text-white",
+                
+                // School Holiday styling (Background highlight)
+                // Use a soft color, distinct from weekends but harmonious
+                schoolHoliday && "bg-indigo-500/20 text-indigo-100",
+
                 // Weekend styling (dimmed text, slight bg)
-                showWeekends && isWknd && "bg-white/5 text-white/70",
-                // Holiday styling (stronger bg, bright text, bold) - overrides weekend style if conflicting
+                // If it's a school holiday AND weekend, maybe blend?
+                // If weekend, usually we want to keep it dimmed unless it's a special holiday.
+                showWeekends && isWknd && !schoolHoliday && "bg-white/5 text-white/70",
+                showWeekends && isWknd && schoolHoliday && "bg-indigo-500/30 text-indigo-100/90",
+
+                // Holiday styling (stronger bg, bright text, bold) - overrides weekend and school holiday
                 holiday && "bg-white/10 font-bold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]"
               )}
             >

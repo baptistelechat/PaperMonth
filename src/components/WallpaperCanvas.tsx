@@ -11,7 +11,11 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
   const { calendar, background, typography, widgets } = config;
 
   // Fetch holidays based on current config
-  const { holidays } = useHolidays(calendar.year);
+  const { holidays, schoolHolidays } = useHolidays(
+    calendar.year,
+    "FR",
+    calendar.schoolZone
+  );
 
   // Background style
   const backgroundStyle: React.CSSProperties =
@@ -64,8 +68,15 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
         */}
 
         <div className="col-start-5 col-span-4 row-start-4 row-span-6 bg-black/20 backdrop-blur-sm rounded-xl p-8 border border-white/10 flex flex-col shadow-2xl">
-          <CalendarHeader config={calendar} fontFamily={typography.fontFamily} />
-          <CalendarGrid config={calendar} holidays={holidays} />
+          <CalendarHeader
+            config={calendar}
+            fontFamily={typography.fontFamily}
+          />
+          <CalendarGrid
+            config={calendar}
+            holidays={holidays}
+            schoolHolidays={schoolHolidays}
+          />
         </div>
 
         {/* Other Widgets */}

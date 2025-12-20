@@ -28,6 +28,8 @@ const getInitialConfig = (): WallpaperConfig => ({
     showWeekends: true,
     showHolidays: true,
     showHolidayNames: false,
+    showSchoolHolidays: false,
+    schoolZone: "Zone A",
   },
   background: {
     type: "gradient",

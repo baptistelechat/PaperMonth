@@ -29,6 +29,7 @@ const getInitialConfig = (): WallpaperConfig => ({
     showHolidays: true,
     showHolidayNames: false,
     showSchoolHolidays: false,
+    showWorldDays: true, // Default to true or false? Let's say true to show off the feature
     schoolZone: "Zone A",
   },
   background: {

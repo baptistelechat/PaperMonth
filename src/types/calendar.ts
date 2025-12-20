@@ -9,19 +9,20 @@ export type TitleFormat =
   | "MMM/YY"
   | "Month";
 
-export type SchoolZone = | "Zone A"
-    | "Zone B"
-    | "Zone C"
-    | "Corse"
-    | "Guadeloupe"
-    | "Guyane"
-    | "Martinique"
-    | "Mayotte"
-    | "Nouvelle Calédonie"
-    | "Polynésie"
-    | "Réunion"
-    | "Saint Pierre et Miquelon"
-    | "Wallis et Futuna";
+export type SchoolZone =
+  | "Zone A"
+  | "Zone B"
+  | "Zone C"
+  | "Corse"
+  | "Guadeloupe"
+  | "Guyane"
+  | "Martinique"
+  | "Mayotte"
+  | "Nouvelle Calédonie"
+  | "Polynésie"
+  | "Réunion"
+  | "Saint Pierre et Miquelon"
+  | "Wallis et Futuna";
 
 export interface CalendarConfig {
   month: number; // 0-11
@@ -32,6 +33,7 @@ export interface CalendarConfig {
   showHolidays: boolean;
   showHolidayNames: boolean;
   showSchoolHolidays: boolean;
+  showWorldDays: boolean; // Add this
   schoolZone: SchoolZone;
 }
 

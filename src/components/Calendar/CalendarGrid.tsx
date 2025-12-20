@@ -1,16 +1,28 @@
-import React from 'react';
-import { getDaysInMonth, getFirstDayOfMonth, DAYS_FR, DAYS_FR_SUNDAY_START } from '@/utils/dates';
-import { CalendarConfig } from '@/types/calendar';
-import { cn } from '@/lib/utils';
-import { SchoolHoliday } from '@/hooks/useHolidays';
+import { SchoolHoliday } from "@/hooks/useHolidays";
+import { cn } from "@/lib/utils";
+import { CalendarConfig } from "@/types/calendar";
+import {
+  DAYS_FR,
+  DAYS_FR_SUNDAY_START,
+  getDaysInMonth,
+  getFirstDayOfMonth,
+} from "@/utils/dates";
+import { WorldDayEvent } from "@/utils/worldDays";
+import React from "react";
 
 interface CalendarGridProps {
   config: CalendarConfig;
   holidays: Array<{ date: string; localName: string }>;
   schoolHolidays?: SchoolHoliday[];
+  worldDays?: WorldDayEvent[];
 }
 
-export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays, schoolHolidays }) => {
+export const CalendarGrid: React.FC<CalendarGridProps> = ({
+  config,
+  holidays,
+  schoolHolidays,
+  worldDays = [],
+}) => {
   const {
     month,
     year,
@@ -19,46 +31,62 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays, sc
     showHolidays,
     showHolidayNames,
     showSchoolHolidays,
+    showWorldDays,
   } = config;
 
   const daysInMonth = getDaysInMonth(month, year);
   const firstDay = getFirstDayOfMonth(month, year, weekStart);
-  
+
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const blanks = Array.from({ length: firstDay }, (_, i) => i);
 
-  const weekDays = weekStart === 'monday' ? DAYS_FR : DAYS_FR_SUNDAY_START;
+  const weekDays = weekStart === "monday" ? DAYS_FR : DAYS_FR_SUNDAY_START;
 
-  // Helper to check if a day is a holiday
-  const getHoliday = (day: number) => {
-    if (!showHolidays) return null;
-    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return holidays.find(h => h.date === dateStr);
+  // Helper to get all events for a day
+  const getEvents = (day: number) => {
+    const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+    const events: Array<{ type: "holiday" | "worldDay"; label: string }> = [];
+
+    // Public Holiday
+    if (showHolidays) {
+      const holiday = holidays.find((h) => h.date === dateStr);
+      if (holiday) {
+        events.push({ type: "holiday", label: holiday.localName });
+      }
+    }
+
+    // World Days
+    if (showWorldDays) {
+      const days = worldDays.filter((wd) => wd.date === dateStr);
+      days.forEach((wd) => {
+        events.push({ type: "worldDay", label: wd.label });
+      });
+    }
+
+    return events;
   };
 
   // Helper to check if a day is a school holiday
   const getSchoolHoliday = (day: number) => {
     if (!showSchoolHolidays || !schoolHolidays) return null;
-    
-    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    
-    return schoolHolidays.find(h => {
-        // Extract YYYY-MM-DD
-        const start = h.start_date.split('T')[0];
-        const end = h.end_date.split('T')[0];
-        
-        // Holiday is strictly between start (end of class) and end (resumption of class)
-        return dateStr > start && dateStr < end;
+
+    const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+      day
+    ).padStart(2, "0")}`;
+
+    return schoolHolidays.find((h) => {
+      const start = h.start_date.split("T")[0];
+      const end = h.end_date.split("T")[0];
+      return dateStr > start && dateStr < end;
     });
   };
 
   // Helper to check if day is weekend
   const isWeekend = (index: number) => {
-    // index includes blanks. 
-    // If weekStart is Monday (0), Saturday is 5, Sunday is 6.
-    // If weekStart is Sunday (0), Saturday is 6, Sunday is 0.
-    const dayOfWeek = (index) % 7;
-    if (weekStart === 'monday') {
+    const dayOfWeek = index % 7;
+    if (weekStart === "monday") {
       return dayOfWeek === 5 || dayOfWeek === 6;
     } else {
       return dayOfWeek === 0 || dayOfWeek === 6;
@@ -81,47 +109,71 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays, sc
         {blanks.map((_, i) => (
           <div key={`blank-${i}`} className="h-10" />
         ))}
-        
+
         {days.map((day, i) => {
           const absoluteIndex = i + firstDay;
           const isWknd = isWeekend(absoluteIndex);
-          const holiday = getHoliday(day);
+          const events = getEvents(day);
           const schoolHoliday = getSchoolHoliday(day);
-          
+
+          const hasPublicHoliday = events.some((e) => e.type === "holiday");
+
+          // Determine Background Class
+          let bgClass = "";
+          let textClass = "text-white";
+          let shadowClass = "";
+
+          if (hasPublicHoliday) {
+            bgClass = "bg-white/20";
+            textClass = "font-bold text-white";
+            shadowClass = "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
+          } else if (showWeekends && isWknd) {
+            bgClass = "bg-white/5";
+            textClass = "text-white/70";
+          } else if (schoolHoliday) {
+            bgClass = "bg-white/10";
+            textClass = "text-white";
+          }
+
+          // Determine Content
+          const showName = showHolidayNames && events.length === 1;
+          const showDots = events.length > 0 && !showName;
+
           return (
-            <div 
-              key={day} 
+            <div
+              key={day}
               className={cn(
                 "h-10 flex flex-col items-center justify-center relative rounded-md transition-colors",
-                // Base styles
-                "text-white",
-                
-                // School Holiday styling (Background highlight)
-                // Use a soft color, distinct from weekends but harmonious
-                schoolHoliday && "bg-indigo-500/20 text-indigo-100",
-
-                // Weekend styling (dimmed text, slight bg)
-                // If it's a school holiday AND weekend, maybe blend?
-                // If weekend, usually we want to keep it dimmed unless it's a special holiday.
-                showWeekends && isWknd && !schoolHoliday && "bg-white/5 text-white/70",
-                showWeekends && isWknd && schoolHoliday && "bg-indigo-500/30 text-indigo-100/90",
-
-                // Holiday styling (stronger bg, bright text, bold) - overrides weekend and school holiday
-                holiday && "bg-white/10 font-bold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]"
+                bgClass,
+                textClass,
+                shadowClass
               )}
             >
-              <span className="text-lg leading-none">
+              <span
+                className={cn("text-lg leading-none", showName && "mb-0.5")}
+              >
                 {day}
               </span>
-              
-              {holiday && (
-                showHolidayNames ? (
-                  <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1 mt-0.5">
-                    {holiday.localName}
-                  </span>
-                ) : (
-                  <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.5)]" />
-                )
+
+              {showName && (
+                <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1">
+                  {events[0].label}
+                </span>
+              )}
+
+              {showDots && (
+                <div className="absolute top-1 right-1 flex gap-0.5">
+                  {events.map((e, idx) => (
+                    <div
+                      key={idx}
+                      className={cn(
+                        "w-1.5 h-1.5 rounded-full shadow-sm",
+                        e.type === "holiday" ? "bg-white" : "bg-white/50"
+                      )}
+                      title={e.label} // Tooltip on hover
+                    />
+                  ))}
+                </div>
               )}
             </div>
           );

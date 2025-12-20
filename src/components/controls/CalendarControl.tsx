@@ -136,13 +136,26 @@ export const CalendarControl: React.FC = () => {
 
         <div className="flex items-center justify-between">
           <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
-            Jours fériés (FR)
+            Jours fériés
           </Label>
           <Switch
             id="show-holidays"
             checked={calendar.showHolidays}
             onCheckedChange={(checked) =>
               setCalendarConfig({ showHolidays: checked })
+            }
+          />
+        </div>
+
+        <div className="flex items-center justify-between">
+          <Label className="text-sm cursor-pointer" htmlFor="show-world-days">
+            Journées Mondiales
+          </Label>
+          <Switch
+            id="show-world-days"
+            checked={calendar.showWorldDays}
+            onCheckedChange={(checked) =>
+              setCalendarConfig({ showWorldDays: checked })
             }
           />
         </div>

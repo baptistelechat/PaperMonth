@@ -1,7 +1,8 @@
 import { useHolidays } from "@/hooks/useHolidays";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { cn } from "@/lib/utils";
-import React, { forwardRef } from "react";
+import { getWorldDaysForYear } from "@/utils/worldDays";
+import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./Calendar/CalendarGrid";
 import { CalendarHeader } from "./Calendar/CalendarHeader";
 
@@ -15,6 +16,12 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
     calendar.year,
     "FR",
     calendar.schoolZone
+  );
+
+  // Get World Days
+  const worldDays = useMemo(
+    () => getWorldDaysForYear(calendar.year),
+    [calendar.year]
   );
 
   // Background style
@@ -76,6 +83,7 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
             config={calendar}
             holidays={holidays}
             schoolHolidays={schoolHolidays}
+            worldDays={worldDays}
           />
         </div>
 

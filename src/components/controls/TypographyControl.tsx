@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
-import { FONT_PRESETS } from "@/utils/gradients";
+import { FONT_PRESETS } from "@/utils/fonts";
 import React from "react";
 
 export const TypographyControl: React.FC = () => {

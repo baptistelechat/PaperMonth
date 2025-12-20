@@ -7,7 +7,7 @@ export type TitleFormat =
   | "mm/yyyy"
   | "MMM/YYYY"
   | "MMM/YY"
-  | "Month"
+  | "Month";
 
 export interface CalendarConfig {
   month: number; // 0-11
@@ -16,6 +16,7 @@ export interface CalendarConfig {
   titleFormat: TitleFormat;
   showWeekends: boolean;
   showHolidays: boolean;
+  showHolidayNames: boolean;
 }
 
 export interface BackgroundConfig {

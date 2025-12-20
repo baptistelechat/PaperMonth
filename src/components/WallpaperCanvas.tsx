@@ -92,7 +92,7 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
 
       {/* Watermark / Branding (Optional) */}
-      <div className="absolute bottom-8 right-8 text-white/30 font-light text-sm tracking-widest">
+      <div className="absolute bottom-8 right-8 text-white/30 font-light text-lg tracking-widest">
         PAPERMONTH
       </div>
     </div>

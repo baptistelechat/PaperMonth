@@ -27,6 +27,7 @@ const getInitialConfig = (): WallpaperConfig => ({
     titleFormat: "full",
     showWeekends: true,
     showHolidays: true,
+    showHolidayNames: false,
   },
   background: {
     type: "gradient",

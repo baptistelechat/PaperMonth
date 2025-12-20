@@ -1,10 +1,5 @@
-import React from "react";
-import { useWallpaperStore } from "@/hooks/useWallpaperStore";
-import { formatMonthTitle } from "@/utils/dates";
-import { TitleFormat } from "@/types/calendar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -12,6 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { useWallpaperStore } from "@/hooks/useWallpaperStore";
+import { TitleFormat } from "@/types/calendar";
+import { formatMonthTitle } from "@/utils/dates";
+import React from "react";
 
 export const CalendarControl: React.FC = () => {
   const { config, setCalendarConfig } = useWallpaperStore();
@@ -115,6 +115,22 @@ export const CalendarControl: React.FC = () => {
             }
           />
         </div>
+
+          <div className="flex items-center justify-between">
+            <Label
+              className="text-sm cursor-pointer"
+              htmlFor="show-holiday-names"
+            >
+              Afficher le noms des dates
+            </Label>
+            <Switch
+              id="show-holiday-names"
+              checked={calendar.showHolidayNames}
+              onCheckedChange={(checked) =>
+                setCalendarConfig({ showHolidayNames: checked })
+              }
+            />
+          </div>
       </div>
     </section>
   );

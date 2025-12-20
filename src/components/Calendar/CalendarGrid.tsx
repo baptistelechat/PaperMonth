@@ -9,8 +9,15 @@ interface CalendarGridProps {
 }
 
 export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) => {
-  const { month, year, weekStart, showWeekends, showHolidays } = config;
-  
+  const {
+    month,
+    year,
+    weekStart,
+    showWeekends,
+    showHolidays,
+    showHolidayNames,
+  } = config;
+
   const daysInMonth = getDaysInMonth(month, year);
   const firstDay = getFirstDayOfMonth(month, year, weekStart);
   
@@ -79,9 +86,13 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({ config, holidays }) 
               </span>
               
               {holiday && (
-                <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1 mt-0.5">
-                  {holiday.localName}
-                </span>
+                showHolidayNames ? (
+                  <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1 mt-0.5">
+                    {holiday.localName}
+                  </span>
+                ) : (
+                  <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-white/90 shadow-[0_0_4px_rgba(255,255,255,0.5)]" />
+                )
               )}
             </div>
           );

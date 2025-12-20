@@ -37,34 +37,32 @@ export const CalendarControl: React.FC = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="full">
-                Complet ({formatMonthTitle(calendar.month, calendar.year, "full")})
-              </SelectItem>
-              <SelectItem value="numeric">
-                Numérique (
-                {formatMonthTitle(
-                  calendar.month,
-                  calendar.year,
-                  "numeric"
-                )}
-                )
+                Complet (
+                {formatMonthTitle(calendar.month, calendar.year, "full")})
               </SelectItem>
               <SelectItem value="uppercase">
                 Majuscule (
-                {formatMonthTitle(
-                  calendar.month,
-                  calendar.year,
-                  "uppercase"
-                )}
-                )
+                {formatMonthTitle(calendar.month, calendar.year, "uppercase")})
               </SelectItem>
-              <SelectItem value="abbreviated">
-                Abrégé (
-                {formatMonthTitle(
-                  calendar.month,
-                  calendar.year,
-                  "abbreviated"
-                )}
-                )
+              <SelectItem value="Month">
+                Mois seul (
+                {formatMonthTitle(calendar.month, calendar.year, "Month")})
+              </SelectItem>
+              <SelectItem value="mm/yyyy">
+                Numérique complet (
+                {formatMonthTitle(calendar.month, calendar.year, "mm/yyyy")})
+              </SelectItem>
+              <SelectItem value="mm/yy">
+                Numérique court (
+                {formatMonthTitle(calendar.month, calendar.year, "mm/yy")})
+              </SelectItem>
+              <SelectItem value="MMM/YYYY">
+                Abrégé complet (
+                {formatMonthTitle(calendar.month, calendar.year, "MMM/YYYY")})
+              </SelectItem>
+              <SelectItem value="MMM/YY">
+                Abrégé court (
+                {formatMonthTitle(calendar.month, calendar.year, "MMM/YY")})
               </SelectItem>
             </SelectContent>
           </Select>
@@ -74,9 +72,7 @@ export const CalendarControl: React.FC = () => {
           <Label className="text-sm">Début de semaine</Label>
           <div className="flex bg-zinc-900 rounded-md p-1 border border-zinc-800">
             <Button
-              variant={
-                calendar.weekStart === "monday" ? "secondary" : "ghost"
-              }
+              variant={calendar.weekStart === "monday" ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setCalendarConfig({ weekStart: "monday" })}
               className="h-7 text-xs"
@@ -84,9 +80,7 @@ export const CalendarControl: React.FC = () => {
               Lun
             </Button>
             <Button
-              variant={
-                calendar.weekStart === "sunday" ? "secondary" : "ghost"
-              }
+              variant={calendar.weekStart === "sunday" ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setCalendarConfig({ weekStart: "sunday" })}
               className="h-7 text-xs"
@@ -97,10 +91,7 @@ export const CalendarControl: React.FC = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Label
-            className="text-sm cursor-pointer"
-            htmlFor="show-weekends"
-          >
+          <Label className="text-sm cursor-pointer" htmlFor="show-weekends">
             Afficher Week-ends
           </Label>
           <Switch
@@ -113,10 +104,7 @@ export const CalendarControl: React.FC = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Label
-            className="text-sm cursor-pointer"
-            htmlFor="show-holidays"
-          >
+          <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
             Jours fériés (FR)
           </Label>
           <Switch

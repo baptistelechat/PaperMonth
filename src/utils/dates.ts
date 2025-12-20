@@ -71,19 +71,27 @@ export function formatMonthTitle(
   });
   const parts = formatter.formatToParts(date);
   const monthName = parts.find((p) => p.type === "month")?.value || "";
-  // const yearStr = parts.find(p => p.type === 'year')?.value || '';
+
+  const mm = String(month + 1).padStart(2, "0");
+  const yy = String(year).slice(-2);
+  const MMM = monthName.substring(0, 3).toUpperCase();
+  const Month = monthName.charAt(0).toUpperCase() + monthName.slice(1);
 
   switch (format) {
-    case "numeric":
-      return `${String(month + 1).padStart(2, "0")} / ${year}`;
     case "uppercase":
       return `${monthName.toUpperCase()} ${year}`;
-    case "abbreviated":
-      return `${monthName.substring(0, 3).toUpperCase()}. ${year}`;
+    case "mm/yy":
+      return `${mm} / ${yy}`;
+    case "mm/yyyy":
+      return `${mm} / ${year}`;
+    case "MMM/YYYY":
+      return `${MMM}. ${year}`;
+    case "MMM/YY":
+      return `${MMM}. ${yy}`;
+    case "Month":
+      return Month;
     case "full":
     default:
-      return `${
-        monthName.charAt(0).toUpperCase() + monthName.slice(1)
-      } ${year}`;
+      return `${Month} ${year}`;
   }
 }

@@ -37,6 +37,7 @@ const getInitialConfig = (): WallpaperConfig => ({
   typography: {
     fontFamily: "Inter",
     fontSize: "md",
+    applyToAll: true,
   },
   widgets: [],
 });

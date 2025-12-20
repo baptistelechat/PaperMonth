@@ -29,6 +29,7 @@ export interface BackgroundConfig {
 export interface TypographyConfig {
   fontFamily: string;
   fontSize: "sm" | "md" | "lg";
+  applyToAll: boolean;
 }
 
 export interface WallpaperConfig {

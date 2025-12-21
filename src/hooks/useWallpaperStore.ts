@@ -102,6 +102,7 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       FONT_PRESETS[Math.floor(Math.random() * FONT_PRESETS.length)];
     const randomTextColor = Math.random() > 0.5 ? "light" : "dark";
     const randomOpacity = Math.round(Math.random() * 10) / 10;
+    const randomApplyToAll = Math.random() > 0.5;
 
     set((state) => ({
       config: {
@@ -116,6 +117,7 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
         typography: {
           ...state.config.typography,
           fontFamily: randomFont.name,
+          applyToAll: randomApplyToAll,
         },
       },
     }));

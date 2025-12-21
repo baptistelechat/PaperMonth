@@ -1,4 +1,9 @@
 import { Button } from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -14,13 +19,10 @@ import { useHolidays } from "@/hooks/useHolidays";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { SchoolZone, TitleFormat } from "@/types/calendar";
 import { formatMonthTitle } from "@/utils/dates";
+import { getWorldDaysForYear } from "@/utils/worldDays";
 import { CircleHelp } from "lucide-react";
 import React from "react";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
+import { ScrollArea } from "../ui/scroll-area";
 
 const ACADEMY_ZONES = {
   "Zone A": [
@@ -88,6 +90,19 @@ export const CalendarControl: React.FC = () => {
     )}`;
     return holidays.some((h) => h.date.startsWith(monthPrefix));
   }, [holidays, calendar.month, calendar.year]);
+
+  // Get World Days for current month
+  const worldDaysInMonth = React.useMemo(() => {
+    const allWorldDays = getWorldDaysForYear(calendar.year);
+    const monthPrefix = `${calendar.year}-${String(calendar.month + 1).padStart(
+      2,
+      "0"
+    )}`;
+
+    return allWorldDays
+      .filter((day) => day.date.startsWith(monthPrefix))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }, [calendar.month, calendar.year]);
 
   return (
     <section className="space-y-4">
@@ -175,18 +190,20 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-        {hasHolidaysInMonth && <div className="flex items-center justify-between">
-          <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
-            Jours fériés
-          </Label>
-          <Switch
-            id="show-holidays"
-            checked={calendar.showHolidays}
-            onCheckedChange={(checked) =>
-              setCalendarConfig({ showHolidays: checked })
-            }
-          />
-        </div>}
+        {hasHolidaysInMonth && (
+          <div className="flex items-center justify-between">
+            <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
+              Jours fériés
+            </Label>
+            <Switch
+              id="show-holidays"
+              checked={calendar.showHolidays}
+              onCheckedChange={(checked) =>
+                setCalendarConfig({ showHolidays: checked })
+              }
+            />
+          </div>
+        )}
 
         {calendar.showHolidays && hasHolidaysInMonth && (
           <div className="flex items-center justify-between">
@@ -207,9 +224,48 @@ export const CalendarControl: React.FC = () => {
         )}
 
         <div className="flex items-center justify-between">
-          <Label className="text-sm cursor-pointer" htmlFor="show-world-days">
-            Journées Mondiales
-          </Label>
+          <div className="flex items-center gap-2">
+            <Label className="text-sm cursor-pointer" htmlFor="show-world-days">
+              Journées Mondiales
+            </Label>
+            {worldDaysInMonth.length > 0 && (
+              <HoverCard>
+                <HoverCardTrigger asChild>
+                  <CircleHelp className="size-4 text-muted-foreground cursor-help" />
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80" side="right" align="start">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-sm">
+                      Journées Mondiales du mois{" "}
+                      <span className="text-muted-foreground font-mono shrink-0">
+                        ({worldDaysInMonth.length})
+                      </span>
+                    </h4>
+                    <ScrollArea className="h-72 w-full pr-4">
+                      <div className="grid gap-2">
+                        {worldDaysInMonth.map((day, index) => (
+                          <div
+                            key={`${day.date}-${index}`}
+                            className="flex gap-2 text-sm"
+                          >
+                            <span className="text-muted-foreground font-mono shrink-0">
+                              {new Date(day.date)
+                                .getDate()
+                                .toString()
+                                .padStart(2, "0")}
+                            </span>
+                            <span className="text-primary leading-snug">
+                              {day.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+            )}
+          </div>
           <Switch
             id="show-world-days"
             checked={calendar.showWorldDays}
@@ -243,7 +299,7 @@ export const CalendarControl: React.FC = () => {
               <Label className="text-sm">Zone scolaire</Label>
               <HoverCard>
                 <HoverCardTrigger asChild>
-                  <CircleHelp className="h-4 w-4 text-muted-foreground cursor-help" />
+                  <CircleHelp className="size-4 text-muted-foreground cursor-help" />
                 </HoverCardTrigger>
                 <HoverCardContent className="w-80" side="right" align="start">
                   <div className="space-y-4">

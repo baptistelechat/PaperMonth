@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { useHolidays } from "@/hooks/useHolidays";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { SchoolZone, TitleFormat } from "@/types/calendar";
 import { formatMonthTitle } from "@/utils/dates";
@@ -51,6 +52,42 @@ const ACADEMY_ZONES = {
 export const CalendarControl: React.FC = () => {
   const { config, setCalendarConfig } = useWallpaperStore();
   const { calendar } = config;
+
+  const { schoolHolidays, holidays } = useHolidays(
+    calendar.year,
+    "FR",
+    calendar.schoolZone
+  );
+
+  const hasSchoolHolidaysInMonth = React.useMemo(() => {
+    if (!schoolHolidays || schoolHolidays.length === 0) return false;
+
+    const monthStart = `${calendar.year}-${String(calendar.month + 1).padStart(
+      2,
+      "0"
+    )}-01`;
+    const lastDay = new Date(calendar.year, calendar.month + 1, 0).getDate();
+    const monthEnd = `${calendar.year}-${String(calendar.month + 1).padStart(
+      2,
+      "0"
+    )}-${String(lastDay).padStart(2, "0")}`;
+
+    return schoolHolidays.some((h) => {
+      const start = h.start_date.split("T")[0];
+      const end = h.end_date.split("T")[0];
+      return start <= monthEnd && end >= monthStart;
+    });
+  }, [schoolHolidays, calendar.month, calendar.year]);
+
+  const hasHolidaysInMonth = React.useMemo(() => {
+    if (!holidays || holidays.length === 0) return false;
+
+    const monthPrefix = `${calendar.year}-${String(calendar.month + 1).padStart(
+      2,
+      "0"
+    )}`;
+    return holidays.some((h) => h.date.startsWith(monthPrefix));
+  }, [holidays, calendar.month, calendar.year]);
 
   return (
     <section className="space-y-4">
@@ -138,7 +175,7 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-        <div className="flex items-center justify-between">
+        {hasHolidaysInMonth && <div className="flex items-center justify-between">
           <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
             Jours fériés
           </Label>
@@ -149,24 +186,25 @@ export const CalendarControl: React.FC = () => {
               setCalendarConfig({ showHolidays: checked })
             }
           />
-        </div>
+        </div>}
 
-        {calendar.showHolidays && (
+        {calendar.showHolidays && hasHolidaysInMonth && (
           <div className="flex items-center justify-between">
-          <Label
-            className="text-sm cursor-pointer"
-            htmlFor="show-holiday-names"
-          >
-            Afficher le noms des jours fériés
-          </Label>
-          <Switch
-            id="show-holiday-names"
-            checked={calendar.showHolidayNames}
-            onCheckedChange={(checked) =>
-              setCalendarConfig({ showHolidayNames: checked })
-            }
-          />
-        </div>)}
+            <Label
+              className="text-sm cursor-pointer"
+              htmlFor="show-holiday-names"
+            >
+              Afficher le noms des jours fériés
+            </Label>
+            <Switch
+              id="show-holiday-names"
+              checked={calendar.showHolidayNames}
+              onCheckedChange={(checked) =>
+                setCalendarConfig({ showHolidayNames: checked })
+              }
+            />
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
           <Label className="text-sm cursor-pointer" htmlFor="show-world-days">
@@ -181,23 +219,25 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <Label
-            className="text-sm cursor-pointer"
-            htmlFor="show-school-holidays"
-          >
-            Vacances scolaires
-          </Label>
-          <Switch
-            id="show-school-holidays"
-            checked={calendar.showSchoolHolidays}
-            onCheckedChange={(checked) =>
-              setCalendarConfig({ showSchoolHolidays: checked })
-            }
-          />
-        </div>
+        {hasSchoolHolidaysInMonth && (
+          <div className="flex items-center justify-between">
+            <Label
+              className="text-sm cursor-pointer"
+              htmlFor="show-school-holidays"
+            >
+              Vacances scolaires
+            </Label>
+            <Switch
+              id="show-school-holidays"
+              checked={calendar.showSchoolHolidays}
+              onCheckedChange={(checked) =>
+                setCalendarConfig({ showSchoolHolidays: checked })
+              }
+            />
+          </div>
+        )}
 
-        {calendar.showSchoolHolidays && (
+        {calendar.showSchoolHolidays && hasSchoolHolidaysInMonth && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Label className="text-sm">Zone scolaire</Label>

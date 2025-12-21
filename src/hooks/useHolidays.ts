@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getFrenchCelebrations } from "@/utils/frenchDays";
 
 export interface Holiday {
   date: string;
@@ -47,7 +48,15 @@ export function useHolidays(
           throw new Error("Failed to fetch holidays");
         }
         const data = await response.json();
-        setHolidays(data);
+        
+        let allHolidays = data;
+        if (countryCode === "FR") {
+           const frenchCelebrations = getFrenchCelebrations(year);
+           // Merge and sort
+           allHolidays = [...allHolidays, ...frenchCelebrations].sort((a: Holiday, b: Holiday) => a.date.localeCompare(b.date));
+        }
+
+        setHolidays(allHolidays);
 
         // Fetch school holidays
         // We fetch holidays that overlap with the current year

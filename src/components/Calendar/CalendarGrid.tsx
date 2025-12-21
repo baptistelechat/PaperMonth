@@ -1,4 +1,4 @@
-import { SchoolHoliday } from "@/hooks/useHolidays";
+import { Holiday, SchoolHoliday } from "@/hooks/useHolidays";
 import { cn } from "@/lib/utils";
 import { CalendarConfig } from "@/types/calendar";
 import {
@@ -12,7 +12,7 @@ import React from "react";
 
 interface CalendarGridProps {
   config: CalendarConfig;
-  holidays: Array<{ date: string; localName: string }>;
+  holidays: Holiday[];
   schoolHolidays?: SchoolHoliday[];
   worldDays?: WorldDayEvent[];
 }
@@ -47,13 +47,21 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
     const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
-    const events: Array<{ type: "holiday" | "worldDay"; label: string }> = [];
+    const events: Array<{
+      type: "holiday" | "observance" | "worldDay";
+      label: string;
+    }> = [];
 
     // Public Holiday
     if (showHolidays) {
       const holiday = holidays.find((h) => h.date === dateStr);
       if (holiday) {
-        events.push({ type: "holiday", label: holiday.localName });
+        const isObservance =
+          holiday.types && holiday.types.includes("Observance");
+        events.push({
+          type: isObservance ? "observance" : "holiday",
+          label: holiday.localName,
+        });
       }
     }
 
@@ -117,30 +125,41 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
           const schoolHoliday = getSchoolHoliday(day);
 
           const hasPublicHoliday = events.some((e) => e.type === "holiday");
+          const hasObservance = events.some((e) => e.type === "observance");
           const hasWorldDay = events.some((e) => e.type === "worldDay");
 
-          // Determine Background Class
+          // Determine Background Class and Text Class
           let bgClass = "";
-          let textClass = "text-white";
+          let textColorClass = "text-white";
+          let textWeightClass = "";
           let shadowClass = "";
 
-          if (hasPublicHoliday) {
-            bgClass = "bg-white/20";
-            textClass = "font-bold text-white";
-            shadowClass = "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
-          } else if (showWeekends && isWknd) {
+          // Base states (Weekend / School Holiday)
+          if (showWeekends && isWknd) {
             bgClass = "bg-white/5";
-            textClass = "text-white/70";
+            textColorClass = "text-white/70";
           } else if (schoolHoliday) {
             bgClass = "bg-white/10";
-            textClass = "text-white";
+            textColorClass = "text-white";
           }
+
+          // Overrides for Events
+          if (hasPublicHoliday) {
+            bgClass = "bg-white/20";
+            textColorClass = "text-white";
+            textWeightClass = "font-bold";
+            shadowClass = "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
+          } else if (hasObservance) {
+            textWeightClass = "font-medium";
+          }
+
+          const textClass = cn(textColorClass, textWeightClass);
 
           // Determine Content
           const showName =
             showHolidayNames &&
             events.length === 1 &&
-            events[0].type === "holiday";
+            (events[0].type === "holiday" || events[0].type === "observance");
 
           const dotEvents = events.filter((e) => e.type !== "worldDay");
           const showDots = dotEvents.length > 0 && !showName;
@@ -165,7 +184,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                   "text-lg leading-none",
                   showName && "mb-0.5",
                   hasWorldDay &&
-                    "underline decoration-2 underline-offset-8 decoration-white"
+                    "underline decoration-2 underline-offset-8 decoration-current"
                 )}
                 title={hasWorldDay ? worldDayTitle : undefined}
               >
@@ -187,7 +206,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                         "w-1.5 h-1.5 rounded-full shadow-sm",
                         e.type === "holiday" ? "bg-white" : "bg-white/50"
                       )}
-                      title={e.label} // Tooltip on hover
+                      title={e.label}
                     />
                   ))}
                 </div>

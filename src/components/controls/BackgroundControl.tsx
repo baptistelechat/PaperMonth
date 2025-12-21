@@ -1,10 +1,10 @@
-import React from "react";
-import { useWallpaperStore } from "@/hooks/useWallpaperStore";
-import { GRADIENT_PRESETS } from "@/utils/gradients";
-import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { useWallpaperStore } from "@/hooks/useWallpaperStore";
+import { GRADIENT_PRESETS } from "@/utils/gradients";
+import { Upload } from "lucide-react";
+import React from "react";
 
 export const BackgroundControl: React.FC = () => {
   const { config, setBackgroundConfig } = useWallpaperStore();
@@ -33,18 +33,14 @@ export const BackgroundControl: React.FC = () => {
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-2">
           <Button
-            variant={
-              background.type === "gradient" ? "secondary" : "outline"
-            }
+            variant={background.type === "gradient" ? "secondary" : "outline"}
             onClick={() => setBackgroundConfig({ type: "gradient" })}
             className="w-full border-zinc-800"
           >
             Gradients
           </Button>
           <Button
-            variant={
-              background.type === "image" ? "secondary" : "outline"
-            }
+            variant={background.type === "image" ? "secondary" : "outline"}
             onClick={() => setBackgroundConfig({ type: "image" })}
             className="w-full border-zinc-800"
           >
@@ -103,9 +99,7 @@ export const BackgroundControl: React.FC = () => {
 
         <div className="space-y-3 pt-2">
           <div className="flex justify-between">
-            <Label className="text-xs text-zinc-500">
-              Opacité Overlay
-            </Label>
+            <Label className="text-xs text-zinc-500">Opacité Overlay</Label>
             <span className="text-xs text-zinc-400">
               {Math.round(background.overlayOpacity * 100)}%
             </span>
@@ -120,6 +114,30 @@ export const BackgroundControl: React.FC = () => {
             }
             className="py-2"
           />
+        </div>
+
+        <div className="space-y-3 pt-2">
+          <Label className="text-xs text-zinc-500">Couleur du texte</Label>
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant={
+                background.textColor === "light" ? "secondary" : "outline"
+              }
+              onClick={() => setBackgroundConfig({ textColor: "light" })}
+              className="w-full border-zinc-800"
+            >
+              Clair
+            </Button>
+            <Button
+              variant={
+                background.textColor === "dark" ? "secondary" : "outline"
+              }
+              onClick={() => setBackgroundConfig({ textColor: "dark" })}
+              className="w-full border-zinc-800"
+            >
+              Sombre
+            </Button>
+          </div>
         </div>
       </div>
     </section>

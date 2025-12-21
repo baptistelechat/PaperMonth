@@ -42,6 +42,7 @@ export interface BackgroundConfig {
   gradient?: string; // Tailwind class or CSS gradient
   imageUrl?: string;
   overlayOpacity: number; // 0-1
+  textColor: "light" | "dark";
 }
 
 export interface TypographyConfig {

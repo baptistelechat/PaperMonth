@@ -9,13 +9,19 @@ import {
 } from "@/utils/dates";
 import { WorldDayEvent } from "@/utils/worldDays";
 import React from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 interface CalendarGridProps {
   config: CalendarConfig;
   holidays: Holiday[];
   schoolHolidays?: SchoolHoliday[];
   worldDays?: WorldDayEvent[];
+  textColor?: "light" | "dark";
 }
 
 export const CalendarGrid: React.FC<CalendarGridProps> = ({
@@ -23,6 +29,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
   holidays,
   schoolHolidays,
   worldDays = [],
+  textColor = "light",
 }) => {
   const {
     month,
@@ -42,6 +49,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
   const blanks = Array.from({ length: firstDay }, (_, i) => i);
 
   const weekDays = weekStart === "monday" ? DAYS_FR : DAYS_FR_SUNDAY_START;
+  const isDark = textColor === "dark";
 
   // Helper to get all events for a day
   const getEvents = (day: number) => {
@@ -110,7 +118,10 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
           {weekDays.map((day) => (
             <div
               key={day}
-              className="text-center text-sm font-medium opacity-70"
+              className={cn(
+                "text-center text-sm font-medium opacity-70",
+                isDark ? "text-black" : "text-white"
+              )}
             >
               {day}
             </div>
@@ -135,25 +146,27 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
 
             // Determine Background Class and Text Class
             let bgClass = "";
-            let textColorClass = "text-white";
+            let textColorClass = isDark ? "text-black" : "text-white";
             let textWeightClass = "";
             let shadowClass = "";
 
             // Base states (Weekend / School Holiday)
             if (showWeekends && isWknd) {
-              bgClass = "bg-white/5";
-              textColorClass = "text-white/70";
+              bgClass = isDark ? "bg-black/5" : "bg-white/5";
+              textColorClass = isDark ? "text-black/70" : "text-white/70";
             } else if (schoolHoliday) {
-              bgClass = "bg-white/10";
-              textColorClass = "text-white";
+              bgClass = isDark ? "bg-black/10" : "bg-white/10";
+              textColorClass = isDark ? "text-black" : "text-white";
             }
 
             // Overrides for Events
             if (hasPublicHoliday) {
-              bgClass = "bg-white/20";
-              textColorClass = "text-white";
+              bgClass = isDark ? "bg-black/20" : "bg-white/20";
+              textColorClass = isDark ? "text-black" : "text-white";
               textWeightClass = "font-bold";
-              shadowClass = "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
+              shadowClass = isDark
+                ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.2)]"
+                : "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
             } else if (hasObservance) {
               textWeightClass = "font-medium";
             }
@@ -203,7 +216,13 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                         key={idx}
                         className={cn(
                           "w-1.5 h-1.5 rounded-full shadow-sm",
-                          e.type === "holiday" ? "bg-white" : "bg-white/50"
+                          e.type === "holiday"
+                            ? isDark
+                              ? "bg-black"
+                              : "bg-white"
+                            : isDark
+                            ? "bg-black/50"
+                            : "bg-white/50"
                         )}
                       />
                     ))}

@@ -34,7 +34,7 @@ const getInitialConfig = (): WallpaperConfig => ({
   },
   background: {
     type: "gradient",
-    gradient: GRADIENT_PRESETS[0].className,
+    gradient: GRADIENT_PRESETS[17].className,
     overlayOpacity: 0.1,
   },
   typography: {

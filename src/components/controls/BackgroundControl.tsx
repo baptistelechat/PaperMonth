@@ -60,15 +60,21 @@ export const BackgroundControl: React.FC = () => {
                 onClick={() =>
                   setBackgroundConfig({ gradient: preset.className })
                 }
-                className={`h-12 rounded-md ${
+                className={`h-16 relative rounded-md ${
                   preset.className
-                } border transition-all ${
+                } border transition-all overflow-hidden ${
                   background.gradient === preset.className
                     ? "ring-2 ring-white scale-105"
-                    : "border-transparent opacity-70 hover:opacity-100"
+                    : "border-transparent opacity-80 hover:opacity-100"
                 }`}
                 title={preset.name}
-              />
+              >
+                <div className="absolute bottom-0 right-0 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-tl-md">
+                  <span className="text-[10px] font-medium text-white/90">
+                    {preset.name}
+                  </span>
+                </div>
+              </button>
             ))}
           </div>
         )}

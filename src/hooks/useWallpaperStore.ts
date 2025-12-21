@@ -100,6 +100,8 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       GRADIENT_PRESETS[Math.floor(Math.random() * GRADIENT_PRESETS.length)];
     const randomFont =
       FONT_PRESETS[Math.floor(Math.random() * FONT_PRESETS.length)];
+    const randomTextColor = Math.random() > 0.5 ? "light" : "dark";
+    const randomOpacity = Math.round(Math.random() * 10) / 10;
 
     set((state) => ({
       config: {
@@ -108,6 +110,8 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
           ...state.config.background,
           type: "gradient",
           gradient: randomGradient.className,
+          textColor: randomTextColor,
+          overlayOpacity: randomOpacity,
         },
         typography: {
           ...state.config.typography,

@@ -1,0 +1,3451 @@
+{
+  "01-04": [
+    {
+      "label": "Journée mondiale du braille (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 4
+      },
+      "source": "ONU"
+    }
+  ],
+  "01-21": [
+    {
+      "label": "Journée internationale des câlins",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale du sport féminin",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de l'éducation (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "01-27": [
+    {
+      "label": "Journée internationale dédiée à la mémoire des victimes de l'Holocauste (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 27
+      },
+      "source": "ONU"
+    }
+  ],
+  "01-28": [
+    {
+      "label": "Journée européenne de la protection des données (Conseil de l'Europe)",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 28
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la coexistence pacifique",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 28
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-WEEKDAY": [
+    {
+      "label": "Journée internationale de l'épilepsie",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 2,
+        "weekday": 1,
+        "occurrence": 2
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "02-02": [
+    {
+      "label": "Journée mondiale des zones humides",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 2
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "02-04": [
+    {
+      "label": "Journée mondiale contre le cancer",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 4
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la fraternité humaine (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 4
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-06": [
+    {
+      "label": "Journée internationale de la tolérance zéro à l'égard des mutilations génitales féminines (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 6
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-10": [
+    {
+      "label": "Journée internationale des légumineuses (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 10
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du léopard d’Arabie",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 10
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-11": [
+    {
+      "label": "Journée internationale des femmes et des filles de science (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 11
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée européenne du 112 (UE)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 11
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "02-12": [
+    {
+      "label": "Journée Darwin",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 12
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale pour la prévention de l’extrémisme violent pouvant conduire au terrorisme",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-13": [
+    {
+      "label": "Journée mondiale de la radio (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 13
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "02-14": [
+    {
+      "label": "Journée internationale de sensibilisation aux cardiopathies congénitales",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 14
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "02-20": [
+    {
+      "label": "Journée mondiale de la justice sociale (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-21": [
+    {
+      "label": "Journée internationale de la langue maternelle (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "02-27": [
+    {
+      "label": "Journée mondiale des ONG",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 27
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de l'ours polaire",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 27
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-WEEKDAY": [
+    {
+      "label": "Journée internationale du sommeil",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 3,
+        "weekday": 5,
+        "occurrence": 3
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Digital Cleanup Day, journée mondiale du nettoyage numérique",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 3,
+        "weekday": 6,
+        "occurrence": 3
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Une heure pour la planète",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 3,
+        "weekday": 6,
+        "occurrence": -1
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-03": [
+    {
+      "label": "Journée mondiale de la vie sauvage (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 3
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-08": [
+    {
+      "label": "Journée internationale des femmes (ONU) ou journée internationale des droits des femmes (ONU Femmes)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 8
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-11": [
+    {
+      "label": "Journée mondiale de la plomberie",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 11
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-14": [
+    {
+      "label": "Journée de pi et des mathématiques",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 14
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-20": [
+    {
+      "label": "Journée mondiale du bonheur (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 20
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale du conte",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la langue française, également appelée journée internationale de la Francophonie.",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale du bonheur",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-21": [
+    {
+      "label": "Journée internationale des forêts (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du Novruz (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale pour l'élimination de la discrimination raciale (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la marionnette",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale de la poésie (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale de la trisomie 21 (OMS, ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale des glaciers",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-22": [
+    {
+      "label": "Journée mondiale de l'eau (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 22
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-23": [
+    {
+      "label": "Journée météorologique mondiale (OMM)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 23
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-24": [
+    {
+      "label": "Journée internationale pour le droit à la vérité en ce qui concerne les violations flagrantes des droits de l'homme et pour la dignité des victimes (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 24
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de lutte contre la tuberculose (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 24
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-25": [
+    {
+      "label": "Journée internationale de solidarité avec les membres du personnel détenus ou portés disparus (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 25
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de commémoration des victimes de l'esclavage et de la traite transatlantique des esclaves (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 25
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la procrastination",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 25
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale pour la fin de la pêche",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 25
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-27": [
+    {
+      "label": "Journée mondiale du théâtre",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 27
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "03-30": [
+    {
+      "label": "Journée mondiale des troubles bipolaires",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 30
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale du zéro déchet",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 30
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-31": [
+    {
+      "label": "Journée internationale de visibilité transgenre",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 31
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "04-02": [
+    {
+      "label": "Journée mondiale de la sensibilisation à l'autisme (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 2
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-07": [
+    {
+      "label": "Journée mondiale de la santé (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 7
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de réflexion sur le génocide des Tutsis au Rwanda en 1994",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 7
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-08": [
+    {
+      "label": "Journée internationale des Roms",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 8
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "04-14": [
+    {
+      "label": "Journée mondiale de la maladie de Chagas (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 14
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "04-15": [
+    {
+      "label": "Journée mondiale de l'art (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 15
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "04-18": [
+    {
+      "label": "Journée internationale des monuments et des sites (ICMOS)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 18
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "04-22": [
+    {
+      "label": "Jour internationale de la Terre nourricière (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 22
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de la Terre nourricière",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 22
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-23": [
+    {
+      "label": "Journée mondiale du livre et du droit d'auteur (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 23
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée de la langue anglaise",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 23
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée de la langue espagnole",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 23
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-24": [
+    {
+      "label": "Journée de commémoration du génocide arménien",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 24
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée des jeunes filles dans le secteur des TIC",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 24
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Semaine mondiale de la vaccination",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 24
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du multilatéralisme et de la diplomatie au service de la paix",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 24
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-25": [
+    {
+      "label": "Journée mondiale contre le paludisme (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 25
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale des délégués",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 25
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-26": [
+    {
+      "label": "Journée mondiale de la propriété intellectuelle (OMPI)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 26
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale du souvenir de la catastrophe de Tchernobyl",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 26
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-29": [
+    {
+      "label": "Journée internationale de la danse",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 29
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale dédiée à la mémoire des victimes des tremblements de terre",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-30": [
+    {
+      "label": "Journée internationale du jazz (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 30
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-WEEKDAY": [
+    {
+      "label": "Journée internationale du rire",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 5,
+        "weekday": 7,
+        "occurrence": 1
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-03": [
+    {
+      "label": "Journée mondiale de la liberté de la presse (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 3
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-04": [
+    {
+      "label": "Journée Star Wars",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 4
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale des pompiers",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 4
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-05": [
+    {
+      "label": "Journée de l'Europe du Conseil de l'Europe",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 5
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale de la langue portugaise [UNESCO]",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-06": [
+    {
+      "label": "Journée internationale sans régime",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 6
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-07": [
+    {
+      "label": "Journée mondiale des orphelins du SIDA",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 7
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la masturbation",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 7
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-09": [
+    {
+      "label": "Journée de l'Europe de l'Union européenne",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 9
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-12": [
+    {
+      "label": "Journée internationale de l'infirmière",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 12
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la santé des végétaux",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 12
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Semaine mondiale des Nations Unies pour la sécurité routière (bisannuel) [OMS]",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 12
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "​Journée du Vesak",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-16": [
+    {
+      "label": "Journée internationale du vivre-ensemble en paix (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 16
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de la lumière",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 16
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-17": [
+    {
+      "label": "Journée mondiale des communications et de la société de l'information (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 17
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale contre l'homophobie et la transphobie",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 17
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-18": [
+    {
+      "label": "Journée internationale des musées",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 18
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-20": [
+    {
+      "label": "Journée mondiale des abeilles (ONU),",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 20
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la métrologie",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-21": [
+    {
+      "label": "Journée mondiale pour la diversité culturelle pour le dialogue et le développement (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du thé",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 21
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-22": [
+    {
+      "label": "Journée internationale de la diversité biologique (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 22
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-25": [
+    {
+      "label": "Journée internationale des enfants disparus",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 25
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale de l'Afrique",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 25
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale du football",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 25
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Semaine de la solidarité avec les peuples des territoires non autonomes",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 25
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-28": [
+    {
+      "label": "Journée mondiale de l'hygiène menstruelle",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 28
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "05-29": [
+    {
+      "label": "Journée internationale des Casques bleus des Nations unies (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-30": [
+    {
+      "label": "Journée internationale de la pomme de terre (ONU).",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 30
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-31": [
+    {
+      "label": "Journée mondiale sans tabac (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 31
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "06-03": [
+    {
+      "label": "Journée mondiale de la bicyclette (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 3
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-04": [
+    {
+      "label": "Journée internationale des enfants victimes innocentes de l'agression (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 4
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-05": [
+    {
+      "label": "Journée mondiale de l'environnement (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 5
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de la lutte contre la pêche illicite, non déclarée et non réglementée",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-08": [
+    {
+      "label": "Journée mondiale de l'océan (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 8
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-09": [
+    {
+      "label": "Journée internationale des archives",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 9
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "06-10": [
+    {
+      "label": "Journée mondiale de l’Art nouveau",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 10
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale pour le dialogue entre les civilisations",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 10
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-14": [
+    {
+      "label": "Journée mondiale du donneur de sang (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 14
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "06-16": [
+    {
+      "label": "Journée de l'enfant africain",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 16
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale des envois de fonds familiaux",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 16
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-17": [
+    {
+      "label": "Journée mondiale de lutte contre la désertification et la sécheresse (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 17
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-18": [
+    {
+      "label": "Journée internationale de la fierté autiste (AFF)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 18
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la lutte contre les discours de haine",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 18
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée de la gastronomie durable",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 18
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-20": [
+    {
+      "label": "Journée mondiale des réfugiés (ONU) (depuis 2001)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-23": [
+    {
+      "label": "Journée des Nations unies pour la fonction publique (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 23
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale des veuves",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 23
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-26": [
+    {
+      "label": "Journée internationale pour le soutien aux victimes de la torture (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 26
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale contre l'abus et le trafic de drogues",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 26
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-30": [
+    {
+      "label": "Journée internationale des astéroïdes (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 30
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du parlementarisme",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 30
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-WEEKDAY": [
+    {
+      "label": "Journée internationale des coopératives (ONU)",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 7,
+        "weekday": 6,
+        "occurrence": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-06": [
+    {
+      "label": "Journée internationale du baiser",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 6
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale des coopératives",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 6
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale du développement rural",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 6
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-11": [
+    {
+      "label": "Journée mondiale de la population (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 11
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de réflexion et de commémoration du génocide commis à Srebrenica en 1995",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 11
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale du cheval",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 11
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-14": [
+    {
+      "label": "Journée internationale des personnes non binaires",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 14
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "07-17": [
+    {
+      "label": "Journée mondiale de la justice internationale",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 17
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "07-18": [
+    {
+      "label": "Journée internationale Nelson Mandela (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 18
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-28": [
+    {
+      "label": "Journée mondiale contre l'hépatite (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 28
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "07-30": [
+    {
+      "label": "Journée internationale de l'amitié (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 30
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la lutte contre la traite d'êtres humains (ONU), anciennement appelée journée mondiale de la dignité des victimes de la traite d'êtres humains",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 30
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-31": [
+    {
+      "label": "Journée internationale de la femme africaine",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 31
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "08-WEEKDAY": [
+    {
+      "label": "Journée internationale de la bière",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 8,
+        "weekday": 5,
+        "occurrence": 1
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "08-08": [
+    {
+      "label": "Journée internationale du chat",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 8
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale de l'orgasme féminin",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 8
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "08-09": [
+    {
+      "label": "Journée internationale des peuples autochtones (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 9
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-12": [
+    {
+      "label": "Journée internationale de la jeunesse (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-13": [
+    {
+      "label": "Journée internationale des gauchers",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 13
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "08-17": [
+    {
+      "label": "Journée internationale du chat noir",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 17
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "08-19": [
+    {
+      "label": "Journée mondiale de l'aide humanitaire (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 19
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-22": [
+    {
+      "label": "Journée internationale de commémoration des personnes victimes de violence en raison de leur religion ou de leurs convictions (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 22
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-23": [
+    {
+      "label": "Journée européenne du souvenir",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 23
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale du souvenir de la traite négrière et de son abolition",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 23
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "08-27": [
+    {
+      "label": "Journée mondiale pour la fin du spécisme",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 27
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale des lacs",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 27
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-30": [
+    {
+      "label": "Journée internationale des victimes de disparition forcée (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 30
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-WEEKDAY": [
+    {
+      "label": "",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 9,
+        "weekday": 6,
+        "occurrence": 3
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale du nettoyage",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 9,
+        "weekday": 6,
+        "occurrence": 3
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale du logiciel libre",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 9,
+        "weekday": 6,
+        "occurrence": 3
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale des sourds, avant-dernier jour de la Semaine internationale des sourds (FMS)",
+      "rule": {
+        "type": "weekday-of-month",
+        "month": 9,
+        "weekday": 6,
+        "occurrence": -1
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-08": [
+    {
+      "label": "Journée internationale de l'alphabétisation (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 8
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-09": [
+    {
+      "label": "Journée internationale pour la protection de l'éducation contre les attaques (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 9
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-10": [
+    {
+      "label": "Journée mondiale de la prévention du suicide",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 10
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-12": [
+    {
+      "label": "Journée des Nations Unies pour la coopération Sud-Sud (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-16": [
+    {
+      "label": "Journée internationale pour la protection de la couche d'ozone (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 16
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale pour la science, la technologie et l’innovation dans le Sud",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 16
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de la cardiologie interventionnelle",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 16
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-19": [
+    {
+      "label": "International Talk Like a Pirate Day (ITLAPD, en français la Journée internationale du parler pirate)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 19
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-20": [
+    {
+      "label": "Journée internationale du sport universitaire (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-21": [
+    {
+      "label": "Journée internationale de la paix (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-22": [
+    {
+      "label": "Journée internationale sans voitures",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 22
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-23": [
+    {
+      "label": "Journée de la bisexualité",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 23
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale des langues des signes",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 23
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-26": [
+    {
+      "label": "Journée européenne des langues (Conseil de l'Europe)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 26
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale de la mer",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 26
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale pour l'élimination totale des armes nucléaires",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 26
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-27": [
+    {
+      "label": "Journée mondiale du tourisme (Organisation mondiale du tourisme)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 27
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "09-28": [
+    {
+      "label": "Journée mondiale de la rage",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 28
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de l'accès universel à l'information",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 28
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-30": [
+    {
+      "label": "Journée internationale de la traduction (Fédération internationale des traducteurs, reconnue par l'Unesco) (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 30
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du blasphème",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 30
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-02": [
+    {
+      "label": "Journée internationale de la non-violence (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 2
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-04": [
+    {
+      "label": "Journée mondiale des animaux",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 4
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Semaine mondiale de l'espace",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 4
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-05": [
+    {
+      "label": "Journée mondiale des enseignants (UNESCO)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 5
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-08": [
+    {
+      "label": "Journée internationale des lesbiennes",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 8
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-10": [
+    {
+      "label": "Journée mondiale de la santé mentale (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 10
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale contre la peine de mort (Union européenne)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 10
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-11": [
+    {
+      "label": "Journée internationale de la fille (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 11
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Coming out day",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 11
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-12": [
+    {
+      "label": "Journée de la langue espagnole",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 12
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale des oiseaux migrateurs",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-15": [
+    {
+      "label": "Journée mondiale du lavage des mains",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 15
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale des femmes rurales (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-16": [
+    {
+      "label": "Journée mondiale de l'alimentation (ONUAA)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 16
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-17": [
+    {
+      "label": "Journée internationale pour l'élimination de la pauvreté (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 17
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-18": [
+    {
+      "label": "Journée mondiale de la ménopause (OMS)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 18
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-20": [
+    {
+      "label": "Journée mondiale de la statistique (tous les cinq ans depuis 2010, ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale contre l’ostéoporose",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-22": [
+    {
+      "label": "Journée internationale de sensibilisation au bégaiement",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 22
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-23": [
+    {
+      "label": "Journée de la mole (fête non officielle instituée par les chimistes d'Amérique du nord)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 23
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la panthère des neiges",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 23
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-24": [
+    {
+      "label": "Journée des Nations unies (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 24
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Semaine mondiale de l’éducation aux médias et à l’information",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 24
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale d'information sur le développement",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 24
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Semaine du désarmement",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 24
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-25": [
+    {
+      "label": "Journée européenne de la justice",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 25
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-26": [
+    {
+      "label": "Journée de la visibilité intersexe",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 26
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-28": [
+    {
+      "label": "Journée mondiale du cinéma d'animation (Association internationale du film d'animation)",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 28
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "10-31": [
+    {
+      "label": "Journée mondiale de l'épargne, dont la première s'est tenue en 1924.",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 31
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale des villes",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 31
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-02": [
+    {
+      "label": "Journée mondiale pour le droit de mourir dans la dignité",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 2
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée internationale de la fin de l’impunité pour les crimes commis contre des journalistes",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 2
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-03": [
+    {
+      "label": "Journée internationale de la gentillesse",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 3
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "11-08": [
+    {
+      "label": "Journée internationale de la radiologie",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 8
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "11-11": [
+    {
+      "label": "Jour du Souvenir",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 11
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "11-12": [
+    {
+      "label": "Journée mondiale de la pneumonie",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 12
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "11-13": [
+    {
+      "label": "Journée internationale de la gentillesse",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 13
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "11-14": [
+    {
+      "label": "Journée mondiale du diabète (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 14
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-16": [
+    {
+      "label": "Journée internationale de la tolérance (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 16
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale du souvenir des victimes de la circulation routière",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 16
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la tolérance",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 16
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-19": [
+    {
+      "label": "Journée internationale de l'homme (créée en 1999)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 19
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée mondiale des toilettes (créée en 2001 par l'Organisation mondiale des toilettes) (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 19
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-20": [
+    {
+      "label": "Journée mondiale de l'enfance, appelée aussi internationale des droits de l'enfant (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 20
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée du souvenir trans (créée en 1999)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 20
+      },
+      "source": "Wikipedia"
+    },
+    {
+      "label": "Journée de l'industrialisation de l'Afrique",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-25": [
+    {
+      "label": "Journée internationale pour l'élimination de la violence à l'égard des femmes (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 25
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-29": [
+    {
+      "label": "Journée internationale de solidarité avec le peuple palestinien (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-03": [
+    {
+      "label": "Journée internationale des personnes handicapées (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 3
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-07": [
+    {
+      "label": "Journée de l'aviation civile internationale (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 7
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-09": [
+    {
+      "label": "Journée internationale de lutte contre la corruption (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 9
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de commémoration des victimes du crimede génocide, d’affirmation de leur dignité et de prévention de ce crime",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 9
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-10": [
+    {
+      "label": "Journée des droits de l'homme (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 10
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale pour le droit des animaux",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 10
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "12-15": [
+    {
+      "label": "Journée de l’espéranto",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 15
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "12-17": [
+    {
+      "label": "Journée internationale pour l'élimination des violences faites aux travailleurs du sexe",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 17
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "12-18": [
+    {
+      "label": "Journée internationale des migrants (ONU)",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 18
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée de la langue arabe",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 18
+      },
+      "source": "Wikipedia"
+    }
+  ],
+  "01-24": [
+    {
+      "label": "Journée internationale de l'éducation",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 24
+      },
+      "source": "ONU"
+    }
+  ],
+  "01-26": [
+    {
+      "label": "Journée internationale des énergies propres",
+      "rule": {
+        "type": "fixed",
+        "month": 1,
+        "day": 26
+      },
+      "source": "ONU"
+    }
+  ],
+  "02-01": [
+    {
+      "label": "Semaine mondiale de l’harmonie interconfessionnelle (première semaine de février)",
+      "rule": {
+        "type": "fixed",
+        "month": 2,
+        "day": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-01": [
+    {
+      "label": "Journée mondiale des herbiers marins",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 1
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée « Zéro discrimination »",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-05": [
+    {
+      "label": "Journée internationale de sensibilisation au désarmement et à la non-prolifération",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-10": [
+    {
+      "label": "Journée internationale des femmes juges",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 10
+      },
+      "source": "ONU"
+    }
+  ],
+  "03-15": [
+    {
+      "label": "Journée internationale de lutte contre l’islamophobie",
+      "rule": {
+        "type": "fixed",
+        "month": 3,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-04": [
+    {
+      "label": "Journée internationale pour la sensibilisation aux mines et l'assistance à la lutte antimines",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 4
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-05": [
+    {
+      "label": "Journée internationale de la conscience",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-06": [
+    {
+      "label": "Journée internationale du sport au service du développement et de la paix",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 6
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-12": [
+    {
+      "label": "Journée internationale du vol spatial habité",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-20": [
+    {
+      "label": "Journée de la langue chinoise (2017)",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-21": [
+    {
+      "label": "Journée mondiale de la créativité et de l’innovation",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "04-28": [
+    {
+      "label": "Journée mondiale pour la sécurité et la santé au travail",
+      "rule": {
+        "type": "fixed",
+        "month": 4,
+        "day": 28
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-02": [
+    {
+      "label": "Journée mondiale du thon",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 2
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-08": [
+    {
+      "label": "Journées du souvenir et de la réconciliation en l'honneur des morts de la Seconde Guerre mondiale",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 8
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-11": [
+    {
+      "label": "Journée mondiale des oiseaux migrateurs",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 11
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-15": [
+    {
+      "label": "Journée internationale des familles",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-19": [
+    {
+      "label": "Journée mondiale du fair-play",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 19
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-23": [
+    {
+      "label": "Journée internationale pour l’élimination de la fistule obstétricale",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 23
+      },
+      "source": "ONU"
+    }
+  ],
+  "05-24": [
+    {
+      "label": "Journée internationale du markhor",
+      "rule": {
+        "type": "fixed",
+        "month": 5,
+        "day": 24
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-01": [
+    {
+      "label": "Journée mondiale des parents",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-06": [
+    {
+      "label": "Journée de la langue russe",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 6
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-07": [
+    {
+      "label": "Journée internationale de la sécurité sanitaire des aliments",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 7
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-11": [
+    {
+      "label": "Journée internationale du jeu",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 11
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-12": [
+    {
+      "label": "Journée mondiale contre le travail des enfants",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-13": [
+    {
+      "label": "Journée internationale de sensibilisation à l'albinisme",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 13
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-15": [
+    {
+      "label": "Journée mondiale de sensibilisation à la maltraitance des personnes âgées",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-19": [
+    {
+      "label": "Journée internationale pour l'élimination de la violence sexuelle en temps de conflit",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 19
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-21": [
+    {
+      "label": "Journée internationale de la célébration du solstice",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale du Yoga",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-24": [
+    {
+      "label": "Journée internationale des femmes dans la diplomatie",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 24
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-25": [
+    {
+      "label": "Journée des gens de mer",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 25
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-27": [
+    {
+      "label": "Journée internationale des personnes sourdaveugles",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 27
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée des micro-, petites et moyennes entreprises",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 27
+      },
+      "source": "ONU"
+    }
+  ],
+  "06-29": [
+    {
+      "label": "Journée internationale des tropiques",
+      "rule": {
+        "type": "fixed",
+        "month": 6,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-07": [
+    {
+      "label": "Journée mondiale de la langue kiswahili",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 7
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-12": [
+    {
+      "label": "Journée internationale de la lutte contre les tempêtes de sable et de poussière",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 12
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de l’espoir",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-15": [
+    {
+      "label": "Journée mondiale des compétences des jeunes",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-20": [
+    {
+      "label": "Journée internationale de la Lune",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 20
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale du jeu d'échecs",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "07-25": [
+    {
+      "label": "Journée internationale pour le bien-être des juges",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 25
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale des femmes et des filles d’ascendance africaine",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 25
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de prévention de la noyade",
+      "rule": {
+        "type": "fixed",
+        "month": 7,
+        "day": 25
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-01": [
+    {
+      "label": "Semaine mondiale de l'allaitement maternel",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-06": [
+    {
+      "label": "Journée internationale de sensibilisation aux besoins et enjeux de développement propres aux pays en développement sans littoral",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 6
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-11": [
+    {
+      "label": "Journée mondiale du steel pan",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 11
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-21": [
+    {
+      "label": "Journée internationale du souvenir, en hommage aux victimes du terrorisme",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-29": [
+    {
+      "label": "Journée internationale contre les essais nucléaires",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "08-31": [
+    {
+      "label": "Journée internationale des personnes d’ascendance africaine",
+      "rule": {
+        "type": "fixed",
+        "month": 8,
+        "day": 31
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-05": [
+    {
+      "label": "Journée internationale de la charité",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-07": [
+    {
+      "label": "Journée internationale de la coopération policière",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 7
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de l’air pur pour des ciels bleus",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 7
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-15": [
+    {
+      "label": "Journée internationale de la démocratie",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-17": [
+    {
+      "label": "Journée mondiale de la sécurité des patients",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 17
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-18": [
+    {
+      "label": "Journée internationale de l’égalité de rémunération",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 18
+      },
+      "source": "ONU"
+    }
+  ],
+  "09-29": [
+    {
+      "label": "Journée internationale de sensibilisation aux pertes et gaspillages de nourriture",
+      "rule": {
+        "type": "fixed",
+        "month": 9,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-01": [
+    {
+      "label": "Journée internationale pour les personnes âgées",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-29": [
+    {
+      "label": "Journée internationale des soins et de l’assistance",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 29
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-07": [
+    {
+      "label": "Journée mondiale de l'habitat",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 7
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale du coton",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 7
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-09": [
+    {
+      "label": "Journée mondiale de la poste",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 9
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-13": [
+    {
+      "label": "Journée internationale pour la réduction des risques de catastrophes",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 13
+      },
+      "source": "ONU"
+    }
+  ],
+  "10-27": [
+    {
+      "label": "Journée mondiale du patrimoine audiovisuel",
+      "rule": {
+        "type": "fixed",
+        "month": 10,
+        "day": 27
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-05": [
+    {
+      "label": "Journée mondiale de sensibilisation aux tsunamis",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-06": [
+    {
+      "label": "Journée internationale pour la prévention de l'exploitation de l'environnement en temps de guerre et de conflit armé",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 6
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-10": [
+    {
+      "label": "Semaine mondiale de la science au service de la paix et du développement",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 10
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-18": [
+    {
+      "label": "Semaine mondiale pour un bon usage des antibiotiques, 13-19 novembre [OMS]",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 18
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale pour la prévention et la guérison de l’exploitation, des atteintes et des violences sexuelles visant les enfants",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 18
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-15": [
+    {
+      "label": "Journée internationale de la prévention de toutes les formes de criminalité transnationale organisée et de la lutte contre ce fléau",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 15
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-21": [
+    {
+      "label": "Journée mondiale de la philosophie",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la télévision",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-24": [
+    {
+      "label": "Journée mondiale des jumeaux siamois",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 24
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-26": [
+    {
+      "label": "Journée mondiale des transports durables",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 26
+      },
+      "source": "ONU"
+    }
+  ],
+  "11-30": [
+    {
+      "label": "Journée du souvenir dédiée à toutes les victimes de la guerre chimique",
+      "rule": {
+        "type": "fixed",
+        "month": 11,
+        "day": 30
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-01": [
+    {
+      "label": "Journée mondiale de lutte contre le sida",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 1
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-02": [
+    {
+      "label": "Journée internationale pour l'abolition de l'esclavage",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 2
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-04": [
+    {
+      "label": "Journée internationale des banques",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 4
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-05": [
+    {
+      "label": "Journée internationale des volontaires",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 5
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale des sols",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 5
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-11": [
+    {
+      "label": "Journée internationale de la montagne",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 11
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-12": [
+    {
+      "label": "Journée internationale de la couverture sanitaire universelle",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 12
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée internationale de la neutralité",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 12
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-14": [
+    {
+      "label": "Journée internationale contre le colonialisme sous toutes ses formes et dans toutes ses manifestations",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 14
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-20": [
+    {
+      "label": "Journée internationale de la solidarité humaine",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 20
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-21": [
+    {
+      "label": "Journée mondiale du basket-ball",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 21
+      },
+      "source": "ONU"
+    },
+    {
+      "label": "Journée mondiale de la méditation",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 21
+      },
+      "source": "ONU"
+    }
+  ],
+  "12-27": [
+    {
+      "label": "Journée internationale de la préparation aux épidémies",
+      "rule": {
+        "type": "fixed",
+        "month": 12,
+        "day": 27
+      },
+      "source": "ONU"
+    }
+  ]
+}

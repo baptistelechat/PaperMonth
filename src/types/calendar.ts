@@ -1,13 +1,40 @@
 import { WidgetConfig } from "./widgets";
 
+export type TitleFormat =
+  | "full"
+  | "uppercase"
+  | "mm/yy"
+  | "mm/yyyy"
+  | "MMM/YYYY"
+  | "MMM/YY"
+  | "Month";
+
+export type SchoolZone =
+  | "Zone A"
+  | "Zone B"
+  | "Zone C"
+  | "Corse"
+  | "Guadeloupe"
+  | "Guyane"
+  | "Martinique"
+  | "Mayotte"
+  | "Nouvelle Calédonie"
+  | "Polynésie"
+  | "Réunion"
+  | "Saint Pierre et Miquelon"
+  | "Wallis et Futuna";
+
 export interface CalendarConfig {
   month: number; // 0-11
   year: number;
   weekStart: "monday" | "sunday";
-  titleFormat: "full" | "numeric" | "uppercase" | "abbreviated";
+  titleFormat: TitleFormat;
   showWeekends: boolean;
   showHolidays: boolean;
-  accentColor: string;
+  showHolidayNames: boolean;
+  showSchoolHolidays: boolean;
+  showWorldDays: boolean; // Add this
+  schoolZone: SchoolZone;
 }
 
 export interface BackgroundConfig {
@@ -15,11 +42,13 @@ export interface BackgroundConfig {
   gradient?: string; // Tailwind class or CSS gradient
   imageUrl?: string;
   overlayOpacity: number; // 0-1
+  textColor: "light" | "dark";
 }
 
 export interface TypographyConfig {
   fontFamily: string;
   fontSize: "sm" | "md" | "lg";
+  applyToAll: boolean;
 }
 
 export interface WallpaperConfig {

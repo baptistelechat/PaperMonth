@@ -1,7 +1,13 @@
-import { create } from 'zustand';
-import { WallpaperConfig, CalendarConfig, BackgroundConfig, TypographyConfig } from '@/types/calendar';
-import { WidgetConfig } from '@/types/widgets';
-import { GRADIENT_PRESETS } from '@/utils/gradients';
+import {
+  BackgroundConfig,
+  CalendarConfig,
+  TypographyConfig,
+  WallpaperConfig,
+} from "@/types/calendar";
+import { WidgetConfig } from "@/types/widgets";
+import { FONT_PRESETS } from "@/utils/fonts";
+import { GRADIENT_PRESETS } from "@/utils/gradients";
+import { create } from "zustand";
 
 interface WallpaperStore {
   config: WallpaperConfig;
@@ -12,9 +18,10 @@ interface WallpaperStore {
   updateWidget: (id: string, updates: Partial<WidgetConfig>) => void;
   removeWidget: (id: string) => void;
   resetConfig: () => void;
+  randomizeConfig: () => void;
 }
 
-const DEFAULT_CONFIG: WallpaperConfig = {
+export const getInitialConfig = (): WallpaperConfig => ({
   calendar: {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
@@ -22,22 +29,27 @@ const DEFAULT_CONFIG: WallpaperConfig = {
     titleFormat: "full",
     showWeekends: true,
     showHolidays: true,
-    accentColor: "blue-500", // Tailwind color
+    showHolidayNames: false,
+    showSchoolHolidays: false,
+    showWorldDays: true,
+    schoolZone: "Zone A",
   },
   background: {
     type: "gradient",
-    gradient: GRADIENT_PRESETS[0].className,
+    gradient: GRADIENT_PRESETS[17].className,
     overlayOpacity: 0.1,
+    textColor: "light",
   },
   typography: {
     fontFamily: "Inter",
     fontSize: "md",
+    applyToAll: true,
   },
   widgets: [],
-};
+});
 
 export const useWallpaperStore = create<WallpaperStore>((set) => ({
-  config: DEFAULT_CONFIG,
+  config: getInitialConfig(),
   setCalendarConfig: (updates) =>
     set((state) => ({
       config: {
@@ -82,5 +94,32 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
         widgets: state.config.widgets.filter((w) => w.id !== id),
       },
     })),
-  resetConfig: () => set({ config: DEFAULT_CONFIG }),
+  resetConfig: () => set({ config: getInitialConfig() }),
+  randomizeConfig: () => {
+    const randomGradient =
+      GRADIENT_PRESETS[Math.floor(Math.random() * GRADIENT_PRESETS.length)];
+    const randomFont =
+      FONT_PRESETS[Math.floor(Math.random() * FONT_PRESETS.length)];
+    const randomTextColor = Math.random() > 0.5 ? "light" : "dark";
+    const randomOpacity = Math.round(Math.random() * 10) / 10;
+    const randomApplyToAll = Math.random() > 0.5;
+
+    set((state) => ({
+      config: {
+        ...state.config,
+        background: {
+          ...state.config.background,
+          type: "gradient",
+          gradient: randomGradient.className,
+          textColor: randomTextColor,
+          overlayOpacity: randomOpacity,
+        },
+        typography: {
+          ...state.config.typography,
+          fontFamily: randomFont.name,
+          applyToAll: randomApplyToAll,
+        },
+      },
+    }));
+  },
 }));

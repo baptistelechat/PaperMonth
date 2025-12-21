@@ -3,10 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { WallpaperCanvas } from "@/components/WallpaperCanvas";
 import { useExport } from "@/hooks/useExport";
-import {
-  getInitialConfig,
-  useWallpaperStore,
-} from "@/hooks/useWallpaperStore";
+import { getInitialConfig, useWallpaperStore } from "@/hooks/useWallpaperStore";
 import {
   Calendar as CalendarIcon,
   ChevronLeft,
@@ -199,7 +196,7 @@ export const Generator: React.FC = () => {
             }}
             className="transition-transform duration-200 ease-out"
           >
-            <WallpaperCanvas ref={canvasRef} />
+            <WallpaperCanvas ref={canvasRef} width={1920} height={1080} />
           </div>
         </div>
 

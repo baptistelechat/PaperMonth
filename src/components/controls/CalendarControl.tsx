@@ -13,9 +13,13 @@ import { Switch } from "@/components/ui/switch";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { SchoolZone, TitleFormat } from "@/types/calendar";
 import { formatMonthTitle } from "@/utils/dates";
-import React from "react";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { CircleHelp } from "lucide-react";
+import React from "react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
 
 const ACADEMY_ZONES = {
   "Zone A": [
@@ -147,6 +151,23 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
+        {calendar.showHolidays && (
+          <div className="flex items-center justify-between">
+          <Label
+            className="text-sm cursor-pointer"
+            htmlFor="show-holiday-names"
+          >
+            Afficher le noms des jours fériés
+          </Label>
+          <Switch
+            id="show-holiday-names"
+            checked={calendar.showHolidayNames}
+            onCheckedChange={(checked) =>
+              setCalendarConfig({ showHolidayNames: checked })
+            }
+          />
+        </div>)}
+
         <div className="flex items-center justify-between">
           <Label className="text-sm cursor-pointer" htmlFor="show-world-days">
             Journées Mondiales
@@ -176,7 +197,7 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-          {calendar.showSchoolHolidays && (
+        {calendar.showSchoolHolidays && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Label className="text-sm">Zone scolaire</Label>
@@ -188,16 +209,18 @@ export const CalendarControl: React.FC = () => {
                   <div className="space-y-4">
                     <h4 className="font-semibold text-sm">Zones Académiques</h4>
                     <div className="grid gap-3">
-                      {Object.entries(ACADEMY_ZONES).map(([zone, academies]) => (
-                        <div key={zone} className="space-y-1">
-                          <p className="text-sm font-medium text-primary">
-                            {zone}
-                          </p>
-                          <p className="text-xs text-muted-foreground leading-snug">
-                            {academies.join(", ")}
-                          </p>
-                        </div>
-                      ))}
+                      {Object.entries(ACADEMY_ZONES).map(
+                        ([zone, academies]) => (
+                          <div key={zone} className="space-y-1">
+                            <p className="text-sm font-medium text-primary">
+                              {zone}
+                            </p>
+                            <p className="text-xs text-muted-foreground leading-snug">
+                              {academies.join(", ")}
+                            </p>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
                 </HoverCardContent>
@@ -243,22 +266,6 @@ export const CalendarControl: React.FC = () => {
             </Select>
           </div>
         )}
-
-        <div className="flex items-center justify-between">
-          <Label
-            className="text-sm cursor-pointer"
-            htmlFor="show-holiday-names"
-          >
-            Afficher le noms des dates
-          </Label>
-          <Switch
-            id="show-holiday-names"
-            checked={calendar.showHolidayNames}
-            onCheckedChange={(checked) =>
-              setCalendarConfig({ showHolidayNames: checked })
-            }
-          />
-        </div>
       </div>
     </section>
   );

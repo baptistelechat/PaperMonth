@@ -136,7 +136,10 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
           }
 
           // Determine Content
-          const showName = showHolidayNames && events.length === 1;
+          const showName =
+            showHolidayNames &&
+            events.length === 1 &&
+            events[0].type === "holiday";
           const showDots = events.length > 0 && !showName;
 
           return (

@@ -117,6 +117,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
           const schoolHoliday = getSchoolHoliday(day);
 
           const hasPublicHoliday = events.some((e) => e.type === "holiday");
+          const hasWorldDay = events.some((e) => e.type === "worldDay");
 
           // Determine Background Class
           let bgClass = "";
@@ -140,7 +141,14 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
             showHolidayNames &&
             events.length === 1 &&
             events[0].type === "holiday";
-          const showDots = events.length > 0 && !showName;
+
+          const dotEvents = events.filter((e) => e.type !== "worldDay");
+          const showDots = dotEvents.length > 0 && !showName;
+
+          const worldDayTitle = events
+            .filter((e) => e.type === "worldDay")
+            .map((e) => e.label)
+            .join("\n");
 
           return (
             <div
@@ -153,7 +161,13 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
               )}
             >
               <span
-                className={cn("text-lg leading-none", showName && "mb-0.5")}
+                className={cn(
+                  "text-lg leading-none",
+                  showName && "mb-0.5",
+                  hasWorldDay &&
+                    "underline decoration-2 underline-offset-8 decoration-white"
+                )}
+                title={hasWorldDay ? worldDayTitle : undefined}
               >
                 {day}
               </span>
@@ -166,7 +180,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
 
               {showDots && (
                 <div className="absolute top-1 right-1 flex gap-0.5">
-                  {events.map((e, idx) => (
+                  {dotEvents.map((e, idx) => (
                     <div
                       key={idx}
                       className={cn(

@@ -5,6 +5,7 @@ import {
   WallpaperConfig,
 } from "@/types/calendar";
 import { WidgetConfig } from "@/types/widgets";
+import { FONT_PRESETS } from "@/utils/fonts";
 import { GRADIENT_PRESETS } from "@/utils/gradients";
 import { create } from "zustand";
 
@@ -17,9 +18,10 @@ interface WallpaperStore {
   updateWidget: (id: string, updates: Partial<WidgetConfig>) => void;
   removeWidget: (id: string) => void;
   resetConfig: () => void;
+  randomizeConfig: () => void;
 }
 
-const getInitialConfig = (): WallpaperConfig => ({
+export const getInitialConfig = (): WallpaperConfig => ({
   calendar: {
     month: new Date().getMonth(),
     year: new Date().getFullYear(),
@@ -29,7 +31,7 @@ const getInitialConfig = (): WallpaperConfig => ({
     showHolidays: true,
     showHolidayNames: false,
     showSchoolHolidays: false,
-    showWorldDays: true, // Default to true or false? Let's say true to show off the feature
+    showWorldDays: true,
     schoolZone: "Zone A",
   },
   background: {
@@ -92,4 +94,25 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       },
     })),
   resetConfig: () => set({ config: getInitialConfig() }),
+  randomizeConfig: () => {
+    const randomGradient =
+      GRADIENT_PRESETS[Math.floor(Math.random() * GRADIENT_PRESETS.length)];
+    const randomFont =
+      FONT_PRESETS[Math.floor(Math.random() * FONT_PRESETS.length)];
+
+    set((state) => ({
+      config: {
+        ...state.config,
+        background: {
+          ...state.config.background,
+          type: "gradient",
+          gradient: randomGradient.className,
+        },
+        typography: {
+          ...state.config.typography,
+          fontFamily: randomFont.name,
+        },
+      },
+    }));
+  },
 }));

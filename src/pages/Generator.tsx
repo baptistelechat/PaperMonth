@@ -1,18 +1,50 @@
 import { ControlPanel } from "@/components/ControlPanel";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { WallpaperCanvas } from "@/components/WallpaperCanvas";
 import { useExport } from "@/hooks/useExport";
-import { useWallpaperStore } from "@/hooks/useWallpaperStore";
-import { ChevronLeft, ChevronRight, Download } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import {
+  getInitialConfig,
+  useWallpaperStore,
+} from "@/hooks/useWallpaperStore";
+import {
+  Calendar as CalendarIcon,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  RotateCcw,
+  Shuffle,
+} from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 export const Generator: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
   const { exportWallpaper } = useExport();
-  const { config, setCalendarConfig } = useWallpaperStore();
+  const { config, setCalendarConfig, resetConfig, randomizeConfig } =
+    useWallpaperStore();
   const { calendar } = config;
+
+  // Determine if current view is current date
+  const isCurrentDate = useMemo(() => {
+    const now = new Date();
+    return (
+      calendar.month === now.getMonth() && calendar.year === now.getFullYear()
+    );
+  }, [calendar.month, calendar.year]);
+
+  // Determine if config is default (excluding widgets potentially, but here checking full equality)
+  const isDefaultConfig = useMemo(() => {
+    // We compare with a fresh initial config, but we need to match the date logic of getInitialConfig
+    // which uses new Date(). So if we are on current date + default styles, it should be true.
+    const initial = getInitialConfig();
+
+    // Since getInitialConfig() calls new Date() inside, it matches the "current date" logic.
+    // However, we need to ensure we are comparing values correctly.
+    // JSON.stringify is a simple way to compare deep objects for this size.
+    return JSON.stringify(config) === JSON.stringify(initial);
+  }, [config]);
 
   // Navigation handlers
   const handlePrevMonth = () => {
@@ -35,6 +67,11 @@ export const Generator: React.FC = () => {
       newYear += 1;
     }
     setCalendarConfig({ month: newMonth, year: newYear });
+  };
+
+  const handleCurrentMonth = () => {
+    const now = new Date();
+    setCalendarConfig({ month: now.getMonth(), year: now.getFullYear() });
   };
 
   // Auto-scale logic
@@ -98,14 +135,45 @@ export const Generator: React.FC = () => {
             </Button>
           </div>
 
-          <Button
-            onClick={handleExport}
-            className="flex items-center gap-2"
-            variant="secondary"
-          >
-            <Download className="w-4 h-4" />
-            Exporter PNG
-          </Button>
+          <div className="flex items-center gap-2">
+            <ButtonGroup>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleCurrentMonth}
+                title="Date courante"
+                disabled={isCurrentDate}
+              >
+                <CalendarIcon className="size-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={randomizeConfig}
+                title="Aléatoire"
+              >
+                <Shuffle className="size-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={resetConfig}
+                title="Réinitialiser"
+                disabled={isDefaultConfig}
+              >
+                <RotateCcw className="size-4" />
+              </Button>
+            </ButtonGroup>
+
+            <Button
+              onClick={handleExport}
+              className="flex items-center gap-2"
+              variant="secondary"
+            >
+              <Download className="w-4 h-4" />
+              Exporter PNG
+            </Button>
+          </div>
         </header>
 
         {/* Canvas Preview Area */}

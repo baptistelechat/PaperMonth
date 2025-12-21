@@ -104,6 +104,15 @@ export const CalendarControl: React.FC = () => {
       .sort((a, b) => a.date.localeCompare(b.date));
   }, [calendar.month, calendar.year]);
 
+  const holidaysInMonth = React.useMemo(() => {
+    if (!holidays) return [];
+    const monthPrefix = `${calendar.year}-${String(calendar.month + 1).padStart(
+      2,
+      "0"
+    )}`;
+    return holidays.filter((h) => h.date.startsWith(monthPrefix));
+  }, [holidays, calendar.month, calendar.year]);
+
   return (
     <section className="space-y-4">
       <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
@@ -192,9 +201,46 @@ export const CalendarControl: React.FC = () => {
 
         {hasHolidaysInMonth && (
           <div className="flex items-center justify-between">
-            <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
-              Jours fériés
-            </Label>
+            <div className="flex items-center gap-2">
+              <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
+                Jours fériés
+              </Label>
+              {holidaysInMonth.length > 0 && (
+                <HoverCard>
+                  <HoverCardTrigger asChild>
+                    <CircleHelp className="size-4 text-muted-foreground cursor-help" />
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-80" side="right" align="start">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-sm">
+                        Jours fériés du mois{" "}
+                        <span className="text-muted-foreground font-mono shrink-0">
+                          ({holidaysInMonth.length})
+                        </span>
+                      </h4>
+                        <div className="grid gap-2">
+                          {holidaysInMonth.map((day, index) => (
+                            <div
+                              key={`holiday-${day.date}-${index}`}
+                              className="flex gap-2 text-sm"
+                            >
+                              <span className="text-muted-foreground font-mono shrink-0">
+                                {new Date(day.date)
+                                  .getDate()
+                                  .toString()
+                                  .padStart(2, "0")}
+                              </span>
+                              <span className="text-primary leading-snug">
+                                {day.localName}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+              )}
+            </div>
             <Switch
               id="show-holidays"
               checked={calendar.showHolidays}

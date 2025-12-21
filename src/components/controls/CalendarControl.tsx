@@ -20,6 +20,7 @@ import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { SchoolZone, TitleFormat } from "@/types/calendar";
 import { formatMonthTitle } from "@/utils/dates";
 import { getWorldDaysForYear } from "@/utils/worldDays";
+import { AnimatePresence, motion } from "framer-motion";
 import { CircleHelp } from "lucide-react";
 import React from "react";
 import { ScrollArea } from "../ui/scroll-area";
@@ -209,106 +210,133 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-        {hasHolidaysInMonth && (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Label className="text-sm cursor-pointer" htmlFor="show-holidays">
-                Jours fériés & Fêtes
-              </Label>
-              {holidaysInMonth.length > 0 && (
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <CircleHelp className="size-4 text-muted-foreground cursor-help" />
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-80" side="right" align="start">
-                    <div className="space-y-4">
-                      <h4 className="font-semibold text-sm">
-                        Jours fériés & Fêtes du mois{" "}
-                        <span className="text-muted-foreground font-mono shrink-0">
-                          ({holidaysInMonth.length})
-                        </span>
-                      </h4>
-                        <div className="space-y-6">
-                          {publicHolidays.length > 0 && (
-                            <div className="grid gap-2">
-                              <h5 className="font-semibold text-xs text-muted-foreground mb-1">
-                                Jours fériés ({publicHolidays.length})
-                              </h5>
-                              {publicHolidays.map((day, index) => (
-                                <div
-                                  key={`holiday-${day.date}-${index}`}
-                                  className="flex gap-2 text-sm"
-                                >
-                                  <span className="text-muted-foreground font-mono shrink-0">
-                                    {new Date(day.date)
-                                      .getDate()
-                                      .toString()
-                                      .padStart(2, "0")}
-                                  </span>
-                                  <span className="text-primary leading-snug">
-                                    {day.localName}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                          {observances.length > 0 && (
-                            <div className="grid gap-2">
-                              <h5 className="font-semibold text-xs text-muted-foreground mb-1">
-                                Fêtes et Événements ({observances.length})
-                              </h5>
-                              {observances.map((day, index) => (
-                                <div
-                                  key={`observance-${day.date}-${index}`}
-                                  className="flex gap-2 text-sm"
-                                >
-                                  <span className="text-muted-foreground font-mono shrink-0">
-                                    {new Date(day.date)
-                                      .getDate()
-                                      .toString()
-                                      .padStart(2, "0")}
-                                  </span>
-                                  <span className="text-primary leading-snug">
-                                    {day.localName}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-              )}
-            </div>
-            <Switch
-              id="show-holidays"
-              checked={calendar.showHolidays}
-              onCheckedChange={(checked) =>
-                setCalendarConfig({ showHolidays: checked })
-              }
-            />
-          </div>
-        )}
-
-        {calendar.showHolidays && hasHolidaysInMonth && (
-          <div className="flex items-center justify-between">
-            <Label
-              className="text-sm cursor-pointer"
-              htmlFor="show-holiday-names"
+        <AnimatePresence>
+          {hasHolidaysInMonth && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
             >
-              Afficher le noms des jours fériés et fêtes
-            </Label>
-            <Switch
-              id="show-holiday-names"
-              checked={calendar.showHolidayNames}
-              onCheckedChange={(checked) =>
-                setCalendarConfig({ showHolidayNames: checked })
-              }
-            />
-          </div>
-        )}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Label
+                    className="text-sm cursor-pointer"
+                    htmlFor="show-holidays"
+                  >
+                    Jours fériés & Fêtes
+                  </Label>
+                  {holidaysInMonth.length > 0 && (
+                    <HoverCard>
+                      <HoverCardTrigger asChild>
+                        <CircleHelp className="size-4 text-muted-foreground cursor-help" />
+                      </HoverCardTrigger>
+                      <HoverCardContent
+                        className="w-80"
+                        side="right"
+                        align="start"
+                      >
+                        <div className="space-y-4">
+                          <h4 className="font-semibold text-sm">
+                            Jours fériés & Fêtes du mois{" "}
+                            <span className="text-muted-foreground font-mono shrink-0">
+                              ({holidaysInMonth.length})
+                            </span>
+                          </h4>
+                          <div className="space-y-6">
+                            {publicHolidays.length > 0 && (
+                              <div className="grid gap-2">
+                                <h5 className="font-semibold text-xs text-muted-foreground mb-1">
+                                  Jours fériés ({publicHolidays.length})
+                                </h5>
+                                {publicHolidays.map((day, index) => (
+                                  <div
+                                    key={`holiday-${day.date}-${index}`}
+                                    className="flex gap-2 text-sm"
+                                  >
+                                    <span className="text-muted-foreground font-mono shrink-0">
+                                      {new Date(day.date)
+                                        .getDate()
+                                        .toString()
+                                        .padStart(2, "0")}
+                                    </span>
+                                    <span className="text-primary leading-snug">
+                                      {day.localName}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {observances.length > 0 && (
+                              <div className="grid gap-2">
+                                <h5 className="font-semibold text-xs text-muted-foreground mb-1">
+                                  Fêtes et Événements ({observances.length})
+                                </h5>
+                                {observances.map((day, index) => (
+                                  <div
+                                    key={`observance-${day.date}-${index}`}
+                                    className="flex gap-2 text-sm"
+                                  >
+                                    <span className="text-muted-foreground font-mono shrink-0">
+                                      {new Date(day.date)
+                                        .getDate()
+                                        .toString()
+                                        .padStart(2, "0")}
+                                    </span>
+                                    <span className="text-primary leading-snug">
+                                      {day.localName}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
+                  )}
+                </div>
+                <Switch
+                  id="show-holidays"
+                  checked={calendar.showHolidays}
+                  onCheckedChange={(checked) =>
+                    setCalendarConfig({ showHolidays: checked })
+                  }
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {calendar.showHolidays && hasHolidaysInMonth && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="flex items-center justify-between">
+                <Label
+                  className="text-sm cursor-pointer"
+                  htmlFor="show-holiday-names"
+                >
+                  Afficher le noms des jours fériés et fêtes
+                </Label>
+                <Switch
+                  id="show-holiday-names"
+                  checked={calendar.showHolidayNames}
+                  onCheckedChange={(checked) =>
+                    setCalendarConfig({ showHolidayNames: checked })
+                  }
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -362,93 +390,119 @@ export const CalendarControl: React.FC = () => {
           />
         </div>
 
-        {hasSchoolHolidaysInMonth && (
-          <div className="flex items-center justify-between">
-            <Label
-              className="text-sm cursor-pointer"
-              htmlFor="show-school-holidays"
+        <AnimatePresence>
+          {hasSchoolHolidaysInMonth && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
             >
-              Vacances scolaires
-            </Label>
-            <Switch
-              id="show-school-holidays"
-              checked={calendar.showSchoolHolidays}
-              onCheckedChange={(checked) =>
-                setCalendarConfig({ showSchoolHolidays: checked })
-              }
-            />
-          </div>
-        )}
+              <div className="flex items-center justify-between">
+                <Label
+                  className="text-sm cursor-pointer"
+                  htmlFor="show-school-holidays"
+                >
+                  Vacances scolaires
+                </Label>
+                <Switch
+                  id="show-school-holidays"
+                  checked={calendar.showSchoolHolidays}
+                  onCheckedChange={(checked) =>
+                    setCalendarConfig({ showSchoolHolidays: checked })
+                  }
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {calendar.showSchoolHolidays && hasSchoolHolidaysInMonth && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Label className="text-sm">Zone scolaire</Label>
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <CircleHelp className="size-4 text-muted-foreground cursor-help" />
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80" side="right" align="start">
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-sm">Zones Académiques</h4>
-                    <div className="grid gap-3">
-                      {Object.entries(ACADEMY_ZONES).map(
-                        ([zone, academies]) => (
-                          <div key={zone} className="space-y-1">
-                            <p className="text-sm font-medium text-primary">
-                              {zone}
-                            </p>
-                            <p className="text-xs text-muted-foreground leading-snug">
-                              {academies.join(", ")}
-                            </p>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-            </div>
-            <Select
-              value={calendar.schoolZone}
-              onValueChange={(val: SchoolZone) =>
-                setCalendarConfig({ schoolZone: val })
-              }
+        <AnimatePresence>
+          {calendar.showSchoolHolidays && hasSchoolHolidaysInMonth && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
             >
-              <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Zones Académiques</SelectLabel>
-                  <SelectItem value="Zone A">Zone A</SelectItem>
-                  <SelectItem value="Zone B">Zone B</SelectItem>
-                  <SelectItem value="Zone C">Zone C</SelectItem>
-                </SelectGroup>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Label className="text-sm">Zone scolaire</Label>
+                  <HoverCard>
+                    <HoverCardTrigger asChild>
+                      <CircleHelp className="size-4 text-muted-foreground cursor-help" />
+                    </HoverCardTrigger>
+                    <HoverCardContent
+                      className="w-80"
+                      side="right"
+                      align="start"
+                    >
+                      <div className="space-y-4">
+                        <h4 className="font-semibold text-sm">
+                          Zones Académiques
+                        </h4>
+                        <div className="grid gap-3">
+                          {Object.entries(ACADEMY_ZONES).map(
+                            ([zone, academies]) => (
+                              <div key={zone} className="space-y-1">
+                                <p className="text-sm font-medium text-primary">
+                                  {zone}
+                                </p>
+                                <p className="text-xs text-muted-foreground leading-snug">
+                                  {academies.join(", ")}
+                                </p>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
+                </div>
+                <Select
+                  value={calendar.schoolZone}
+                  onValueChange={(val: SchoolZone) =>
+                    setCalendarConfig({ schoolZone: val })
+                  }
+                >
+                  <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Zones Académiques</SelectLabel>
+                      <SelectItem value="Zone A">Zone A</SelectItem>
+                      <SelectItem value="Zone B">Zone B</SelectItem>
+                      <SelectItem value="Zone C">Zone C</SelectItem>
+                    </SelectGroup>
 
-                <SelectGroup>
-                  <SelectLabel>Régions Spécifiques</SelectLabel>
-                  <SelectItem value="Corse">Corse</SelectItem>
-                  <SelectItem value="Guadeloupe">Guadeloupe</SelectItem>
-                  <SelectItem value="Guyane">Guyane</SelectItem>
-                  <SelectItem value="Martinique">Martinique</SelectItem>
-                  <SelectItem value="Mayotte">Mayotte</SelectItem>
-                  <SelectItem value="Nouvelle Calédonie">
-                    Nouvelle Calédonie
-                  </SelectItem>
-                  <SelectItem value="Polynésie">Polynésie</SelectItem>
-                  <SelectItem value="Réunion">Réunion</SelectItem>
-                  <SelectItem value="Saint Pierre et Miquelon">
-                    Saint Pierre et Miquelon
-                  </SelectItem>
-                  <SelectItem value="Wallis et Futuna">
-                    Wallis et Futuna
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        )}
+                    <SelectGroup>
+                      <SelectLabel>Régions Spécifiques</SelectLabel>
+                      <SelectItem value="Corse">Corse</SelectItem>
+                      <SelectItem value="Guadeloupe">Guadeloupe</SelectItem>
+                      <SelectItem value="Guyane">Guyane</SelectItem>
+                      <SelectItem value="Martinique">Martinique</SelectItem>
+                      <SelectItem value="Mayotte">Mayotte</SelectItem>
+                      <SelectItem value="Nouvelle Calédonie">
+                        Nouvelle Calédonie
+                      </SelectItem>
+                      <SelectItem value="Polynésie">Polynésie</SelectItem>
+                      <SelectItem value="Réunion">Réunion</SelectItem>
+                      <SelectItem value="Saint Pierre et Miquelon">
+                        Saint Pierre et Miquelon
+                      </SelectItem>
+                      <SelectItem value="Wallis et Futuna">
+                        Wallis et Futuna
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

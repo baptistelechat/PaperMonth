@@ -3,8 +3,8 @@ import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { cn } from "@/lib/utils";
 import { getWorldDaysForYear } from "@/utils/worldDays";
 import React, { forwardRef, useMemo } from "react";
-import { CalendarGrid } from "./Calendar/CalendarGrid";
-import { CalendarHeader } from "./Calendar/CalendarHeader";
+import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
+import { CalendarHeader } from "./widgets/Calendar/CalendarHeader";
 
 // We use forwardRef to allow the parent to capture the canvas for export
 export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
@@ -70,7 +70,10 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
     >
       {/* Overlay */}
       <div
-        className={cn("absolute inset-0 pointer-events-none", themeClasses.overlay)}
+        className={cn(
+          "absolute inset-0 pointer-events-none",
+          themeClasses.overlay
+        )}
         style={{ opacity: background.overlayOpacity }}
       />
 

@@ -9,6 +9,7 @@ import {
 } from "@/utils/dates";
 import { WorldDayEvent } from "@/utils/worldDays";
 import React from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 interface CalendarGridProps {
   config: CalendarConfig;
@@ -102,119 +103,142 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
   };
 
   return (
-    <div className="w-full">
-      {/* Weekday Headers */}
-      <div className="grid grid-cols-7 mb-2">
-        {weekDays.map((day) => (
-          <div key={day} className="text-center text-sm font-medium opacity-70">
-            {day}
-          </div>
-        ))}
-      </div>
-
-      {/* Days Grid */}
-      <div className="grid grid-cols-7 gap-y-2 gap-x-1">
-        {blanks.map((_, i) => (
-          <div key={`blank-${i}`} className="h-10" />
-        ))}
-
-        {days.map((day, i) => {
-          const absoluteIndex = i + firstDay;
-          const isWknd = isWeekend(absoluteIndex);
-          const events = getEvents(day);
-          const schoolHoliday = getSchoolHoliday(day);
-
-          const hasPublicHoliday = events.some((e) => e.type === "holiday");
-          const hasObservance = events.some((e) => e.type === "observance");
-          const hasWorldDay = events.some((e) => e.type === "worldDay");
-
-          // Determine Background Class and Text Class
-          let bgClass = "";
-          let textColorClass = "text-white";
-          let textWeightClass = "";
-          let shadowClass = "";
-
-          // Base states (Weekend / School Holiday)
-          if (showWeekends && isWknd) {
-            bgClass = "bg-white/5";
-            textColorClass = "text-white/70";
-          } else if (schoolHoliday) {
-            bgClass = "bg-white/10";
-            textColorClass = "text-white";
-          }
-
-          // Overrides for Events
-          if (hasPublicHoliday) {
-            bgClass = "bg-white/20";
-            textColorClass = "text-white";
-            textWeightClass = "font-bold";
-            shadowClass = "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
-          } else if (hasObservance) {
-            textWeightClass = "font-medium";
-          }
-
-          const textClass = cn(textColorClass, textWeightClass);
-
-          // Determine Content
-          const showName =
-            showHolidayNames &&
-            events.length === 1 &&
-            (events[0].type === "holiday" || events[0].type === "observance");
-
-          const dotEvents = events.filter((e) => e.type !== "worldDay");
-          const showDots = dotEvents.length > 0 && !showName;
-
-          const worldDayTitle = events
-            .filter((e) => e.type === "worldDay")
-            .map((e) => e.label)
-            .join("\n");
-
-          return (
+    <TooltipProvider>
+      <div className="w-full">
+        {/* Weekday Headers */}
+        <div className="grid grid-cols-7 mb-2">
+          {weekDays.map((day) => (
             <div
               key={day}
-              className={cn(
-                "h-10 flex flex-col items-center justify-center relative rounded-md transition-colors",
-                bgClass,
-                textClass,
-                shadowClass
-              )}
+              className="text-center text-sm font-medium opacity-70"
             >
-              <span
-                className={cn(
-                  "text-lg leading-none",
-                  showName && "mb-0.5",
-                  hasWorldDay &&
-                    "underline decoration-2 underline-offset-8 decoration-current"
-                )}
-                title={hasWorldDay ? worldDayTitle : undefined}
-              >
-                {day}
-              </span>
-
-              {showName && (
-                <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1">
-                  {events[0].label}
-                </span>
-              )}
-
-              {showDots && (
-                <div className="absolute top-1 right-1 flex gap-0.5">
-                  {dotEvents.map((e, idx) => (
-                    <div
-                      key={idx}
-                      className={cn(
-                        "w-1.5 h-1.5 rounded-full shadow-sm",
-                        e.type === "holiday" ? "bg-white" : "bg-white/50"
-                      )}
-                      title={e.label}
-                    />
-                  ))}
-                </div>
-              )}
+              {day}
             </div>
-          );
-        })}
+          ))}
+        </div>
+
+        {/* Days Grid */}
+        <div className="grid grid-cols-7 gap-y-2 gap-x-1">
+          {blanks.map((_, i) => (
+            <div key={`blank-${i}`} className="h-10" />
+          ))}
+
+          {days.map((day, i) => {
+            const absoluteIndex = i + firstDay;
+            const isWknd = isWeekend(absoluteIndex);
+            const events = getEvents(day);
+            const schoolHoliday = getSchoolHoliday(day);
+
+            const hasPublicHoliday = events.some((e) => e.type === "holiday");
+            const hasObservance = events.some((e) => e.type === "observance");
+            const hasWorldDay = events.some((e) => e.type === "worldDay");
+
+            // Determine Background Class and Text Class
+            let bgClass = "";
+            let textColorClass = "text-white";
+            let textWeightClass = "";
+            let shadowClass = "";
+
+            // Base states (Weekend / School Holiday)
+            if (showWeekends && isWknd) {
+              bgClass = "bg-white/5";
+              textColorClass = "text-white/70";
+            } else if (schoolHoliday) {
+              bgClass = "bg-white/10";
+              textColorClass = "text-white";
+            }
+
+            // Overrides for Events
+            if (hasPublicHoliday) {
+              bgClass = "bg-white/20";
+              textColorClass = "text-white";
+              textWeightClass = "font-bold";
+              shadowClass = "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2)]";
+            } else if (hasObservance) {
+              textWeightClass = "font-medium";
+            }
+
+            const textClass = cn(textColorClass, textWeightClass);
+
+            // Determine Content
+            const showName =
+              showHolidayNames &&
+              events.length === 1 &&
+              (events[0].type === "holiday" || events[0].type === "observance");
+
+            const dotEvents = events.filter((e) => e.type !== "worldDay");
+            const showDots = dotEvents.length > 0 && !showName;
+
+            const cellContent = (
+              <div
+                className={cn(
+                  "h-10 flex flex-col items-center justify-center relative rounded-md transition-colors",
+                  bgClass,
+                  textClass,
+                  shadowClass,
+                  events.length > 0 && "cursor-help"
+                )}
+              >
+                <span
+                  className={cn(
+                    "text-lg leading-none",
+                    showName && "mb-0.5",
+                    hasWorldDay &&
+                      "underline decoration-2 underline-offset-8 decoration-current"
+                  )}
+                >
+                  {day}
+                </span>
+
+                {showName && (
+                  <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1">
+                    {events[0].label}
+                  </span>
+                )}
+
+                {showDots && (
+                  <div className="absolute top-1 right-1 flex gap-0.5">
+                    {dotEvents.map((e, idx) => (
+                      <div
+                        key={idx}
+                        className={cn(
+                          "w-1.5 h-1.5 rounded-full shadow-sm",
+                          e.type === "holiday" ? "bg-white" : "bg-white/50"
+                        )}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+
+            if (events.length > 0) {
+              return (
+                <Tooltip key={day}>
+                  <TooltipTrigger asChild>{cellContent}</TooltipTrigger>
+                  <TooltipContent>
+                    <div className="flex flex-col gap-1 text-xs">
+                      {events.map((e, idx) => (
+                        <div
+                          key={idx}
+                          className={cn(
+                            e.type === "holiday" && "text-red-400",
+                            e.type === "observance" && "text-violet-400"
+                          )}
+                        >
+                          {e.label}
+                        </div>
+                      ))}
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            }
+
+            return <React.Fragment key={day}>{cellContent}</React.Fragment>;
+          })}
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };

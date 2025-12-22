@@ -30,7 +30,7 @@ export const EventTooltip: React.FC<EventTooltipProps> = ({
     <Tooltip>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent
-        className={cn("max-w-[300px]", className)}
+        className={cn("max-w-75", className)}
         side={side}
         align={align}
       >
@@ -39,8 +39,9 @@ export const EventTooltip: React.FC<EventTooltipProps> = ({
             <div
               key={idx}
               className={cn(
-                e.type === "holiday" && "text-red-400",
-                e.type === "observance" && "text-violet-400"
+                e.type === "holiday" && "text-red-600",
+                e.type === "observance" && "text-violet-600",
+                e.type === "school-holiday" && "text-green-600"
               )}
             >
               {e.label}

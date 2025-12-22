@@ -1,4 +1,4 @@
-import { Holiday } from "@/hooks/useHolidays";
+import { Holiday, SchoolHoliday } from "@/hooks/useHolidays";
 import { formatEventLabel } from "@/utils/textFormatting";
 import { WorldDay } from "@/utils/worldDays";
 import React, { useMemo } from "react";
@@ -7,6 +7,7 @@ import { WidgetTitle } from "./WidgetTitle";
 
 interface KeyDatesWidgetProps {
   holidays: Holiday[];
+  schoolHolidays: SchoolHoliday[];
   worldDays: WorldDay[];
   currentMonth: number;
   currentYear: number;
@@ -19,12 +20,13 @@ interface EventItem {
   day: number;
   label: string;
   originalLabel: string;
-  type: "holiday" | "observance" | "world";
+  type: "holiday" | "observance" | "world" | "school-holiday";
   isWeek: boolean;
 }
 
 export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
   holidays,
+  schoolHolidays,
   worldDays,
   currentMonth,
   currentYear,
@@ -53,6 +55,51 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
       }
     });
 
+    // Filter and add school holidays
+    const monthStart = new Date(currentYear, currentMonth, 1);
+    const monthEnd = new Date(currentYear, currentMonth + 1, 0);
+    const addedSchoolHolidays = new Set<string>();
+
+    schoolHolidays.forEach((sh) => {
+      const startDate = new Date(sh.start_date);
+      // Adjust end date (dataset end date is return date, so holiday ends the day before)
+      const endDate = new Date(sh.end_date);
+      endDate.setDate(endDate.getDate() - 1);
+
+      const uniqueKey = `${sh.start_date}-${sh.end_date}-${sh.description}`;
+
+      // Check overlap and uniqueness
+      if (
+        startDate <= monthEnd &&
+        endDate >= monthStart &&
+        !addedSchoolHolidays.has(uniqueKey)
+      ) {
+        addedSchoolHolidays.add(uniqueKey);
+        const startStr = startDate.toLocaleDateString("fr-FR", {
+          day: "2-digit",
+          month: "2-digit",
+        });
+        const endStr = endDate.toLocaleDateString("fr-FR", {
+          day: "2-digit",
+          month: "2-digit",
+        });
+
+        // Determine sorting day: start of holiday or 1st of month
+        const sortDay = startDate < monthStart ? 1 : startDate.getDate();
+
+        items.push({
+          date: sh.start_date,
+          day: sortDay,
+          label: sh.description || "Vacances scolaires",
+          originalLabel: `${
+            sh.description || "Vacances scolaires"
+          } du ${startStr} au ${endStr}`,
+          type: "school-holiday",
+          isWeek: false,
+        });
+      }
+    });
+
     // Filter and add world days
     worldDays.forEach((w) => {
       if (w.date.startsWith(monthPrefix)) {
@@ -73,7 +120,7 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
     // We keep all items, the grid will handle the overflow if necessary
     // or we can adjust the grid layout dynamically
     return { items: sorted, count: sorted.length };
-  }, [holidays, worldDays, currentMonth, currentYear]);
+  }, [holidays, schoolHolidays, worldDays, currentMonth, currentYear]);
 
   const textClass = textColor === "dark" ? "text-black" : "text-white";
   const mutedClass = textColor === "dark" ? "text-black/50" : "text-white/50";
@@ -89,10 +136,7 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
 
   return (
     <div className="h-full flex flex-col">
-      <WidgetTitle
-        title="Dates clés"
-        textColor={textColor}
-      />
+      <WidgetTitle title="Dates clés" textColor={textColor} />
 
       <div className="flex-1 w-full">
         <div
@@ -114,12 +158,12 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
                   },
                 ]}
               >
-                <div className={`flex gap-2 items-baseline group cursor-help ${
-                      events.count > 18 ? "text-sm" : "text-lg"
-                    }`}>
-                  <span
-                    className={`font-mono font-bold shrink-0 ${textClass}`}
-                  >
+                <div
+                  className={`flex gap-2 items-baseline group cursor-help ${
+                    events.count > 9 ? "text-sm" : "text-lg"
+                  }`}
+                >
+                  <span className={`font-mono font-bold shrink-0 ${textClass}`}>
                     {event.day.toString().padStart(2, "0")}
                   </span>
                   <span
@@ -128,6 +172,8 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
                         ? `font-bold ${textClass}`
                         : event.type === "observance"
                         ? `font-medium italic ${textClass}`
+                        : event.type === "school-holiday"
+                        ? `font-medium ${textClass} opacity-90`
                         : mutedClass
                     } ${
                       event.isWeek ? "underline decoration-current" : ""
@@ -139,8 +185,8 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
               </EventTooltip>
             ))
           ) : (
-            <div className={`text-lg ${mutedClass}`}>
-              Aucune date à afficher ce mois-ci
+            <div className={`text-lg italic ${mutedClass}`}>
+              Aucune date clé ce mois-ci
             </div>
           )}
         </div>

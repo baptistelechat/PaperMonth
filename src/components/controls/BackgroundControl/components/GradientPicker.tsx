@@ -1,4 +1,5 @@
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
+import { cn } from "@/lib/utils";
 import { GRADIENT_PRESETS } from "@/utils/gradients";
 import React from "react";
 
@@ -14,13 +15,13 @@ export const GradientPicker: React.FC = () => {
         <button
           key={preset.id}
           onClick={() => setBackgroundConfig({ gradient: preset.className })}
-          className={`h-16 relative rounded-md ${
-            preset.className
-          } border transition-all overflow-hidden ${
+          className={cn(
+            "h-16 relative rounded-md border transition-all overflow-hidden",
+            preset.className,
             background.gradient === preset.className
               ? "ring-2 ring-white scale-105"
               : "border-transparent opacity-80 hover:opacity-100"
-          }`}
+          )}
           title={preset.name}
         >
           <div className="absolute bottom-0 right-0 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-tl-md">

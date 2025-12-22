@@ -51,9 +51,17 @@ export interface TypographyConfig {
   applyToAll: boolean;
 }
 
+import { Tip, TipCategory } from "@/data/tips";
+
+export interface TipsConfig {
+  currentTips: Tip[];
+  selectedCategories: TipCategory[];
+}
+
 export interface WallpaperConfig {
   calendar: CalendarConfig;
   background: BackgroundConfig;
   typography: TypographyConfig;
+  tips: TipsConfig;
   widgets: WidgetConfig[];
 }

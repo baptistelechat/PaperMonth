@@ -1,6 +1,7 @@
 import { BackgroundControl } from "@/components/controls/BackgroundControl";
 import { CalendarControl } from "@/components/controls/CalendarControl";
 import { DateControl } from "@/components/controls/DateControl";
+import { TipsControl } from "@/components/controls/TipsControl";
 import { TypographyControl } from "@/components/controls/TypographyControl";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -19,6 +20,8 @@ export const ControlPanel: React.FC = () => {
           <DateControl />
           <Separator />
           <CalendarControl />
+          <Separator />
+          <TipsControl />
           <Separator />
           <BackgroundControl />
           <Separator />

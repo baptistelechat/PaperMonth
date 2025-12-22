@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { CircleHelp } from "lucide-react";
 import React, { ReactNode } from "react";
 
@@ -50,7 +51,7 @@ export const ControlSelect: React.FC<ControlSelectProps> = ({
   const indentClass = indent ? "pl-4 border-l border-zinc-800 ml-1" : "";
 
   return (
-    <div className={`space-y-2 ${indentClass} ${className || ""}`}>
+    <div className={cn("space-y-2", indentClass, className)}>
       <div className="flex items-center gap-2">
         {label && <Label className="text-sm">{label}</Label>}
         {helpContent && (

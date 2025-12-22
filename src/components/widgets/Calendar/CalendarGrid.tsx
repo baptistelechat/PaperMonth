@@ -9,12 +9,8 @@ import {
 } from "@/utils/dates";
 import { WorldDayEvent } from "@/utils/worldDays";
 import React from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../../ui/tooltip";
+import { TooltipProvider } from "../../ui/tooltip";
+import { EventTooltip } from "@/components/shared/EventTooltip";
 
 interface CalendarGridProps {
   config: CalendarConfig;
@@ -233,24 +229,9 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
 
             if (events.length > 0) {
               return (
-                <Tooltip key={day}>
-                  <TooltipTrigger asChild>{cellContent}</TooltipTrigger>
-                  <TooltipContent>
-                    <div className="flex flex-col gap-1 text-xs">
-                      {events.map((e, idx) => (
-                        <div
-                          key={idx}
-                          className={cn(
-                            e.type === "holiday" && "text-red-400",
-                            e.type === "observance" && "text-violet-400"
-                          )}
-                        >
-                          {e.label}
-                        </div>
-                      ))}
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
+                <EventTooltip key={day} events={events}>
+                  {cellContent}
+                </EventTooltip>
               );
             }
 

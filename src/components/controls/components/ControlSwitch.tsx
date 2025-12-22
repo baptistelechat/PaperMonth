@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/hover-card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 import { CircleHelp } from "lucide-react";
 import React, { ReactNode } from "react";
 
@@ -32,9 +33,11 @@ export const ControlSwitch: React.FC<ControlSwitchProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-between ${indentClass} ${
-        className || ""
-      }`}
+      className={cn(
+        "flex items-center justify-between",
+        indentClass,
+        className
+      )}
     >
       <div className="flex items-center gap-2">
         <Label className="text-sm cursor-pointer" htmlFor={switchId}>

@@ -1631,16 +1631,6 @@
   ],
   "09-WEEKDAY": [
     {
-      "label": "",
-      "rule": {
-        "type": "weekday-of-month",
-        "month": 9,
-        "weekday": 6,
-        "occurrence": 3
-      },
-      "source": "Wikipedia"
-    },
-    {
       "label": "Journée mondiale du nettoyage",
       "rule": {
         "type": "weekday-of-month",

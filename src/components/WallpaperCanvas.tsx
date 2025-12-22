@@ -1,10 +1,16 @@
 import { useHolidays } from "@/hooks/useHolidays";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { cn } from "@/lib/utils";
+import { formatMonthTitle } from "@/utils/dates";
 import { getWorldDaysForYear } from "@/utils/worldDays";
+import { Sparkles } from "lucide-react";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
-import { CalendarHeader } from "./widgets/Calendar/CalendarHeader";
+import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
+import { TipWidget } from "./widgets/TipWidget";
+import { WidgetContainer } from "./widgets/WidgetContainer";
+import { WidgetTitle } from "./widgets/WidgetTitle";
+import { ZoneWidget } from "./widgets/ZoneWidget";
 
 interface WallpaperCanvasProps {
   width?: number;
@@ -65,7 +71,7 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
         ref={ref}
         id="wallpaper-canvas"
         className={cn(
-          "relative overflow-hidden flex flex-col p-16 select-none",
+          "relative overflow-hidden flex flex-col p-16 pb-28 select-none",
           backgroundClass
         )}
         style={{
@@ -87,16 +93,21 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
         {/* Content Layer */}
         <div className="relative z-10 grid grid-cols-12 grid-rows-12 h-full w-full gap-4">
           {/* Calendar Widget */}
-          <div
-            className={cn(
-              "col-start-5 col-span-4 row-start-4 row-span-6 backdrop-blur-sm rounded-xl p-8 border flex flex-col shadow-2xl",
-              themeClasses.container
-            )}
+          <WidgetContainer
+            colStart={1}
+            colSpan={4}
+            rowStart={1}
+            rowSpan={6}
+            themeClasses={themeClasses}
           >
-            <CalendarHeader
-              config={calendar}
-              fontFamily={typography.fontFamily}
+            <WidgetTitle
+              title={formatMonthTitle(
+                calendar.month,
+                calendar.year,
+                calendar.titleFormat
+              )}
               textColor={textColor}
+              level="h1"
             />
             <CalendarGrid
               config={calendar}
@@ -105,40 +116,65 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
               worldDays={worldDays}
               textColor={textColor}
             />
-          </div>
+          </WidgetContainer>
 
           {/* Other Widgets */}
           {widgets
             .filter((w) => w.visible)
             .map((widget) => (
-              <div
+              <WidgetContainer
                 key={widget.id}
-                className={cn(
-                  "backdrop-blur-sm rounded-xl border flex items-center justify-center",
-                  themeClasses.container,
-                  themeClasses.text
-                )}
-                style={{
-                  gridColumnStart: widget.colStart,
-                  gridColumnEnd: `span ${widget.colSpan}`,
-                  gridRowStart: widget.rowStart,
-                  gridRowEnd: `span ${widget.rowSpan}`,
-                  opacity: widget.opacity,
-                }}
+                colStart={widget.colStart}
+                colSpan={widget.colSpan}
+                rowStart={widget.rowStart}
+                rowSpan={widget.rowSpan}
+                opacity={widget.opacity}
+                themeClasses={themeClasses}
               >
                 {/* Render widget content based on type */}
-                <span>Widget: {widget.type}</span>
-              </div>
+                {widget.type === "software" || widget.type === "folder" ? (
+                  <ZoneWidget
+                    title={
+                      widget.type === "software" ? "Logiciels" : "Dossiers"
+                    }
+                    fontFamily={
+                      typography.applyToAll ? typography.fontFamily : undefined
+                    }
+                    textColor={textColor}
+                  />
+                ) : widget.type === "keyDates" ? (
+                  <KeyDatesWidget
+                    holidays={calendar.showHolidays ? holidays : []}
+                    schoolHolidays={
+                      calendar.showSchoolHolidays ? schoolHolidays : []
+                    }
+                    worldDays={calendar.showWorldDays ? worldDays : []}
+                    currentMonth={calendar.month}
+                    currentYear={calendar.year}
+                    textColor={textColor}
+                  />
+                ) : widget.type === "tip" ? (
+                  <TipWidget
+                    fontFamily={
+                      typography.applyToAll ? typography.fontFamily : undefined
+                    }
+                    textColor={textColor}
+                  />
+                ) : (
+                  <span>Widget: {widget.type}</span>
+                )}
+              </WidgetContainer>
             ))}
         </div>
 
         {/* Watermark / Branding (Optional) */}
         <div
           className={cn(
-            "absolute bottom-8 right-8 font-light text-lg tracking-widest",
+            "absolute bottom-16 right-16 font-light text-lg tracking-widest flex gap-2 items-center",
             themeClasses.watermark
           )}
         >
+          <Sparkles className="size-6" />
           PAPERMONTH
         </div>
       </div>

@@ -24,7 +24,7 @@ export const GradientPicker: React.FC = () => {
           )}
           title={preset.name}
         >
-          <div className="absolute bottom-0 right-0 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-tl-md">
+          <div className="absolute right-0 bottom-0 rounded-tl-md bg-black/40 px-2 py-1 backdrop-blur-sm">
             <span className="text-[10px] font-medium text-white/90">
               {preset.name}
             </span>

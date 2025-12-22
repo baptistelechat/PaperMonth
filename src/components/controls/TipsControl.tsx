@@ -64,7 +64,7 @@ export const TipsControl: React.FC = () => {
                 />
                 <Label
                   htmlFor={`category-${category}`}
-                  className="text-xs font-normal cursor-pointer"
+                  className="cursor-pointer text-xs font-normal"
                 >
                   {category}
                 </Label>
@@ -79,7 +79,7 @@ export const TipsControl: React.FC = () => {
             onClick={handleRandomize}
             disabled={selectedCategories.length === 0}
             variant="outline"
-            className="w-full justify-start text-zinc-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full justify-start text-zinc-400 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Dices className="mr-2 h-4 w-4" />
             Nouveaux conseils
@@ -93,7 +93,7 @@ export const TipsControl: React.FC = () => {
               value={customTip}
               onChange={(e) => setCustomTip(e.target.value)}
               placeholder="Votre propre conseil..."
-              className="min-h-20 bg-zinc-950/50 border-zinc-800 focus:border-white/20"
+              className="min-h-20 border-zinc-800 bg-zinc-950/50 focus:border-white/20"
             />
             <Button
               onClick={handleAddCustomTip}

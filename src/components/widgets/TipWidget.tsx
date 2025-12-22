@@ -24,7 +24,7 @@ export const TipWidget: React.FC<TipWidgetProps> = ({
     .join(" • ");
 
   return (
-    <div className="h-full flex flex-col relative group">
+    <div className="group relative flex h-full flex-col">
       <WidgetTitle
         title="Conseils du mois"
         textColor={textColor}
@@ -32,7 +32,7 @@ export const TipWidget: React.FC<TipWidgetProps> = ({
         fontFamily={fontFamily}
       />
 
-      <div className="flex-1 flex flex-col justify-start">
+      <div className="flex flex-1 flex-col justify-start">
         <ul
           className={cn("list-none pl-0 space-y-4", textClass)}
           style={{ fontFamily }}
@@ -40,10 +40,10 @@ export const TipWidget: React.FC<TipWidgetProps> = ({
           {currentTips.map((tip, index) => (
             <li
               key={index}
-              className="flex flex-col gap-1 text-xl font-medium leading-relaxed"
+              className="flex flex-col gap-1 text-xl leading-relaxed font-medium"
             >
               <div className="flex items-start gap-2">
-                <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-current" />
                 <span>{tip.content}</span>
               </div>
             </li>

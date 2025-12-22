@@ -107,28 +107,28 @@ export const Generator: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
+    <div className="flex h-screen w-full overflow-hidden bg-black font-sans text-white">
       {/* Sidebar */}
       <ControlPanel />
 
       {/* Main Content */}
-      <div className="flex-1 min-w-0 flex flex-col relative bg-zinc-950">
+      <div className="relative flex min-w-0 flex-1 flex-col bg-zinc-950">
         {/* Header */}
-        <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-zinc-900/50 backdrop-blur-md">
+        <header className="flex h-16 items-center justify-between border-b border-white/10 bg-zinc-900/50 px-6 backdrop-blur-md">
           <div className="flex items-center gap-2">
             <img
               src="/icon.svg"
               alt="PaperMonth Logo"
-              className="w-8 h-8 rounded-md"
+              className="h-8 w-8 rounded-md"
             />
-            <h1 className="font-semibold tracking-tight text-lg">PaperMonth</h1>
+            <h1 className="text-lg font-semibold tracking-tight">PaperMonth</h1>
           </div>
 
-          <div className="flex items-center gap-2 bg-zinc-900 rounded-md border border-zinc-800 p-1">
+          <div className="flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 p-1">
             <Button variant="ghost" size="icon-sm" onClick={handlePrevMonth}>
               <ChevronLeft className="size-4" />
             </Button>
-            <div className="text-sm font-medium w-32 text-center select-none capitalize">
+            <div className="w-32 text-center text-sm font-medium capitalize select-none">
               {new Date(calendar.year, calendar.month).toLocaleDateString(
                 "fr-FR",
                 { month: "long", year: "numeric" }
@@ -174,7 +174,7 @@ export const Generator: React.FC = () => {
               className="flex items-center gap-2"
               variant="secondary"
             >
-              <Download className="w-4 h-4" />
+              <Download className="h-4 w-4" />
               Exporter PNG
             </Button>
           </div>
@@ -183,7 +183,7 @@ export const Generator: React.FC = () => {
         {/* Canvas Preview Area */}
         <div
           ref={containerRef}
-          className="flex-1 flex items-center justify-center overflow-hidden bg-[url('/grid-pattern.svg')] bg-zinc-950 relative"
+          className="relative flex flex-1 items-center justify-center overflow-hidden bg-zinc-950 bg-[url('/grid-pattern.svg')]"
         >
           {/* Dotted Background (Simulated with CSS) */}
           <div
@@ -208,7 +208,7 @@ export const Generator: React.FC = () => {
         </div>
 
         {/* Zoom Info */}
-        <div className="absolute bottom-4 right-6 bg-zinc-900/80 backdrop-blur text-xs px-3 py-1.5 rounded-full border border-white/10 text-zinc-400">
+        <div className="absolute right-6 bottom-4 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur">
           Zoom: {Math.round(scale * 100)}%
         </div>
       </div>

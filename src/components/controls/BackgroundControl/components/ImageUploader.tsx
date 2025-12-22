@@ -24,20 +24,20 @@ export const ImageUploader: React.FC = () => {
 
   return (
     <div className="space-y-2">
-      <div className="relative border-2 border-dashed border-zinc-800 rounded-lg p-6 hover:bg-zinc-900 transition-colors cursor-pointer text-center group">
+      <div className="group relative cursor-pointer rounded-lg border-2 border-dashed border-zinc-800 p-6 text-center transition-colors hover:bg-zinc-900">
         <input
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
         />
-        <Upload className="w-8 h-8 mx-auto mb-3 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
-        <span className="text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">
+        <Upload className="mx-auto mb-3 h-8 w-8 text-zinc-600 transition-colors group-hover:text-zinc-400" />
+        <span className="text-xs text-zinc-500 transition-colors group-hover:text-zinc-300">
           Cliquez pour uploader une image
         </span>
       </div>
       {background.imageUrl && (
-        <div className="text-xs text-emerald-500 text-center font-medium">
+        <div className="text-center text-xs font-medium text-emerald-500">
           Image chargée avec succès
         </div>
       )}

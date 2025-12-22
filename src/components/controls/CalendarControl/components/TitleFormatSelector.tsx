@@ -24,7 +24,7 @@ export const TitleFormatSelector: React.FC = () => {
           setCalendarConfig({ titleFormat: val })
         }
       >
-        <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
+        <SelectTrigger className="w-full border-zinc-800 bg-zinc-900">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>

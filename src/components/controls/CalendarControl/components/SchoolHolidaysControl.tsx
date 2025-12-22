@@ -91,12 +91,12 @@ export const SchoolHolidaysControl: React.FC<SchoolHolidaysControlProps> = ({
 
   const helpContent = (
     <div className="space-y-4">
-      <h4 className="font-semibold text-sm">Zones Académiques</h4>
+      <h4 className="text-sm font-semibold">Zones Académiques</h4>
       <div className="grid gap-3">
         {Object.entries(ACADEMY_ZONES).map(([zone, academies]) => (
           <div key={zone} className="space-y-1">
-            <p className="text-sm font-medium text-primary">{zone}</p>
-            <p className="text-xs text-muted-foreground leading-snug">
+            <p className="text-primary text-sm font-medium">{zone}</p>
+            <p className="text-muted-foreground text-xs leading-snug">
               {academies.join(", ")}
             </p>
           </div>

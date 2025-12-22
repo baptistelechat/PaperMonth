@@ -40,13 +40,13 @@ export const ControlSwitch: React.FC<ControlSwitchProps> = ({
       )}
     >
       <div className="flex items-center gap-2">
-        <Label className="text-sm cursor-pointer" htmlFor={switchId}>
+        <Label className="cursor-pointer text-sm" htmlFor={switchId}>
           {label}
         </Label>
         {helpContent && (
           <HoverCard>
             <HoverCardTrigger asChild>
-              <CircleHelp className="size-4 text-muted-foreground cursor-help" />
+              <CircleHelp className="text-muted-foreground size-4 cursor-help" />
             </HoverCardTrigger>
             <HoverCardContent className="w-80" side="right" align="start">
               {helpContent}

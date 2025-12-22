@@ -13,9 +13,9 @@ export const ZoneWidget: React.FC<ZoneWidgetProps> = ({
   textColor,
 }) => {
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       <WidgetTitle title={title} fontFamily={fontFamily} textColor={textColor} />
-      <div className="flex-1 rounded-lg border-2 border-dashed border-current opacity-30 flex items-center justify-center">
+      <div className="flex flex-1 items-center justify-center rounded-lg border-2 border-dashed border-current opacity-30">
         {/* Placeholder for icons */}
       </div>
     </div>

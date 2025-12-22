@@ -136,12 +136,12 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
   // and implicit columns (created by grid-flow-col) are auto-sized.
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       <WidgetTitle title="Dates clés" textColor={textColor} />
 
-      <div className="flex-1 w-full">
+      <div className="w-full flex-1">
         <div
-          className="grid gap-x-6 gap-y-1 grid-flow-col h-full content-start text-sm"
+          className="grid h-full grid-flow-col content-start gap-x-6 gap-y-1 text-sm"
           style={{
             gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
             gridTemplateColumns: `repeat(${Math.max(2, cols)}, minmax(0, 1fr))`,

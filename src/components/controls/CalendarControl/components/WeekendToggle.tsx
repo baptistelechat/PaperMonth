@@ -9,7 +9,7 @@ export const WeekendToggle: React.FC = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <Label className="text-sm cursor-pointer" htmlFor="show-weekends">
+      <Label className="cursor-pointer text-sm" htmlFor="show-weekends">
         Afficher Week-ends
       </Label>
       <Switch

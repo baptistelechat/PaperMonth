@@ -110,7 +110,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
     <TooltipProvider>
       <div className="w-full">
         {/* Weekday Headers */}
-        <div className="grid grid-cols-7 mb-2">
+        <div className="mb-2 grid grid-cols-7">
           {weekDays.map((day) => (
             <div
               key={day}
@@ -125,7 +125,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
         </div>
 
         {/* Days Grid */}
-        <div className="grid grid-cols-7 gap-y-2 gap-x-1">
+        <div className="grid grid-cols-7 gap-x-1 gap-y-2">
           {blanks.map((_, i) => (
             <div key={`blank-${i}`} className="h-10" />
           ))}
@@ -200,7 +200,7 @@ export const CalendarGrid: React.FC<CalendarGridProps> = ({
                 </span>
 
                 {showName && (
-                  <span className="text-[0.6rem] leading-none opacity-80 truncate w-full text-center px-1">
+                  <span className="w-full truncate px-1 text-center text-[0.6rem] leading-none opacity-80">
                     {events[0].label}
                   </span>
                 )}

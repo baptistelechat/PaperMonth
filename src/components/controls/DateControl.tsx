@@ -36,7 +36,7 @@ export const DateControl: React.FC = () => {
             onChange={(e) =>
               setCalendarConfig({ year: parseInt(e.target.value) })
             }
-            className="bg-zinc-900 border-zinc-800"
+            className="border-zinc-800 bg-zinc-900"
           />
         </div>
       </div>

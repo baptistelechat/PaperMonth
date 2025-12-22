@@ -25,9 +25,9 @@ export const WorldDaysControl: React.FC = () => {
 
   const helpContent = (
     <div className="space-y-4">
-      <h4 className="font-semibold text-sm">
+      <h4 className="text-sm font-semibold">
         Journées Mondiales du mois{" "}
-        <span className="text-muted-foreground font-mono shrink-0">
+        <span className="text-muted-foreground shrink-0 font-mono">
           ({worldDaysInMonth.length})
         </span>
       </h4>
@@ -38,7 +38,7 @@ export const WorldDaysControl: React.FC = () => {
               key={`${day.date}-${index}`}
               className="flex gap-2 text-sm"
             >
-              <span className="text-muted-foreground font-mono shrink-0">
+              <span className="text-muted-foreground shrink-0 font-mono">
                 {new Date(day.date)
                   .getDate()
                   .toString()

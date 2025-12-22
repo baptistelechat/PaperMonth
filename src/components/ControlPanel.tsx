@@ -9,14 +9,14 @@ import React from "react";
 
 export const ControlPanel: React.FC = () => {
   return (
-    <div className="w-96 shrink-0 bg-zinc-900/50 border-r border-white/10 flex flex-col h-screen">
-      <div className="p-6 border-b border-white/10">
+    <div className="flex h-screen w-96 shrink-0 flex-col border-r border-white/10 bg-zinc-900/50">
+      <div className="border-b border-white/10 p-6">
         <h2 className="text-xl font-bold tracking-tight">Configuration</h2>
       </div>
 
       {/* Hauteur de l'écran (100vh) - Hauteur du header (~77px: p-6(24*2) + text-xl(28) + border(1)) */}
       <ScrollArea className="h-[calc(100vh-78px)]">
-        <div className="p-6 space-y-8">
+        <div className="space-y-8 p-6">
           <DateControl />
           <Separator />
           <CalendarControl />

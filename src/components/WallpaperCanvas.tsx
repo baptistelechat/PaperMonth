@@ -91,7 +91,7 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
         />
 
         {/* Content Layer */}
-        <div className="relative z-10 grid grid-cols-12 grid-rows-12 h-full w-full gap-4">
+        <div className="relative z-10 grid h-full w-full grid-cols-12 grid-rows-12 gap-4">
           {/* Calendar Widget */}
           <WidgetContainer
             colStart={1}

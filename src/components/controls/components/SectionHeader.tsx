@@ -6,7 +6,7 @@ interface SectionHeaderProps {
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
   return (
-    <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider">
+    <h3 className="text-sm font-semibold tracking-wider text-zinc-400 uppercase">
       {title}
     </h3>
   );

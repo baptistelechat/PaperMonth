@@ -29,16 +29,16 @@ export const HolidaysControl: React.FC<HolidaysControlProps> = ({
 
   const helpContent = (
     <div className="space-y-4">
-      <h4 className="font-semibold text-sm">
+      <h4 className="text-sm font-semibold">
         Jours fériés & Fêtes du mois{" "}
-        <span className="text-muted-foreground font-mono shrink-0">
+        <span className="text-muted-foreground shrink-0 font-mono">
           ({holidays?.length || 0})
         </span>
       </h4>
       <div className="space-y-6">
         {publicHolidays.length > 0 && (
           <div className="grid gap-2">
-            <h5 className="font-semibold text-xs text-muted-foreground mb-1">
+            <h5 className="text-muted-foreground mb-1 text-xs font-semibold">
               Jours fériés ({publicHolidays.length})
             </h5>
             {publicHolidays.map((day, index) => (
@@ -46,7 +46,7 @@ export const HolidaysControl: React.FC<HolidaysControlProps> = ({
                 key={`holiday-${day.date}-${index}`}
                 className="flex gap-2 text-sm"
               >
-                <span className="text-muted-foreground font-mono shrink-0">
+                <span className="text-muted-foreground shrink-0 font-mono">
                   {new Date(day.date).getDate().toString().padStart(2, "0")}
                 </span>
                 <span className="text-primary leading-snug">
@@ -59,7 +59,7 @@ export const HolidaysControl: React.FC<HolidaysControlProps> = ({
 
         {observances.length > 0 && (
           <div className="grid gap-2">
-            <h5 className="font-semibold text-xs text-muted-foreground mb-1">
+            <h5 className="text-muted-foreground mb-1 text-xs font-semibold">
               Fêtes et Événements ({observances.length})
             </h5>
             {observances.map((day, index) => (
@@ -67,7 +67,7 @@ export const HolidaysControl: React.FC<HolidaysControlProps> = ({
                 key={`observance-${day.date}-${index}`}
                 className="flex gap-2 text-sm"
               >
-                <span className="text-muted-foreground font-mono shrink-0">
+                <span className="text-muted-foreground shrink-0 font-mono">
                   {new Date(day.date).getDate().toString().padStart(2, "0")}
                 </span>
                 <span className="text-primary leading-snug">

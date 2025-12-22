@@ -57,7 +57,7 @@ export const ControlSelect: React.FC<ControlSelectProps> = ({
         {helpContent && (
           <HoverCard>
             <HoverCardTrigger asChild>
-              <CircleHelp className="size-4 text-muted-foreground cursor-help" />
+              <CircleHelp className="text-muted-foreground size-4 cursor-help" />
             </HoverCardTrigger>
             <HoverCardContent className="w-80" side="right" align="start">
               {helpContent}
@@ -66,7 +66,7 @@ export const ControlSelect: React.FC<ControlSelectProps> = ({
         )}
       </div>
       <Select value={value} onValueChange={onValueChange}>
-        <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
+        <SelectTrigger className="w-full border-zinc-800 bg-zinc-900">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

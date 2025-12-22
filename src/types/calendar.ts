@@ -54,6 +54,7 @@ export interface TypographyConfig {
 export interface DimensionsConfig {
   width: number;
   height: number;
+  scale: number;
 }
 
 import { Tip, TipCategory } from "@/data/tips";

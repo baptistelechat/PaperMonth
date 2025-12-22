@@ -1,11 +1,18 @@
 import { ControlPanel } from "@/components/ControlPanel";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { WallpaperCanvas } from "@/components/WallpaperCanvas";
 import { useExport } from "@/hooks/useExport";
 import { getInitialConfig, useWallpaperStore } from "@/hooks/useWallpaperStore";
 import {
   Calendar as CalendarIcon,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Download,
@@ -14,13 +21,30 @@ import {
 } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
+const RESOLUTION_PRESETS = [
+  {
+    label: "HD",
+    desc: "1280x720",
+    width: 1280,
+    height: 720,
+    scale: 1280 / 1920,
+  },
+  { label: "FHD", desc: "1920x1080", width: 1920, height: 1080, scale: 1 },
+  { label: "4K", desc: "3840x2160", width: 3840, height: 2160, scale: 2 },
+];
+
 export const Generator: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
   const { exportWallpaper } = useExport();
-  const { config, setCalendarConfig, resetConfig, randomizeConfig } =
-    useWallpaperStore();
+  const {
+    config,
+    setCalendarConfig,
+    setDimensionsConfig,
+    resetConfig,
+    randomizeConfig,
+  } = useWallpaperStore();
   const { calendar, dimensions } = config;
 
   // Determine if current view is current date
@@ -103,7 +127,25 @@ export const Generator: React.FC = () => {
     const fileName = `PaperMonth_${config.calendar.year}_${
       config.calendar.month + 1
     }`;
+
+    // Always use store dimensions for now as we want to respect user selection
+    // But if we wanted to support export-only scaling, we could pass overrideWidth/Height here
+    // based on a different selection than the view dimensions.
+    // For now, let's assume the user wants to export what they see (dimensions in store).
     exportWallpaper(canvasRef, fileName);
+  };
+
+  const currentPreset = RESOLUTION_PRESETS.find(
+    (p) => Math.abs(p.scale - dimensions.scale) < 0.01
+  );
+
+  const handlePresetChange = (value: string) => {
+    const preset = RESOLUTION_PRESETS.find((p) => p.label === value);
+    if (preset) {
+      // Keep dimensions at 1920x1080 (FHD) as base, but update scale for export
+      // This ensures the preview always looks consistent
+      setDimensionsConfig({ width: 1920, height: 1080, scale: preset.scale });
+    }
   };
 
   return (
@@ -169,14 +211,41 @@ export const Generator: React.FC = () => {
               </Button>
             </ButtonGroup>
 
-            <Button
-              onClick={handleExport}
-              className="flex items-center gap-2"
-              variant="secondary"
-            >
-              <Download className="h-4 w-4" />
-              Exporter PNG
-            </Button>
+            <ButtonGroup>
+              <Button
+                onClick={handleExport}
+                className="rounded-r-none border-r-0"
+                variant="secondary"
+              >
+                <Download className="mr-2 size-4" />
+                Exporter {currentPreset ? currentPreset.label : "PNG"}
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    className="h-9 w-10 rounded-l-none border-0 border-l border-white/10 px-2"
+                  >
+                    <ChevronDown className="size-4 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {RESOLUTION_PRESETS.map((preset) => (
+                    <DropdownMenuItem
+                      key={preset.label}
+                      onClick={() => handlePresetChange(preset.label)}
+                    >
+                      <div className="flex flex-col text-left">
+                        <span className="font-medium">{preset.label}</span>
+                        <span className="text-muted-foreground text-xs">
+                          {preset.desc}
+                        </span>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </ButtonGroup>
           </div>
         </header>
 
@@ -209,7 +278,9 @@ export const Generator: React.FC = () => {
 
         {/* Zoom Info */}
         <div className="absolute right-6 bottom-4 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur">
-          {dimensions.width}x{dimensions.height}px - {Math.round(scale * 100)}%
+          {Math.round(dimensions.width * dimensions.scale)}x
+          {Math.round(dimensions.height * dimensions.scale)}px -{" "}
+          {Math.round((scale / (dimensions.scale || 1)) * 100)}%
         </div>
       </div>
     </div>

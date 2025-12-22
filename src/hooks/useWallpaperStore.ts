@@ -45,7 +45,30 @@ export const getInitialConfig = (): WallpaperConfig => ({
     fontSize: "md",
     applyToAll: true,
   },
-  widgets: [],
+  widgets: [
+    {
+      id: "software-zone",
+      type: "software",
+      visible: true,
+      colStart: 5,
+      colSpan: 5,
+      rowStart: 1,
+      rowSpan: 6,
+      size: "md",
+      opacity: 1,
+    },
+    {
+      id: "folder-zone",
+      type: "folder",
+      visible: true,
+      colStart: 8,
+      colSpan: 5,
+      rowStart: 7,
+      rowSpan: 6,
+      size: "md",
+      opacity: 1,
+    },
+  ],
 });
 
 export const useWallpaperStore = create<WallpaperStore>((set) => ({

@@ -5,6 +5,8 @@ import { getWorldDaysForYear } from "@/utils/worldDays";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
 import { CalendarHeader } from "./widgets/Calendar/CalendarHeader";
+import { WidgetContainer } from "./widgets/WidgetContainer";
+import { ZoneWidget } from "./widgets/ZoneWidget";
 
 interface WallpaperCanvasProps {
   width?: number;
@@ -87,11 +89,12 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
         {/* Content Layer */}
         <div className="relative z-10 grid grid-cols-12 grid-rows-12 h-full w-full gap-4">
           {/* Calendar Widget */}
-          <div
-            className={cn(
-              "col-start-1 col-span-4 row-start-1 row-span-6 backdrop-blur-sm rounded-xl p-8 border flex flex-col shadow-2xl",
-              themeClasses.container
-            )}
+          <WidgetContainer
+            colStart={1}
+            colSpan={4}
+            rowStart={1}
+            rowSpan={6}
+            themeClasses={themeClasses}
           >
             <CalendarHeader
               config={calendar}
@@ -105,30 +108,34 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
               worldDays={worldDays}
               textColor={textColor}
             />
-          </div>
+          </WidgetContainer>
 
           {/* Other Widgets */}
           {widgets
             .filter((w) => w.visible)
             .map((widget) => (
-              <div
+              <WidgetContainer
                 key={widget.id}
-                className={cn(
-                  "backdrop-blur-sm rounded-xl border flex items-center justify-center",
-                  themeClasses.container,
-                  themeClasses.text
-                )}
-                style={{
-                  gridColumnStart: widget.colStart,
-                  gridColumnEnd: `span ${widget.colSpan}`,
-                  gridRowStart: widget.rowStart,
-                  gridRowEnd: `span ${widget.rowSpan}`,
-                  opacity: widget.opacity,
-                }}
+                colStart={widget.colStart}
+                colSpan={widget.colSpan}
+                rowStart={widget.rowStart}
+                rowSpan={widget.rowSpan}
+                opacity={widget.opacity}
+                themeClasses={themeClasses}
               >
                 {/* Render widget content based on type */}
-                <span>Widget: {widget.type}</span>
-              </div>
+                {widget.type === "software" || widget.type === "folder" ? (
+                  <ZoneWidget
+                    title={
+                      widget.type === "software" ? "Logiciels" : "Dossiers"
+                    }
+                    fontFamily={typography.fontFamily}
+                    textColor={textColor}
+                  />
+                ) : (
+                  <span>Widget: {widget.type}</span>
+                )}
+              </WidgetContainer>
             ))}
         </div>
 

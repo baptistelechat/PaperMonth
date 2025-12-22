@@ -68,6 +68,17 @@ export const getInitialConfig = (): WallpaperConfig => ({
       size: "md",
       opacity: 1,
     },
+    {
+      id: "key-dates-widget",
+      type: "keyDates",
+      visible: true,
+      colStart: 1,
+      colSpan: 7,
+      rowStart: 7,
+      rowSpan: 6,
+      size: "md",
+      opacity: 1,
+    },
   ],
 });
 

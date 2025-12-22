@@ -1,6 +1,7 @@
 import * as cheerio from "cheerio";
 import fs from "node:fs";
 import path from "node:path";
+import { STOP_WORDS } from "../src/utils/textFormatting";
 
 // --- Types ---
 
@@ -106,30 +107,7 @@ function getCanonicalKey(str: string): string {
   s = s.replace(/[.,:;!?'"’\-–]/g, " ");
   // 5. Remove stop words (French)
   // le, la, les, l, un, une, des, d, du, de, à, et, ou, pour, sur, en, dans, par, avec, sans, sous
-  const stopWords = [
-    "le",
-    "la",
-    "les",
-    "l",
-    "un",
-    "une",
-    "des",
-    "d",
-    "du",
-    "de",
-    "a", // normalized 'à'
-    "et",
-    "ou",
-    "pour",
-    "sur",
-    "en",
-    "dans",
-    "par",
-    "avec",
-    "sans",
-    "sous",
-  ];
-  const regex = new RegExp(`\\b(${stopWords.join("|")})\\b`, "g");
+  const regex = new RegExp(`\\b(${STOP_WORDS.join("|")})\\b`, "g");
   s = s.replace(regex, "");
   // 6. Normalize spaces again
   return normalizeString(s);

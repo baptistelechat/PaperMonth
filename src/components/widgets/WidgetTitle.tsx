@@ -5,6 +5,7 @@ interface WidgetTitleProps {
   fontFamily?: string;
   textColor?: "light" | "dark";
   className?: string;
+  level?: "h1" | "h2";
 }
 
 export const WidgetTitle: React.FC<WidgetTitleProps> = ({
@@ -12,17 +13,18 @@ export const WidgetTitle: React.FC<WidgetTitleProps> = ({
   fontFamily,
   textColor = "light",
   className = "",
+  level = "h2",
 }) => {
+  const Tag = level;
+
   return (
     <div className="mb-6">
-      <h2
-        className={`text-5xl font-bold tracking-tight drop-shadow-sm ${
-          textColor === "dark" ? "text-black" : "text-white"
-        } ${className}`}
+      <Tag
+        className={`font-bold tracking-tight drop-shadow-sm text-4xl ${textColor === "dark" ? "text-black" : "text-white"} ${className}`}
         style={{ fontFamily }}
       >
         {title}
-      </h2>
+      </Tag>
     </div>
   );
 };

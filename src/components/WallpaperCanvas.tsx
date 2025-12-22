@@ -4,9 +4,11 @@ import { cn } from "@/lib/utils";
 import { getWorldDaysForYear } from "@/utils/worldDays";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
-import { CalendarHeader } from "./widgets/Calendar/CalendarHeader";
+import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
 import { WidgetContainer } from "./widgets/WidgetContainer";
 import { ZoneWidget } from "./widgets/ZoneWidget";
+import { WidgetTitle } from "./widgets/WidgetTitle";
+import { formatMonthTitle } from "@/utils/dates";
 
 interface WallpaperCanvasProps {
   width?: number;
@@ -96,10 +98,17 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
             rowSpan={6}
             themeClasses={themeClasses}
           >
-            <CalendarHeader
-              config={calendar}
-              fontFamily={typography.fontFamily}
+            <WidgetTitle
+              title={formatMonthTitle(
+                calendar.month,
+                calendar.year,
+                calendar.titleFormat
+              )}
+              fontFamily={
+                typography.applyToAll ? undefined : typography.fontFamily
+              }
               textColor={textColor}
+              level="h1"
             />
             <CalendarGrid
               config={calendar}
@@ -129,6 +138,15 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
                     title={
                       widget.type === "software" ? "Logiciels" : "Dossiers"
                     }
+                    fontFamily={typography.fontFamily}
+                    textColor={textColor}
+                  />
+                ) : widget.type === "keyDates" ? (
+                  <KeyDatesWidget
+                    holidays={holidays}
+                    worldDays={worldDays}
+                    currentMonth={calendar.month}
+                    currentYear={calendar.year}
                     fontFamily={typography.fontFamily}
                     textColor={textColor}
                   />

@@ -123,9 +123,6 @@ export const getFrenchCelebrations = (year: number): Holiday[] => {
   const grandFathersDay = getNthWeekdayOfMonth(year, 9, 0, 1);
   addCelebration(grandFathersDay, "Fête des Grands-Pères");
 
-  // Sainte-Catherine: Nov 25
-  addCelebration(new Date(year, 10, 25), "Sainte-Catherine");
-
   // Saint-Nicolas: Dec 6
   addCelebration(new Date(year, 11, 6), "Saint-Nicolas");
 

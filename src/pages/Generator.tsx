@@ -114,9 +114,9 @@ export const Generator: React.FC = () => {
               alt="PaperMonth Logo"
               className="w-8 h-8 rounded-md"
             />
-            <span className="font-semibold tracking-tight text-lg">
+            <h1 className="font-semibold tracking-tight text-lg">
               PaperMonth
-            </span>
+            </h1>
           </div>
 
           <div className="flex items-center gap-2 bg-zinc-900 rounded-md border border-zinc-800 p-1">

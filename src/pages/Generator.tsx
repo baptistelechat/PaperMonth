@@ -109,9 +109,11 @@ export const Generator: React.FC = () => {
         {/* Header */}
         <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-zinc-900/50 backdrop-blur-md">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center text-black font-bold">
-              P
-            </div>
+            <img
+              src="/icon.svg"
+              alt="PaperMonth Logo"
+              className="w-8 h-8 rounded-md"
+            />
             <span className="font-semibold tracking-tight text-lg">
               PaperMonth
             </span>

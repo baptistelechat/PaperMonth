@@ -1,4 +1,5 @@
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 interface WidgetTitleProps {
@@ -24,9 +25,11 @@ export const WidgetTitle: React.FC<WidgetTitleProps> = ({
   return (
     <div className="mb-6">
       <Tag
-        className={`font-bold tracking-tight drop-shadow-sm text-4xl ${
-          textColor === "dark" ? "text-black" : "text-white"
-        } ${className}`}
+        className={cn(
+          "font-bold tracking-tight drop-shadow-sm text-4xl",
+          textColor === "dark" ? "text-black" : "text-white",
+          className
+        )}
         style={{ fontFamily: fontFamily || typography.fontFamily }}
       >
         {title}

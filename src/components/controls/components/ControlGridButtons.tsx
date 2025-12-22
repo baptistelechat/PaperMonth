@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 export interface GridButtonOption {
@@ -28,13 +29,13 @@ export const ControlGridButtons: React.FC<ControlGridButtonsProps> = ({
   return (
     <div className="space-y-2">
       {label && <Label className="text-xs text-zinc-500">{label}</Label>}
-      <div className={`grid grid-cols-2 gap-2 ${className || ""}`}>
+      <div className={cn("grid grid-cols-2 gap-2", className)}>
         {options.map((option) => (
           <Button
             key={option.value}
             variant={value === option.value ? "secondary" : "outline"}
             onClick={() => onChange(option.value)}
-            className={`w-full border-zinc-800 ${buttonClassName || ""}`}
+            className={cn("w-full border-zinc-800", buttonClassName)}
             style={option.style}
           >
             {option.label}

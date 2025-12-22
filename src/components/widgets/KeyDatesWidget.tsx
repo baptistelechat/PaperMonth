@@ -4,6 +4,7 @@ import { WorldDay } from "@/utils/worldDays";
 import React, { useMemo } from "react";
 import { EventTooltip } from "../shared/EventTooltip";
 import { WidgetTitle } from "./WidgetTitle";
+import { cn } from "@/lib/utils";
 
 interface KeyDatesWidgetProps {
   holidays: Holiday[];
@@ -140,7 +141,7 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
 
       <div className="flex-1 w-full">
         <div
-          className={`grid gap-x-6 gap-y-1 grid-flow-col h-full content-start text-sm`}
+          className="grid gap-x-6 gap-y-1 grid-flow-col h-full content-start text-sm"
           style={{
             gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
             gridTemplateColumns: `repeat(${Math.max(2, cols)}, minmax(0, 1fr))`,
@@ -159,25 +160,29 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
                 ]}
               >
                 <div
-                  className={`flex gap-2 items-baseline group cursor-help ${
+                  className={cn(
+                    "flex gap-2 items-baseline group cursor-help",
                     events.count > 9 ? "text-sm" : "text-lg"
-                  }`}
+                  )}
                 >
-                  <span className={`font-mono font-bold shrink-0 ${textClass}`}>
+                  <span
+                    className={cn("font-mono font-bold shrink-0", textClass)}
+                  >
                     {event.day.toString().padStart(2, "0")}
                   </span>
                   <span
-                    className={`leading-snug ${
+                    className={cn(
+                      "leading-snug transition-colors line-clamp-1",
                       event.type === "holiday"
-                        ? `font-bold ${textClass}`
+                        ? cn("font-bold", textClass)
                         : event.type === "observance"
-                        ? `font-medium italic ${textClass}`
+                        ? cn("font-medium italic", textClass)
                         : event.type === "school-holiday"
-                        ? `font-medium ${textClass} opacity-90`
-                        : mutedClass
-                    } ${
-                      event.isWeek ? "underline decoration-current" : ""
-                    } group-hover:${textClass} transition-colors line-clamp-1`}
+                        ? cn("font-medium opacity-90", textClass)
+                        : mutedClass,
+                      event.isWeek && "underline decoration-current",
+                      `group-hover:${textClass}`
+                    )}
                   >
                     {event.label}
                   </span>
@@ -185,7 +190,7 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
               </EventTooltip>
             ))
           ) : (
-            <div className={`text-lg italic ${mutedClass}`}>
+            <div className={cn("text-lg italic", mutedClass)}>
               Aucune date clé ce mois-ci
             </div>
           )}

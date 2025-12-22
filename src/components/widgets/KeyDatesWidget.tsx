@@ -114,11 +114,11 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
                   },
                 ]}
               >
-                <div className="flex gap-2 items-baseline group cursor-help">
-                  <span
-                    className={`font-mono font-bold shrink-0 ${textClass} ${
+                <div className={`flex gap-2 items-baseline group cursor-help ${
                       events.count > 18 ? "text-sm" : "text-lg"
-                    }`}
+                    }`}>
+                  <span
+                    className={`font-mono font-bold shrink-0 ${textClass}`}
                   >
                     {event.day.toString().padStart(2, "0")}
                   </span>
@@ -139,8 +139,8 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
               </EventTooltip>
             ))
           ) : (
-            <div className={`text-sm italic ${mutedClass}`}>
-              Aucune date clé ce mois-ci
+            <div className={`text-lg ${mutedClass}`}>
+              Aucune date à afficher ce mois-ci
             </div>
           )}
         </div>

@@ -143,8 +143,8 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
                   />
                 ) : widget.type === "keyDates" ? (
                   <KeyDatesWidget
-                    holidays={holidays}
-                    worldDays={worldDays}
+                    holidays={calendar.showHolidays ? holidays : []}
+                    worldDays={calendar.showWorldDays ? worldDays : []}
                     currentMonth={calendar.month}
                     currentYear={calendar.year}
                     textColor={textColor}

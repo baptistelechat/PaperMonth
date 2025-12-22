@@ -3,6 +3,7 @@ import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { cn } from "@/lib/utils";
 import { formatMonthTitle } from "@/utils/dates";
 import { getWorldDaysForYear } from "@/utils/worldDays";
+import { Sparkles } from "lucide-react";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
 import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
@@ -70,7 +71,7 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
         ref={ref}
         id="wallpaper-canvas"
         className={cn(
-          "relative overflow-hidden flex flex-col p-16 select-none",
+          "relative overflow-hidden flex flex-col p-16 pb-28 select-none",
           backgroundClass
         )}
         style={{
@@ -169,10 +170,11 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
         {/* Watermark / Branding (Optional) */}
         <div
           className={cn(
-            "absolute bottom-8 right-8 font-light text-lg tracking-widest",
+            "absolute bottom-16 right-16 font-light text-lg tracking-widest flex gap-2 items-center",
             themeClasses.watermark
           )}
         >
+          <Sparkles className="size-6" />
           PAPERMONTH
         </div>
       </div>

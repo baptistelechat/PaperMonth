@@ -51,6 +51,11 @@ export interface TypographyConfig {
   applyToAll: boolean;
 }
 
+export interface DimensionsConfig {
+  width: number;
+  height: number;
+}
+
 import { Tip, TipCategory } from "@/data/tips";
 
 export interface TipsConfig {
@@ -62,6 +67,7 @@ export interface WallpaperConfig {
   calendar: CalendarConfig;
   background: BackgroundConfig;
   typography: TypographyConfig;
+  dimensions: DimensionsConfig;
   tips: TipsConfig;
   widgets: WidgetConfig[];
 }

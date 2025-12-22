@@ -21,7 +21,7 @@ export const Generator: React.FC = () => {
   const { exportWallpaper } = useExport();
   const { config, setCalendarConfig, resetConfig, randomizeConfig } =
     useWallpaperStore();
-  const { calendar } = config;
+  const { calendar, dimensions } = config;
 
   // Determine if current view is current date
   const isCurrentDate = useMemo(() => {
@@ -87,8 +87,8 @@ export const Generator: React.FC = () => {
       const availableWidth = containerRef.current.clientWidth - padding;
       const availableHeight = containerRef.current.clientHeight - padding;
 
-      const scaleX = availableWidth / 1920;
-      const scaleY = availableHeight / 1080;
+      const scaleX = availableWidth / dimensions.width;
+      const scaleY = availableHeight / dimensions.height;
 
       // Use the smaller scale to fit entirely, with a max of 1
       setScale(Math.min(scaleX, scaleY, 1));
@@ -97,7 +97,7 @@ export const Generator: React.FC = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [dimensions]);
 
   const handleExport = () => {
     const fileName = `PaperMonth_${config.calendar.year}_${
@@ -203,13 +203,13 @@ export const Generator: React.FC = () => {
             }}
             className="transition-transform duration-200 ease-out"
           >
-            <WallpaperCanvas ref={canvasRef} width={1920} height={1080} />
+            <WallpaperCanvas ref={canvasRef} />
           </div>
         </div>
 
         {/* Zoom Info */}
         <div className="absolute right-6 bottom-4 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur">
-          Zoom: {Math.round(scale * 100)}%
+          {dimensions.width}x{dimensions.height}px - {Math.round(scale * 100)}%
         </div>
       </div>
     </div>

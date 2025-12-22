@@ -2,6 +2,7 @@ import { TipCategory, TIPS } from "@/data/tips";
 import {
   BackgroundConfig,
   CalendarConfig,
+  DimensionsConfig,
   TipsConfig,
   TypographyConfig,
   WallpaperConfig,
@@ -16,6 +17,7 @@ interface WallpaperStore {
   setCalendarConfig: (config: Partial<CalendarConfig>) => void;
   setBackgroundConfig: (config: Partial<BackgroundConfig>) => void;
   setTypographyConfig: (config: Partial<TypographyConfig>) => void;
+  setDimensionsConfig: (config: Partial<DimensionsConfig>) => void;
   setTipsConfig: (config: Partial<TipsConfig>) => void;
   addWidget: (widget: WidgetConfig) => void;
   updateWidget: (id: string, updates: Partial<WidgetConfig>) => void;
@@ -56,6 +58,10 @@ export const getInitialConfig = (): WallpaperConfig => ({
     fontFamily: "Inter",
     fontSize: "md",
     applyToAll: true,
+  },
+  dimensions: {
+    width: 1920,
+    height: 1080,
   },
   tips: {
     currentTips: getRandomTips(3, [
@@ -142,6 +148,13 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       config: {
         ...state.config,
         typography: { ...state.config.typography, ...updates },
+      },
+    })),
+  setDimensionsConfig: (updates) =>
+    set((state) => ({
+      config: {
+        ...state.config,
+        dimensions: { ...state.config.dimensions, ...updates },
       },
     })),
   setTipsConfig: (updates) =>

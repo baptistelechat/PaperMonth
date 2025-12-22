@@ -89,7 +89,7 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
           {/* Calendar Widget */}
           <div
             className={cn(
-              "col-start-5 col-span-4 row-start-4 row-span-6 backdrop-blur-sm rounded-xl p-8 border flex flex-col shadow-2xl",
+              "col-start-1 col-span-4 row-start-1 row-span-6 backdrop-blur-sm rounded-xl p-8 border flex flex-col shadow-2xl",
               themeClasses.container
             )}
           >

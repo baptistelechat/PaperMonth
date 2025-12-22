@@ -1,6 +1,8 @@
+import { TipCategory, TIPS } from "@/data/tips";
 import {
   BackgroundConfig,
   CalendarConfig,
+  TipsConfig,
   TypographyConfig,
   WallpaperConfig,
 } from "@/types/calendar";
@@ -14,12 +16,22 @@ interface WallpaperStore {
   setCalendarConfig: (config: Partial<CalendarConfig>) => void;
   setBackgroundConfig: (config: Partial<BackgroundConfig>) => void;
   setTypographyConfig: (config: Partial<TypographyConfig>) => void;
+  setTipsConfig: (config: Partial<TipsConfig>) => void;
   addWidget: (widget: WidgetConfig) => void;
   updateWidget: (id: string, updates: Partial<WidgetConfig>) => void;
   removeWidget: (id: string) => void;
   resetConfig: () => void;
   randomizeConfig: () => void;
 }
+
+const getRandomTips = (count: number = 3, categories: TipCategory[] = []) => {
+  let filteredTips = TIPS;
+  if (categories.length > 0) {
+    filteredTips = TIPS.filter((tip) => categories.includes(tip.category));
+  }
+  const shuffled = [...filteredTips].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
 
 export const getInitialConfig = (): WallpaperConfig => ({
   calendar: {
@@ -44,6 +56,22 @@ export const getInitialConfig = (): WallpaperConfig => ({
     fontFamily: "Inter",
     fontSize: "md",
     applyToAll: true,
+  },
+  tips: {
+    currentTips: getRandomTips(3, [
+      "Productivité",
+      "Bien-être",
+      "Focus",
+      "Numérique",
+      "Créativité",
+    ]),
+    selectedCategories: [
+      "Productivité",
+      "Bien-être",
+      "Focus",
+      "Numérique",
+      "Créativité",
+    ],
   },
   widgets: [
     {
@@ -79,6 +107,17 @@ export const getInitialConfig = (): WallpaperConfig => ({
       size: "md",
       opacity: 1,
     },
+    {
+      id: "tip-widget",
+      type: "tip",
+      visible: true,
+      colStart: 10,
+      colSpan: 3,
+      rowStart: 1,
+      rowSpan: 6,
+      size: "md",
+      opacity: 1,
+    },
   ],
 });
 
@@ -105,6 +144,13 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
         typography: { ...state.config.typography, ...updates },
       },
     })),
+  setTipsConfig: (updates) =>
+    set((state) => ({
+      config: {
+        ...state.config,
+        tips: { ...state.config.tips, ...updates },
+      },
+    })),
   addWidget: (widget) =>
     set((state) => ({
       config: {
@@ -128,7 +174,19 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
         widgets: state.config.widgets.filter((w) => w.id !== id),
       },
     })),
-  resetConfig: () => set({ config: getInitialConfig() }),
+  resetConfig: () =>
+    set((state) => {
+      const initial = getInitialConfig();
+      return {
+        config: {
+          ...initial,
+          tips: {
+            ...initial.tips,
+            currentTips: state.config.tips.currentTips,
+          },
+        },
+      };
+    }),
   randomizeConfig: () => {
     const randomGradient =
       GRADIENT_PRESETS[Math.floor(Math.random() * GRADIENT_PRESETS.length)];

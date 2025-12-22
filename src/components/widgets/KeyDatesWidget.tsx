@@ -28,7 +28,6 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
   worldDays,
   currentMonth,
   currentYear,
-  fontFamily,
   textColor = "light",
 }) => {
   const events = useMemo(() => {
@@ -92,7 +91,6 @@ export const KeyDatesWidget: React.FC<KeyDatesWidgetProps> = ({
     <div className="h-full flex flex-col">
       <WidgetTitle
         title="Dates clés"
-        fontFamily={fontFamily}
         textColor={textColor}
       />
 

@@ -1,14 +1,15 @@
 import { useHolidays } from "@/hooks/useHolidays";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { cn } from "@/lib/utils";
+import { formatMonthTitle } from "@/utils/dates";
 import { getWorldDaysForYear } from "@/utils/worldDays";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
 import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
+import { TipWidget } from "./widgets/TipWidget";
 import { WidgetContainer } from "./widgets/WidgetContainer";
-import { ZoneWidget } from "./widgets/ZoneWidget";
 import { WidgetTitle } from "./widgets/WidgetTitle";
-import { formatMonthTitle } from "@/utils/dates";
+import { ZoneWidget } from "./widgets/ZoneWidget";
 
 interface WallpaperCanvasProps {
   width?: number;
@@ -104,9 +105,6 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
                 calendar.year,
                 calendar.titleFormat
               )}
-              fontFamily={
-                typography.applyToAll ? undefined : typography.fontFamily
-              }
               textColor={textColor}
               level="h1"
             />
@@ -138,7 +136,9 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
                     title={
                       widget.type === "software" ? "Logiciels" : "Dossiers"
                     }
-                    fontFamily={typography.fontFamily}
+                    fontFamily={
+                      typography.applyToAll ? typography.fontFamily : undefined
+                    }
                     textColor={textColor}
                   />
                 ) : widget.type === "keyDates" ? (
@@ -147,7 +147,13 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement, WallpaperCanvasProps>(
                     worldDays={worldDays}
                     currentMonth={calendar.month}
                     currentYear={calendar.year}
-                    fontFamily={typography.fontFamily}
+                    textColor={textColor}
+                  />
+                ) : widget.type === "tip" ? (
+                  <TipWidget
+                    fontFamily={
+                      typography.applyToAll ? typography.fontFamily : undefined
+                    }
                     textColor={textColor}
                   />
                 ) : (

@@ -37,10 +37,17 @@ export const Generator: React.FC = () => {
     // which uses new Date(). So if we are on current date + default styles, it should be true.
     const initial = getInitialConfig();
 
-    // Since getInitialConfig() calls new Date() inside, it matches the "current date" logic.
-    // However, we need to ensure we are comparing values correctly.
-    // JSON.stringify is a simple way to compare deep objects for this size.
-    return JSON.stringify(config) === JSON.stringify(initial);
+    // Create copies of configs excluding the random tips to compare
+    // We exclude currentTips because they are randomized on every initialization
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { currentTips: _c, ...configTipsWithoutCurrent } = config.tips;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { currentTips: _i, ...initialTipsWithoutCurrent } = initial.tips;
+
+    const configToCompare = { ...config, tips: configTipsWithoutCurrent };
+    const initialToCompare = { ...initial, tips: initialTipsWithoutCurrent };
+
+    return JSON.stringify(configToCompare) === JSON.stringify(initialToCompare);
   }, [config]);
 
   // Navigation handlers
@@ -114,9 +121,7 @@ export const Generator: React.FC = () => {
               alt="PaperMonth Logo"
               className="w-8 h-8 rounded-md"
             />
-            <h1 className="font-semibold tracking-tight text-lg">
-              PaperMonth
-            </h1>
+            <h1 className="font-semibold tracking-tight text-lg">PaperMonth</h1>
           </div>
 
           <div className="flex items-center gap-2 bg-zinc-900 rounded-md border border-zinc-800 p-1">

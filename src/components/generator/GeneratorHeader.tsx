@@ -204,9 +204,7 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
 
         <div className=" lg:hidden flex w-full items-center justify-center text-muted-foreground gap-2">
           <Expand className="size-3" />
-          <p className="text-xs">
-            Clique sur l'aperçu pour agrandir
-          </p>
+          <p className="text-xs">Clique sur l'aperçu pour agrandir</p>
         </div>
       </div>
 

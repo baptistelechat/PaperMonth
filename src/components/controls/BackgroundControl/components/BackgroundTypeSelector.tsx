@@ -12,7 +12,7 @@ export const BackgroundTypeSelector: React.FC = () => {
   ];
 
   return (
-    <ControlGridButtons 
+    <ControlGridButtons
       value={background.type}
       onChange={(val) =>
         setBackgroundConfig({ type: val as "gradient" | "image" })

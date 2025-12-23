@@ -93,14 +93,14 @@ export const HolidaysControl: React.FC<HolidaysControlProps> = ({
         >
           <div className="space-y-4">
             <ControlSwitch
-              label="Jours fériés & Fêtes"
-              checked={calendar.showHolidays}
-              onCheckedChange={(checked) =>
-                setCalendarConfig({ showHolidays: checked })
-              }
-              id="show-holidays"
-              helpContent={helpContent}
-            />
+            label="Jours fériés & Fêtes"
+            checked={calendar.showHolidays}
+            onCheckedChange={(checked) =>
+              setCalendarConfig({ showHolidays: checked })
+            }
+            id="show-holidays"
+            helpContent={helpContent}
+          />
 
             <AnimatePresence>
               {calendar.showHolidays && (

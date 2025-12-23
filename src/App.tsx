@@ -13,7 +13,7 @@ export default function App() {
         script.src = "https://cloud.umami.is/script.js";
         script.setAttribute(
           "data-website-id",
-          "dccce0ba-147e-4a9a-b9bd-d611fce46823"
+          "221a0cc9-934f-4b41-807b-886273162aca"
         );
         document.head.appendChild(script);
       }

@@ -3,7 +3,9 @@ import { ExportOverlay } from "@/components/generator/ExportOverlay";
 import { GeneratorHeader } from "@/components/generator/GeneratorHeader";
 import { PreviewArea } from "@/components/generator/PreviewArea";
 import { useExport } from "@/hooks/useExport";
+import { useUmami } from "@/hooks/useUmami";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
+import { getExportTrackingData } from "@/utils/tracking";
 import React, { useEffect, useRef, useState } from "react";
 
 export const Generator: React.FC = () => {
@@ -19,6 +21,7 @@ export const Generator: React.FC = () => {
     useState<AbortController | null>(null);
 
   const { exportWallpaper, exportYear } = useExport();
+  const { track } = useUmami();
   const { config } = useWallpaperStore();
   const { dimensions } = config;
 
@@ -44,6 +47,8 @@ export const Generator: React.FC = () => {
   }, [dimensions]);
 
   const handleExportMonth = async () => {
+    track("Export", getExportTrackingData(config, "Month"));
+
     setIsExporting(true);
     setExportProgress({ current: 0, total: 1 }); // Indeterminate or single step
     const fileName = `PaperMonth_${config.calendar.year}_${
@@ -60,6 +65,8 @@ export const Generator: React.FC = () => {
   };
 
   const handleExportYear = async () => {
+    track("Export", getExportTrackingData(config, "Year"));
+
     setIsExporting(true);
     const controller = new AbortController();
     setAbortController(controller);

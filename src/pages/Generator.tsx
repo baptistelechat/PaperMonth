@@ -2,7 +2,13 @@ import { ControlPanel } from "@/components/ControlPanel";
 import { CustomResolutionDialog } from "@/components/CustomResolutionDialog";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectContent,
@@ -42,7 +48,14 @@ export const Generator: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
   const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState({
+    current: 0,
+    total: 0,
+  });
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
+  const [abortController, setAbortController] =
+    useState<AbortController | null>(null);
+
   const { exportWallpaper, exportYear } = useExport();
   const {
     config,
@@ -131,6 +144,7 @@ export const Generator: React.FC = () => {
 
   const handleExportMonth = async () => {
     setIsExporting(true);
+    setExportProgress({ current: 0, total: 1 }); // Indeterminate or single step
     const fileName = `PaperMonth_${config.calendar.year}_${
       config.calendar.month + 1
     }`;
@@ -141,12 +155,36 @@ export const Generator: React.FC = () => {
     // For now, let's assume the user wants to export what they see (dimensions in store).
     await exportWallpaper(canvasRef, fileName);
     setIsExporting(false);
+    setExportProgress({ current: 0, total: 0 });
   };
 
   const handleExportYear = async () => {
     setIsExporting(true);
-    await exportYear(canvasRef, config.calendar.year);
+    const controller = new AbortController();
+    setAbortController(controller);
+    setExportProgress({ current: 0, total: 12 });
+
+    await exportYear(
+      canvasRef,
+      config.calendar.year,
+      (current, total) => {
+        setExportProgress({ current, total });
+      },
+      controller.signal
+    );
+
     setIsExporting(false);
+    setExportProgress({ current: 0, total: 0 });
+    setAbortController(null);
+  };
+
+  const handleCancelExport = () => {
+    if (abortController) {
+      abortController.abort();
+      setIsExporting(false);
+      setExportProgress({ current: 0, total: 0 });
+      setAbortController(null);
+    }
   };
 
   const currentPreset = RESOLUTION_PRESETS.find(
@@ -172,7 +210,52 @@ export const Generator: React.FC = () => {
     dimensions.exportHeight ?? Math.round(dimensions.height * dimensions.scale);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-black font-sans text-white">
+    <div className="relative flex h-screen w-full overflow-hidden bg-black font-sans text-white">
+      {/* Export Overlay */}
+      {isExporting && (
+        <div className="fixed inset-0 z-50 flex cursor-wait flex-col items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="flex w-80 flex-col items-center gap-4 rounded-lg border border-white/10 bg-zinc-900 p-8 shadow-2xl">
+            <Loader2 className="text-primary h-12 w-12 animate-spin" />
+            <div className="w-full space-y-2 text-center">
+              <h3 className="text-lg font-semibold text-white">
+                Exportation en cours...
+              </h3>
+              {exportProgress.total > 1 ? (
+                <>
+                  <Progress
+                    value={
+                      (exportProgress.current / exportProgress.total) * 100
+                    }
+                    className="mt-4 h-2"
+                  />
+                  <p className="animate-pulse text-sm text-zinc-400">
+                    Génération du mois{" "}
+                    {Math.min(exportProgress.current + 1, exportProgress.total)}{" "}
+                    sur {exportProgress.total} en cours
+                  </p>
+                </>
+              ) : (
+                <p className="animate-pulse text-sm text-zinc-400">
+                  Veuillez patienter pendant la génération
+                </p>
+              )}
+            </div>
+
+            {/* Cancel Button - Only shown for long exports (Year) */}
+            {exportProgress.total > 1 && (
+              <Button
+                variant="destructive"
+                size="sm"
+                className="mt-2 w-full"
+                onClick={handleCancelExport}
+              >
+                Annuler
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Sidebar */}
       <ControlPanel />
 

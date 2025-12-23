@@ -44,7 +44,12 @@ export function useExport() {
   );
 
   const exportYear = useCallback(
-    async (ref: React.RefObject<HTMLElement>, year: number) => {
+    async (
+      ref: React.RefObject<HTMLElement>,
+      year: number,
+      onProgress?: (current: number, total: number) => void,
+      abortSignal?: AbortSignal
+    ) => {
       if (ref.current === null) {
         return;
       }
@@ -63,6 +68,13 @@ export function useExport() {
       try {
         // Iterate through all 12 months
         for (let m = 0; m < 12; m++) {
+          if (abortSignal?.aborted) {
+            throw new Error("Export cancelled");
+          }
+
+          // Report progress at start of iteration (0/12, 1/12, ...)
+          onProgress?.(m, 12);
+
           // Update month
           setCalendarConfig({ month: m, year });
 
@@ -82,6 +94,10 @@ export function useExport() {
           // Wait for render to update
           // A short delay is needed for React to commit changes and DOM to update
           await new Promise((resolve) => setTimeout(resolve, 100));
+
+          if (abortSignal?.aborted) {
+            throw new Error("Export cancelled");
+          }
 
           const finalWidth = exportWidth ?? Math.round(width * scale);
           const finalHeight = exportHeight ?? Math.round(height * scale);
@@ -104,13 +120,24 @@ export function useExport() {
             const monthStr = (m + 1).toString().padStart(2, "0");
             zip.file(`PaperMonth_${year}_${monthStr}.png`, blob);
           }
+
+          // Report progress after completion (1/12, 2/12...)
+          onProgress?.(m + 1, 12);
+        }
+
+        if (abortSignal?.aborted) {
+          throw new Error("Export cancelled");
         }
 
         // Generate and save zip
         const content = await zip.generateAsync({ type: "blob" });
         saveAs(content, `PaperMonth_${year}_Year.zip`);
       } catch (err) {
-        console.error("Failed to export year", err);
+        if ((err as Error).message === "Export cancelled") {
+          console.log("Export cancelled by user");
+        } else {
+          console.error("Failed to export year", err);
+        }
       } finally {
         // Restore original state
         setCalendarConfig(originalConfig.calendar);

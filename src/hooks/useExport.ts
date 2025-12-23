@@ -1,15 +1,11 @@
+import { saveAs } from "file-saver";
 import { toBlob, toPng } from "html-to-image";
 import JSZip from "jszip";
-import { saveAs } from "file-saver";
 import { useCallback } from "react";
 import { getRandomTips, useWallpaperStore } from "./useWallpaperStore";
 
 export function useExport() {
-  const {
-    config,
-    setCalendarConfig,
-    setTipsConfig,
-  } = useWallpaperStore();
+  const { config, setCalendarConfig, setTipsConfig } = useWallpaperStore();
   const { width, height, scale, exportWidth, exportHeight } = config.dimensions;
 
   const exportWallpaper = useCallback(
@@ -55,12 +51,12 @@ export function useExport() {
 
       const zip = new JSZip();
       const originalConfig = { ...config };
-      
+
       // We need to keep the user's tips for the currently displayed month
       // if it was manually edited. But here we assume if the user is exporting
       // the year, they want the current state for the current month, and random for others.
       // The store already holds the "current state" for the displayed month.
-      
+
       const currentMonthIndex = originalConfig.calendar.month;
       const currentTips = originalConfig.tips.currentTips;
 
@@ -71,7 +67,10 @@ export function useExport() {
           setCalendarConfig({ month: m, year });
 
           // Handle tips
-          if (m === currentMonthIndex && year === originalConfig.calendar.year) {
+          if (
+            m === currentMonthIndex &&
+            year === originalConfig.calendar.year
+          ) {
             // Restore original tips for the current month
             setTipsConfig({ currentTips });
           } else {
@@ -82,7 +81,7 @@ export function useExport() {
 
           // Wait for render to update
           // A short delay is needed for React to commit changes and DOM to update
-          await new Promise((resolve) => setTimeout(resolve, 200));
+          await new Promise((resolve) => setTimeout(resolve, 100));
 
           const finalWidth = exportWidth ?? Math.round(width * scale);
           const finalHeight = exportHeight ?? Math.round(height * scale);
@@ -110,7 +109,6 @@ export function useExport() {
         // Generate and save zip
         const content = await zip.generateAsync({ type: "blob" });
         saveAs(content, `PaperMonth_${year}_Year.zip`);
-
       } catch (err) {
         console.error("Failed to export year", err);
       } finally {
@@ -119,7 +117,16 @@ export function useExport() {
         setTipsConfig(originalConfig.tips);
       }
     },
-    [config, width, height, scale, exportWidth, exportHeight, setCalendarConfig, setTipsConfig]
+    [
+      config,
+      width,
+      height,
+      scale,
+      exportWidth,
+      exportHeight,
+      setCalendarConfig,
+      setTipsConfig,
+    ]
   );
 
   return { exportWallpaper, exportYear };

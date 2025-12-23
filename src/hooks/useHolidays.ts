@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { getFrenchCelebrations } from "@/utils/frenchDays";
+import { useEffect, useState } from "react";
 
 export interface Holiday {
   date: string;
@@ -48,12 +48,14 @@ export function useHolidays(
           throw new Error("Failed to fetch holidays");
         }
         const data = await response.json();
-        
+
         let allHolidays = data;
         if (countryCode === "FR") {
-           const frenchCelebrations = getFrenchCelebrations(year);
-           // Merge and sort
-           allHolidays = [...allHolidays, ...frenchCelebrations].sort((a: Holiday, b: Holiday) => a.date.localeCompare(b.date));
+          const frenchCelebrations = getFrenchCelebrations(year);
+          // Merge and sort
+          allHolidays = [...allHolidays, ...frenchCelebrations].sort(
+            (a: Holiday, b: Holiday) => a.date.localeCompare(b.date)
+          );
         }
 
         setHolidays(allHolidays);
@@ -64,7 +66,41 @@ export function useHolidays(
           "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-calendrier-scolaire/records";
 
         // Filter for holidays overlapping with the requested year
-        const whereQuery = `start_date < "${year}-12-31" AND end_date > "${year}-01-01"`;
+        // Logic: The holiday must start BEFORE the year ends AND end AFTER the year begins.
+        // We use inclusive boundaries (<= and >=) to capture holidays starting/ending exactly on Jan 1st or Dec 31st.
+        let whereQuery = `start_date <= "${year}-12-31" AND end_date >= "${year}-01-01"`;
+
+        // Add Zone Filter
+        if (schoolZone && schoolZone !== "all") {
+          if (schoolZone === "Corse") {
+            whereQuery += ` AND (zones="Corse" OR location="Corse")`;
+          } else if (
+            [
+              "Guadeloupe",
+              "Guyane",
+              "Martinique",
+              "Mayotte",
+              "Nouvelle Calédonie",
+              "Polynésie",
+              "Réunion",
+              "Saint Pierre et Miquelon",
+              "Wallis et Futuna",
+            ].includes(schoolZone)
+          ) {
+            whereQuery += ` AND (zones="${schoolZone}" OR location="${schoolZone}")`;
+          } else {
+            // Standard Metro Zones (A, B, C)
+            whereQuery += ` AND zones="${schoolZone}"`;
+          }
+        }
+
+        // Add Population Filter (Students only)
+        // We exclude teachers explicitly to be safe, or match 'Élèves'
+        // Based on previous logic: !h.population || h.population === "Élèves" || h.population === "-"
+        // ODSQL approach: (population IS NULL OR population = "Élèves" OR population = "-")
+        // Simpler approach that usually works for this dataset: population != "Enseignants"
+        whereQuery += ` AND (population="Élèves" OR population="-" OR population IS NULL)`;
+
         const encodedWhere = encodeURIComponent(whereQuery);
 
         // Pagination loop to fetch all records (limit is capped at 100)
@@ -97,47 +133,7 @@ export function useHolidays(
         } while (offset < totalCount && allResults.length < totalCount);
 
         if (allResults.length > 0) {
-          let results = allResults;
-
-          // Filter by zone
-          if (schoolZone && schoolZone !== "all") {
-            if (schoolZone === "Corse") {
-              // Corse sometimes appears as location 'Corse' or zone 'Corse'
-              results = results.filter(
-                (h) => h.location === "Corse" || h.zones === "Corse"
-              );
-            } else if (
-              [
-                "Guadeloupe",
-                "Guyane",
-                "Martinique",
-                "Mayotte",
-                "Nouvelle Calédonie",
-                "Polynésie",
-                "Réunion",
-                "Saint Pierre et Miquelon",
-                "Wallis et Futuna",
-              ].includes(schoolZone)
-            ) {
-              // For Overseas territories, usually the Zone name matches the territory name
-              // or the location matches.
-              results = results.filter(
-                (h) => h.zones === schoolZone || h.location === schoolZone
-              );
-            } else {
-              // Standard Metro Zones (A, B, C)
-              results = results.filter((h) => h.zones === schoolZone);
-            }
-          }
-
-          // Filter for 'Élèves' population if specified (sometimes dataset has separate rows for teachers)
-          // Usually we want student holidays.
-          results = results.filter(
-            (h) =>
-              !h.population || h.population === "Élèves" || h.population === "-"
-          );
-
-          setSchoolHolidays(results);
+          setSchoolHolidays(allResults);
         } else {
           console.warn("No school holidays found");
         }

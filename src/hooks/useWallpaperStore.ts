@@ -26,7 +26,7 @@ interface WallpaperStore {
   randomizeConfig: () => void;
 }
 
-const getRandomTips = (count: number = 3, categories: TipCategory[] = []) => {
+export const getRandomTips = (count: number = 3, categories: TipCategory[] = []) => {
   let filteredTips = TIPS;
   if (categories.length > 0) {
     filteredTips = TIPS.filter((tip) => categories.includes(tip.category));

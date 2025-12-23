@@ -2,6 +2,7 @@ import { ControlPanel } from "@/components/ControlPanel";
 import { CustomResolutionDialog } from "@/components/CustomResolutionDialog";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -14,6 +15,7 @@ import { useExport } from "@/hooks/useExport";
 import { getInitialConfig, useWallpaperStore } from "@/hooks/useWallpaperStore";
 import {
   Calendar as CalendarIcon,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Download,
@@ -41,7 +43,7 @@ export const Generator: React.FC = () => {
   const [scale, setScale] = useState(0.5);
   const [isExporting, setIsExporting] = useState(false);
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
-  const { exportWallpaper } = useExport();
+  const { exportWallpaper, exportYear } = useExport();
   const {
     config,
     setCalendarConfig,
@@ -127,7 +129,7 @@ export const Generator: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [dimensions]);
 
-  const handleExport = async () => {
+  const handleExportMonth = async () => {
     setIsExporting(true);
     const fileName = `PaperMonth_${config.calendar.year}_${
       config.calendar.month + 1
@@ -138,6 +140,12 @@ export const Generator: React.FC = () => {
     // based on a different selection than the view dimensions.
     // For now, let's assume the user wants to export what they see (dimensions in store).
     await exportWallpaper(canvasRef, fileName);
+    setIsExporting(false);
+  };
+
+  const handleExportYear = async () => {
+    setIsExporting(true);
+    await exportYear(canvasRef, config.calendar.year);
     setIsExporting(false);
   };
 
@@ -264,23 +272,45 @@ export const Generator: React.FC = () => {
               </SelectContent>
             </Select>
 
-            <Button
-              onClick={handleExport}
-              disabled={isExporting}
-              className="min-w-36"
-            >
-              {isExporting ? (
-                <div className="flex items-center gap-2">
-                  <Loader2 className="size-4 animate-spin" />
-                  <span>Génération...</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <Download className="size-4" />
-                  <span>Télécharger</span>
-                </div>
-              )}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  disabled={isExporting}
+                  className="min-w-36 transition-all duration-300"
+                >
+                  {isExporting ? (
+                    <div className="animate-in fade-in zoom-in flex items-center gap-2 duration-300">
+                      <Loader2 className="size-4 animate-spin" />
+                      <span>Génération...</span>
+                    </div>
+                  ) : (
+                    <div className="animate-in fade-in zoom-in flex items-center gap-2 duration-300">
+                      <Download className="size-4" />
+                      <span>Télécharger</span>
+                      <ChevronDown className="ml-1 size-3.5 opacity-70" />
+                    </div>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleExportMonth}>
+                  <div className="flex flex-col text-left">
+                    <span className="font-medium">Mois actuel (PNG)</span>
+                    <span className="text-muted-foreground text-xs">
+                      Export du mois en cours uniquement
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleExportYear}>
+                  <div className="flex flex-col text-left">
+                    <span className="font-medium">Année complète (ZIP)</span>
+                    <span className="text-muted-foreground text-xs">
+                      Export des 12 mois de l'année
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <CustomResolutionDialog

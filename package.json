@@ -2,7 +2,7 @@
   "name": "papermonth",
   "description": "A wallpaper generator that allows you to create custom wallpapers using a simple interface.",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",

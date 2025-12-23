@@ -3,20 +3,21 @@ import { CustomResolutionDialog } from "@/components/CustomResolutionDialog";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { WallpaperCanvas } from "@/components/WallpaperCanvas";
 import { useExport } from "@/hooks/useExport";
 import { getInitialConfig, useWallpaperStore } from "@/hooks/useWallpaperStore";
 import {
   Calendar as CalendarIcon,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Download,
+  Loader2,
   RotateCcw,
   Shuffle,
 } from "lucide-react";
@@ -38,6 +39,7 @@ export const Generator: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
+  const [isExporting, setIsExporting] = useState(false);
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
   const { exportWallpaper } = useExport();
   const {
@@ -125,7 +127,8 @@ export const Generator: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [dimensions]);
 
-  const handleExport = () => {
+  const handleExport = async () => {
+    setIsExporting(true);
     const fileName = `PaperMonth_${config.calendar.year}_${
       config.calendar.month + 1
     }`;
@@ -134,7 +137,8 @@ export const Generator: React.FC = () => {
     // But if we wanted to support export-only scaling, we could pass overrideWidth/Height here
     // based on a different selection than the view dimensions.
     // For now, let's assume the user wants to export what they see (dimensions in store).
-    exportWallpaper(canvasRef, fileName);
+    await exportWallpaper(canvasRef, fileName);
+    setIsExporting(false);
   };
 
   const currentPreset = RESOLUTION_PRESETS.find(
@@ -153,6 +157,11 @@ export const Generator: React.FC = () => {
       setDimensionsConfig({ width: 1920, height: 1080, scale: preset.scale });
     }
   };
+
+  const displayWidth =
+    dimensions.exportWidth ?? Math.round(dimensions.width * dimensions.scale);
+  const displayHeight =
+    dimensions.exportHeight ?? Math.round(dimensions.height * dimensions.scale);
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-black font-sans text-white">
@@ -217,51 +226,61 @@ export const Generator: React.FC = () => {
               </Button>
             </ButtonGroup>
 
-            <ButtonGroup>
-              <Button
-                onClick={handleExport}
-                className="rounded-r-none border-r-0"
-                variant="secondary"
-              >
-                <Download className="mr-2 size-4" />
-                Exporter {currentPreset ? currentPreset.label : "PNG"}
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="secondary"
-                    className="h-9 w-10 rounded-l-none border-0 border-l border-white/10 px-2"
-                  >
-                    <ChevronDown className="size-4 opacity-50" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {RESOLUTION_PRESETS.map((preset) => (
-                    <DropdownMenuItem
-                      key={preset.label}
-                      onClick={() => handlePresetChange(preset.label)}
-                    >
-                      <div className="flex flex-col text-left">
-                        <span className="font-medium">{preset.label}</span>
-                        <span className="text-muted-foreground text-xs">
-                          {preset.desc}
-                        </span>
-                      </div>
-                    </DropdownMenuItem>
-                  ))}
-                  <DropdownMenuItem
-                    onClick={() => handlePresetChange("Custom")}
-                  >
+            <Select
+              value={currentPreset ? currentPreset.label : "Custom"}
+              onValueChange={handlePresetChange}
+            >
+              <SelectTrigger className="w-48">
+                <SelectValue>
+                  <span className="flex items-center gap-2">
+                    <span className="font-medium">
+                      {currentPreset ? currentPreset.label : "Custom"}
+                    </span>
+                    <span className="text-muted-foreground text-xs">
+                      - {displayWidth}x{displayHeight}
+                    </span>
+                  </span>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent align="end">
+                {RESOLUTION_PRESETS.map((preset) => (
+                  <SelectItem key={preset.label} value={preset.label}>
                     <div className="flex flex-col text-left">
-                      <span className="font-medium">Custom</span>
+                      <span className="font-medium">{preset.label}</span>
                       <span className="text-muted-foreground text-xs">
-                        Définir manuellement
+                        {preset.desc}
                       </span>
                     </div>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </ButtonGroup>
+                  </SelectItem>
+                ))}
+                <SelectItem value="Custom">
+                  <div className="flex flex-col text-left">
+                    <span className="font-medium">Custom</span>
+                    <span className="text-muted-foreground text-xs">
+                      Définir manuellement
+                    </span>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button
+              onClick={handleExport}
+              disabled={isExporting}
+              className="min-w-36"
+            >
+              {isExporting ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="size-4 animate-spin" />
+                  <span>Génération...</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Download className="size-4" />
+                  <span>Télécharger</span>
+                </div>
+              )}
+            </Button>
           </div>
 
           <CustomResolutionDialog

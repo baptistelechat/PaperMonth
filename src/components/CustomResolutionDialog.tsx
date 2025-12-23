@@ -35,7 +35,7 @@ export const CustomResolutionDialog: React.FC<CustomResolutionDialogProps> = ({
       const currentExportHeight = Math.round(
         config.dimensions.height * (config.dimensions.scale || 1)
       );
-      
+
       setWidth(currentExportWidth.toString());
       setHeight(currentExportHeight.toString());
     }
@@ -53,11 +53,12 @@ export const CustomResolutionDialog: React.FC<CustomResolutionDialogProps> = ({
     // We use 1080px as the reference height for UI scaling
     const referenceHeight = 1080;
     const newScale = h / referenceHeight;
-    
+
     // The store width/height should be the "base" dimensions for the canvas
     // so that when multiplied by scale, it equals the target export dimensions.
     // storeWidth * scale = targetWidth => storeWidth = targetWidth / scale
-    const baseWidth = w / newScale;
+    // Round to 4 decimal places to avoid precision issues
+    const baseWidth = Math.round((w / newScale) * 10000) / 10000;
     const baseHeight = referenceHeight;
 
     setDimensionsConfig({
@@ -67,7 +68,7 @@ export const CustomResolutionDialog: React.FC<CustomResolutionDialogProps> = ({
       exportWidth: w,
       exportHeight: h,
     });
-    
+
     onOpenChange(false);
   };
 

@@ -1,33 +1,160 @@
-import { useCallback } from 'react';
-import { toPng } from 'html-to-image';
+import { saveAs } from "file-saver";
+import { toBlob, toPng } from "html-to-image";
+import JSZip from "jszip";
+import { useCallback } from "react";
+import { getRandomTips, useWallpaperStore } from "./useWallpaperStore";
 
 export function useExport() {
-  const exportWallpaper = useCallback(async (ref: React.RefObject<HTMLElement>, fileName: string) => {
-    if (ref.current === null) {
-      return;
-    }
+  const { config, setCalendarConfig, setTipsConfig } = useWallpaperStore();
+  const { width, height, scale, exportWidth, exportHeight } = config.dimensions;
 
-    try {
-      const dataUrl = await toPng(ref.current, {
-        cacheBust: true,
-        width: 1920,
-        height: 1080,
-        pixelRatio: 1, // Ensure 1:1 if the canvas is already 1920x1080, or adjust if scaled
-        // Note: If the preview is scaled down, we might need to handle that. 
-        // Best approach is to export the element at its natural size.
-        // If the element is scaled via CSS transform, html-to-image might capture the transform.
-        // We might need to temporarily unset transform or render a hidden full-size clone.
-        // For this MVP, we will assume the canvas is rendered at full size or we handle the scale.
-      });
+  const exportWallpaper = useCallback(
+    async (ref: React.RefObject<HTMLElement>, fileName: string) => {
+      if (ref.current === null) {
+        return;
+      }
 
-      const link = document.createElement('a');
-      link.download = `${fileName}.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch (err) {
-      console.error('Failed to export wallpaper', err);
-    }
-  }, []);
+      // Use the stored scale for export, or explicit dimensions if provided
+      const finalWidth = exportWidth ?? Math.round(width * scale);
+      const finalHeight = exportHeight ?? Math.round(height * scale);
 
-  return { exportWallpaper };
+      try {
+        const dataUrl = await toPng(ref.current, {
+          cacheBust: true,
+          width: finalWidth,
+          height: finalHeight,
+          pixelRatio: 1,
+          style: {
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            width: `${width}px`,
+            height: `${height}px`,
+          },
+        });
+
+        const link = document.createElement("a");
+        link.download = `${fileName}.png`;
+        link.href = dataUrl;
+        link.click();
+      } catch (err) {
+        console.error("Failed to export wallpaper", err);
+      }
+    },
+    [width, height, scale, exportWidth, exportHeight]
+  );
+
+  const exportYear = useCallback(
+    async (
+      ref: React.RefObject<HTMLElement>,
+      year: number,
+      onProgress?: (current: number, total: number) => void,
+      abortSignal?: AbortSignal
+    ) => {
+      if (ref.current === null) {
+        return;
+      }
+
+      const zip = new JSZip();
+      const originalConfig = { ...config };
+
+      // We need to keep the user's tips for the currently displayed month
+      // if it was manually edited. But here we assume if the user is exporting
+      // the year, they want the current state for the current month, and random for others.
+      // The store already holds the "current state" for the displayed month.
+
+      const currentMonthIndex = originalConfig.calendar.month;
+      const currentTips = originalConfig.tips.currentTips;
+
+      try {
+        // Iterate through all 12 months
+        for (let m = 0; m < 12; m++) {
+          if (abortSignal?.aborted) {
+            throw new Error("Export cancelled");
+          }
+
+          // Report progress at start of iteration (0/12, 1/12, ...)
+          onProgress?.(m, 12);
+
+          // Update month
+          setCalendarConfig({ month: m, year });
+
+          // Handle tips
+          if (
+            m === currentMonthIndex &&
+            year === originalConfig.calendar.year
+          ) {
+            // Restore original tips for the current month
+            setTipsConfig({ currentTips });
+          } else {
+            // Generate random tips for other months
+            const newTips = getRandomTips(3, config.tips.selectedCategories);
+            setTipsConfig({ currentTips: newTips });
+          }
+
+          // Wait for render to update
+          // A short delay is needed for React to commit changes and DOM to update
+          await new Promise((resolve) => setTimeout(resolve, 100));
+
+          if (abortSignal?.aborted) {
+            throw new Error("Export cancelled");
+          }
+
+          const finalWidth = exportWidth ?? Math.round(width * scale);
+          const finalHeight = exportHeight ?? Math.round(height * scale);
+
+          const blob = await toBlob(ref.current, {
+            cacheBust: true,
+            width: finalWidth,
+            height: finalHeight,
+            pixelRatio: 1,
+            style: {
+              transform: `scale(${scale})`,
+              transformOrigin: "top left",
+              width: `${width}px`,
+              height: `${height}px`,
+            },
+          });
+
+          if (blob) {
+            // Format: PaperMonth_2025_01.png
+            const monthStr = (m + 1).toString().padStart(2, "0");
+            zip.file(`PaperMonth_${year}_${monthStr}.png`, blob);
+          }
+
+          // Report progress after completion (1/12, 2/12...)
+          onProgress?.(m + 1, 12);
+        }
+
+        if (abortSignal?.aborted) {
+          throw new Error("Export cancelled");
+        }
+
+        // Generate and save zip
+        const content = await zip.generateAsync({ type: "blob" });
+        saveAs(content, `PaperMonth_${year}_Year.zip`);
+      } catch (err) {
+        if ((err as Error).message === "Export cancelled") {
+          console.log("Export cancelled by user");
+        } else {
+          console.error("Failed to export year", err);
+        }
+      } finally {
+        // Restore original state
+        setCalendarConfig(originalConfig.calendar);
+        setTipsConfig(originalConfig.tips);
+      }
+    },
+    [
+      config,
+      width,
+      height,
+      scale,
+      exportWidth,
+      exportHeight,
+      setCalendarConfig,
+      setTipsConfig,
+    ]
+  );
+
+  return { exportWallpaper, exportYear };
 }

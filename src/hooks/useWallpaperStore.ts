@@ -2,6 +2,7 @@ import { TipCategory, TIPS } from "@/data/tips";
 import {
   BackgroundConfig,
   CalendarConfig,
+  DimensionsConfig,
   TipsConfig,
   TypographyConfig,
   WallpaperConfig,
@@ -16,6 +17,7 @@ interface WallpaperStore {
   setCalendarConfig: (config: Partial<CalendarConfig>) => void;
   setBackgroundConfig: (config: Partial<BackgroundConfig>) => void;
   setTypographyConfig: (config: Partial<TypographyConfig>) => void;
+  setDimensionsConfig: (config: Partial<DimensionsConfig>) => void;
   setTipsConfig: (config: Partial<TipsConfig>) => void;
   addWidget: (widget: WidgetConfig) => void;
   updateWidget: (id: string, updates: Partial<WidgetConfig>) => void;
@@ -24,7 +26,7 @@ interface WallpaperStore {
   randomizeConfig: () => void;
 }
 
-const getRandomTips = (count: number = 3, categories: TipCategory[] = []) => {
+export const getRandomTips = (count: number = 3, categories: TipCategory[] = []) => {
   let filteredTips = TIPS;
   if (categories.length > 0) {
     filteredTips = TIPS.filter((tip) => categories.includes(tip.category));
@@ -56,6 +58,11 @@ export const getInitialConfig = (): WallpaperConfig => ({
     fontFamily: "Inter",
     fontSize: "md",
     applyToAll: true,
+  },
+  dimensions: {
+    width: 1920,
+    height: 1080,
+    scale: 1,
   },
   tips: {
     currentTips: getRandomTips(3, [
@@ -144,6 +151,39 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
         typography: { ...state.config.typography, ...updates },
       },
     })),
+  setDimensionsConfig: (updates) =>
+    set((state) => {
+      // If we are resetting to a standard preset (checking if width/height match standard ratios and no explicit export dims passed)
+      // we should clear the export dimensions to avoid "sticking" to old custom resolutions
+      // BUT updates might contain new exportWidth/Height, so we only clear if they are undefined in updates
+      // and we are setting standard dims.
+      
+      // Actually, a simpler rule: if we are setting new width/height, we should probably clear export dims 
+      // UNLESS they are explicitly provided in the updates.
+      // This handles the case where user switches from Custom (with export dims) to FHD (standard dims).
+      
+      const newExportWidth = 'exportWidth' in updates ? updates.exportWidth : undefined;
+      const newExportHeight = 'exportHeight' in updates ? updates.exportHeight : undefined;
+      
+      // If we are just updating scale (e.g. zoom), we want to keep export dims.
+      // If we are updating width/height (preset change), we want to clear export dims unless provided.
+      const isDimensionChange = 'width' in updates || 'height' in updates;
+      
+      const finalExportWidth = isDimensionChange ? newExportWidth : (state.config.dimensions.exportWidth ?? newExportWidth);
+      const finalExportHeight = isDimensionChange ? newExportHeight : (state.config.dimensions.exportHeight ?? newExportHeight);
+
+      return {
+        config: {
+          ...state.config,
+          dimensions: { 
+            ...state.config.dimensions, 
+            ...updates,
+            exportWidth: finalExportWidth,
+            exportHeight: finalExportHeight
+          },
+        },
+      };
+    }),
   setTipsConfig: (updates) =>
     set((state) => ({
       config: {

@@ -9,8 +9,11 @@ export const WorldDaysControl: React.FC = () => {
   const { config, setCalendarConfig } = useWallpaperStore();
   const { calendar } = config;
 
+  const allWorldDays = useMemo(() => {
+    return getWorldDaysForYear(calendar.year);
+  }, [calendar.year]);
+
   const worldDaysInMonth = useMemo(() => {
-    const allWorldDays = getWorldDaysForYear(calendar.year);
     const monthPrefix = `${calendar.year}-${String(calendar.month + 1).padStart(
       2,
       "0"
@@ -19,7 +22,7 @@ export const WorldDaysControl: React.FC = () => {
     return allWorldDays
       .filter((day) => day.date.startsWith(monthPrefix))
       .sort((a, b) => a.date.localeCompare(b.date));
-  }, [calendar.month, calendar.year]);
+  }, [calendar.month, calendar.year, allWorldDays]);
 
   const hasData = worldDaysInMonth.length > 0;
 

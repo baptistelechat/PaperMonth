@@ -1,7 +1,7 @@
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { WidgetTitle } from "./WidgetTitle";
+import { WidgetTitle } from "./components/WidgetTitle";
 
 interface TipWidgetProps {
   fontFamily?: string;
@@ -20,8 +20,7 @@ export const TipWidget: React.FC<TipWidgetProps> = ({
 
   const uniqueCategories = Array.from(
     new Set(currentTips.filter((t) => !t.isCustom).map((t) => t.category))
-  )
-    .join(" • ");
+  ).join(" • ");
 
   return (
     <div className="group relative flex h-full flex-col">

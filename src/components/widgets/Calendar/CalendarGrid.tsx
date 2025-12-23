@@ -1,3 +1,4 @@
+import { EventTooltip } from "@/components/widgets/components/EventTooltip";
 import { Holiday, SchoolHoliday } from "@/hooks/useHolidays";
 import { cn } from "@/lib/utils";
 import { CalendarConfig } from "@/types/calendar";
@@ -10,7 +11,6 @@ import {
 import { WorldDayEvent } from "@/utils/worldDays";
 import React from "react";
 import { TooltipProvider } from "../../ui/tooltip";
-import { EventTooltip } from "@/components/shared/EventTooltip";
 
 interface CalendarGridProps {
   config: CalendarConfig;

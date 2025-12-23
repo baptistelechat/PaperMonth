@@ -2,8 +2,8 @@ import { Holiday, SchoolHoliday } from "@/hooks/useHolidays";
 import { formatEventLabel } from "@/utils/textFormatting";
 import { WorldDay } from "@/utils/worldDays";
 import React, { useMemo } from "react";
-import { EventTooltip } from "../shared/EventTooltip";
-import { WidgetTitle } from "./WidgetTitle";
+import { EventTooltip } from "./components/EventTooltip";
+import { WidgetTitle } from "./components/WidgetTitle";
 import { cn } from "@/lib/utils";
 
 interface KeyDatesWidgetProps {

@@ -6,10 +6,10 @@ import { getWorldDaysForYear } from "@/utils/worldDays";
 import { Sparkles } from "lucide-react";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
+import { WidgetTitle } from "./widgets/components/WidgetTitle";
 import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
 import { TipWidget } from "./widgets/TipWidget";
-import { WidgetContainer } from "./widgets/WidgetContainer";
-import { WidgetTitle } from "./widgets/WidgetTitle";
+import { WidgetContainer } from "./widgets/components/WidgetContainer";
 import { ZoneWidget } from "./widgets/ZoneWidget";
 
 // We use forwardRef to allow the parent to capture the canvas for export

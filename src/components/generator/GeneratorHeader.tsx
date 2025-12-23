@@ -1,6 +1,6 @@
 import { CustomResolutionDialog } from "@/components/CustomResolutionDialog";
+import { ConfigActions } from "@/components/generator/ConfigActions";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,18 +14,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getInitialConfig, useWallpaperStore } from "@/hooks/useWallpaperStore";
+import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import {
-  Calendar as CalendarIcon,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   Download,
+  Expand,
   Loader2,
-  RotateCcw,
-  Shuffle,
 } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 
 const RESOLUTION_PRESETS = [
   {
@@ -51,36 +49,9 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
   onExportYear,
 }) => {
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
-  const {
-    config,
-    setCalendarConfig,
-    setDimensionsConfig,
-    resetConfig,
-    randomizeConfig,
-  } = useWallpaperStore();
+  const { config, setCalendarConfig, setDimensionsConfig } =
+    useWallpaperStore();
   const { calendar, dimensions } = config;
-
-  // Determine if current view is current date
-  const isCurrentDate = useMemo(() => {
-    const now = new Date();
-    return (
-      calendar.month === now.getMonth() && calendar.year === now.getFullYear()
-    );
-  }, [calendar.month, calendar.year]);
-
-  // Determine if config is default
-  const isDefaultConfig = useMemo(() => {
-    const initial = getInitialConfig();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { currentTips: _c, ...configTipsWithoutCurrent } = config.tips;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { currentTips: _i, ...initialTipsWithoutCurrent } = initial.tips;
-
-    const configToCompare = { ...config, tips: configTipsWithoutCurrent };
-    const initialToCompare = { ...initial, tips: initialTipsWithoutCurrent };
-
-    return JSON.stringify(configToCompare) === JSON.stringify(initialToCompare);
-  }, [config]);
 
   // Navigation handlers
   const handlePrevMonth = () => {
@@ -105,11 +76,6 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
     setCalendarConfig({ month: newMonth, year: newYear });
   };
 
-  const handleCurrentMonth = () => {
-    const now = new Date();
-    setCalendarConfig({ month: now.getMonth(), year: now.getFullYear() });
-  };
-
   // Resolution handlers
   const currentPreset = RESOLUTION_PRESETS.find(
     (p) => Math.abs(p.scale - dimensions.scale) < 0.01
@@ -132,66 +98,37 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
     dimensions.exportHeight ?? Math.round(dimensions.height * dimensions.scale);
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-white/10 bg-zinc-900/50 px-6 backdrop-blur-md">
-      <div className="flex items-center gap-2">
-        <img
-          src="/icon.svg"
-          alt="PaperMonth Logo"
-          className="h-8 w-8 rounded-md"
-        />
-        <h1 className="text-lg font-semibold tracking-tight">PaperMonth</h1>
-      </div>
-
-      <div className="flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 p-1">
-        <Button variant="ghost" size="icon-sm" onClick={handlePrevMonth}>
-          <ChevronLeft className="size-4" />
-        </Button>
-        <div className="w-32 text-center text-sm font-medium capitalize select-none">
-          {new Date(calendar.year, calendar.month).toLocaleDateString("fr-FR", {
-            month: "long",
-            year: "numeric",
-          })}
+    <header className="flex h-auto flex-col gap-4 border-b border-white/10 bg-zinc-900/50 p-4 backdrop-blur-md lg:h-16 lg:flex-row lg:items-center lg:justify-end lg:gap-2 lg:px-6 lg:py-0">
+      <div className="hidden w-full justify-center lg:flex">
+        <div className="flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 p-1">
+          <Button variant="ghost" size="icon-sm" onClick={handlePrevMonth}>
+            <ChevronLeft className="size-4" />
+          </Button>
+          <div className="w-32 text-center text-sm font-medium capitalize select-none">
+            {new Date(calendar.year, calendar.month).toLocaleDateString(
+              "fr-FR",
+              {
+                month: "long",
+                year: "numeric",
+              }
+            )}
+          </div>
+          <Button variant="ghost" size="icon-sm" onClick={handleNextMonth}>
+            <ChevronRight className="size-4" />
+          </Button>
         </div>
-        <Button variant="ghost" size="icon-sm" onClick={handleNextMonth}>
-          <ChevronRight className="size-4" />
-        </Button>
       </div>
 
-      <div className="flex items-center gap-2">
-        <ButtonGroup>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleCurrentMonth}
-            title="Date courante"
-            disabled={isCurrentDate}
-          >
-            <CalendarIcon className="size-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={randomizeConfig}
-            title="Aléatoire"
-          >
-            <Shuffle className="size-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={resetConfig}
-            title="Réinitialiser"
-            disabled={isDefaultConfig}
-          >
-            <RotateCcw className="size-4" />
-          </Button>
-        </ButtonGroup>
+      <div className="flex w-full flex-col gap-3 lg:w-auto lg:flex-row lg:items-center lg:gap-2">
+        <div className="hidden justify-center lg:block">
+          <ConfigActions />
+        </div>
 
         <Select
           value={currentPreset ? currentPreset.label : "Custom"}
           onValueChange={handlePresetChange}
         >
-          <SelectTrigger className="w-48">
+          <SelectTrigger className="w-full lg:w-48">
             <SelectValue>
               <span className="flex items-center gap-2">
                 <span className="font-medium">
@@ -229,7 +166,7 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
           <DropdownMenuTrigger asChild>
             <Button
               disabled={isExporting}
-              className="min-w-36 transition-all duration-300"
+              className="w-full transition-all duration-300 lg:w-auto lg:min-w-36"
             >
               {isExporting ? (
                 <div className="animate-in fade-in zoom-in flex items-center gap-2 duration-300">
@@ -264,6 +201,13 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <div className=" lg:hidden flex w-full items-center justify-center text-muted-foreground gap-2">
+          <Expand className="size-3" />
+          <p className="text-xs">
+            Clique sur l'aperçu pour agrandir
+          </p>
+        </div>
       </div>
 
       <CustomResolutionDialog

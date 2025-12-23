@@ -89,7 +89,7 @@ export const Generator: React.FC = () => {
   };
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden bg-black font-sans text-white">
+    <div className="relative flex h-dvh w-full flex-col overflow-auto bg-black font-sans text-white lg:flex-row lg:overflow-hidden">
       <ExportOverlay
         isExporting={isExporting}
         progress={exportProgress}
@@ -100,7 +100,7 @@ export const Generator: React.FC = () => {
       <ControlPanel />
 
       {/* Main Content */}
-      <div className="relative flex min-w-0 flex-1 flex-col bg-zinc-950">
+      <div className="relative flex min-h-[50vh] md:min-h-[70vh] min-w-0 flex-1 flex-col bg-zinc-950 lg:min-h-0">
         <GeneratorHeader
           isExporting={isExporting}
           onExportMonth={handleExportMonth}

@@ -1,4 +1,5 @@
 import { ControlPanel } from "@/components/ControlPanel";
+import { CustomResolutionDialog } from "@/components/CustomResolutionDialog";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -37,6 +38,7 @@ export const Generator: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
+  const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
   const { exportWallpaper } = useExport();
   const {
     config,
@@ -140,6 +142,10 @@ export const Generator: React.FC = () => {
   );
 
   const handlePresetChange = (value: string) => {
+    if (value === "Custom") {
+      setIsCustomDialogOpen(true);
+      return;
+    }
     const preset = RESOLUTION_PRESETS.find((p) => p.label === value);
     if (preset) {
       // Keep dimensions at 1920x1080 (FHD) as base, but update scale for export
@@ -243,10 +249,25 @@ export const Generator: React.FC = () => {
                       </div>
                     </DropdownMenuItem>
                   ))}
+                  <DropdownMenuItem
+                    onClick={() => handlePresetChange("Custom")}
+                  >
+                    <div className="flex flex-col text-left">
+                      <span className="font-medium">Custom</span>
+                      <span className="text-muted-foreground text-xs">
+                        Définir manuellement
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </ButtonGroup>
           </div>
+
+          <CustomResolutionDialog
+            open={isCustomDialogOpen}
+            onOpenChange={setIsCustomDialogOpen}
+          />
         </header>
 
         {/* Canvas Preview Area */}

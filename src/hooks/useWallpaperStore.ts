@@ -152,12 +152,38 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       },
     })),
   setDimensionsConfig: (updates) =>
-    set((state) => ({
-      config: {
-        ...state.config,
-        dimensions: { ...state.config.dimensions, ...updates },
-      },
-    })),
+    set((state) => {
+      // If we are resetting to a standard preset (checking if width/height match standard ratios and no explicit export dims passed)
+      // we should clear the export dimensions to avoid "sticking" to old custom resolutions
+      // BUT updates might contain new exportWidth/Height, so we only clear if they are undefined in updates
+      // and we are setting standard dims.
+      
+      // Actually, a simpler rule: if we are setting new width/height, we should probably clear export dims 
+      // UNLESS they are explicitly provided in the updates.
+      // This handles the case where user switches from Custom (with export dims) to FHD (standard dims).
+      
+      const newExportWidth = 'exportWidth' in updates ? updates.exportWidth : undefined;
+      const newExportHeight = 'exportHeight' in updates ? updates.exportHeight : undefined;
+      
+      // If we are just updating scale (e.g. zoom), we want to keep export dims.
+      // If we are updating width/height (preset change), we want to clear export dims unless provided.
+      const isDimensionChange = 'width' in updates || 'height' in updates;
+      
+      const finalExportWidth = isDimensionChange ? newExportWidth : (state.config.dimensions.exportWidth ?? newExportWidth);
+      const finalExportHeight = isDimensionChange ? newExportHeight : (state.config.dimensions.exportHeight ?? newExportHeight);
+
+      return {
+        config: {
+          ...state.config,
+          dimensions: { 
+            ...state.config.dimensions, 
+            ...updates,
+            exportWidth: finalExportWidth,
+            exportHeight: finalExportHeight
+          },
+        },
+      };
+    }),
   setTipsConfig: (updates) =>
     set((state) => ({
       config: {

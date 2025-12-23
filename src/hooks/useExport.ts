@@ -4,7 +4,7 @@ import { useWallpaperStore } from "./useWallpaperStore";
 
 export function useExport() {
   const { config } = useWallpaperStore();
-  const { width, height, scale } = config.dimensions;
+  const { width, height, scale, exportWidth, exportHeight } = config.dimensions;
 
   const exportWallpaper = useCallback(
     async (ref: React.RefObject<HTMLElement>, fileName: string) => {
@@ -12,9 +12,9 @@ export function useExport() {
         return;
       }
 
-      // Use the stored scale for export
-      const finalWidth = Math.round(width * scale);
-      const finalHeight = Math.round(height * scale);
+      // Use the stored scale for export, or explicit dimensions if provided
+      const finalWidth = exportWidth ?? Math.round(width * scale);
+      const finalHeight = exportHeight ?? Math.round(height * scale);
 
       try {
         const dataUrl = await toPng(ref.current, {
@@ -38,7 +38,7 @@ export function useExport() {
         console.error("Failed to export wallpaper", err);
       }
     },
-    [width, height, scale]
+    [width, height, scale, exportWidth, exportHeight]
   );
 
   return { exportWallpaper };

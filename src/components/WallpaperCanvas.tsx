@@ -61,12 +61,37 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
         overlay: "bg-black",
       };
 
+  // Determine content max width (16:9 ratio) if container is wider
+  const contentStyle: React.CSSProperties = useMemo(() => {
+    // If we have explicit export dimensions, use those to determine ratio
+    // Otherwise use current dimensions
+    const currentWidth = dimensions.exportWidth ?? width;
+    const currentHeight = dimensions.exportHeight ?? height;
+
+    const ratio = currentWidth / currentHeight;
+    const standardRatio = 16 / 9;
+
+    // Allow a small epsilon for floating point differences
+    if (ratio > standardRatio + 0.01) {
+      // It's wider (Ultrawide), constrain width to match 16:9 height
+      // We calculate the max-width based on the current canvas height
+      // The canvas height in the DOM is `height` (px).
+      const maxWidth = height * standardRatio;
+      return {
+        maxWidth: `${maxWidth}px`,
+        margin: "0 auto",
+      };
+    }
+
+    return {};
+  }, [width, height, dimensions.exportWidth, dimensions.exportHeight]);
+
   return (
     <div
       ref={ref}
       id="wallpaper-canvas"
       className={cn(
-        "relative overflow-hidden flex flex-col p-16 pb-28 select-none",
+        "relative overflow-hidden flex flex-col p-16 pb-28 select-none justify-center",
         backgroundClass
       )}
       style={{
@@ -86,7 +111,10 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
       />
 
       {/* Content Layer */}
-      <div className="relative z-10 grid h-full w-full grid-cols-12 grid-rows-12 gap-4">
+      <div
+        className="relative z-10 grid h-full w-full grid-cols-12 grid-rows-12 gap-4"
+        style={contentStyle}
+      >
         {/* Calendar Widget */}
         <WidgetContainer
           colStart={1}
@@ -158,17 +186,17 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
               )}
             </WidgetContainer>
           ))}
-      </div>
 
-      {/* Watermark / Branding (Optional) */}
-      <div
-        className={cn(
-          "absolute bottom-16 right-16 font-light text-lg tracking-widest flex gap-2 items-center",
-          themeClasses.watermark
-        )}
-      >
-        <Sparkles className="size-6" />
-        PAPERMONTH
+        {/* Watermark / Branding (Inside Content Layer for correct alignment) */}
+        <div
+          className={cn(
+            "absolute -bottom-12 right-0 font-light text-lg tracking-widest flex gap-2 items-center",
+            themeClasses.watermark
+          )}
+        >
+          <Sparkles className="size-6" />
+          PAPERMONTH
+        </div>
       </div>
     </div>
   );

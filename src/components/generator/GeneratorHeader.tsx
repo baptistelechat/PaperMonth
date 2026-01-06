@@ -100,7 +100,7 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
             variant="ghost"
             size="icon-sm"
             onClick={prevMonth}
-            title="Mois précédent (←, Q ou A)"
+            title="Mois précédent"
           >
             <ChevronLeft className="size-4" />
           </Button>
@@ -117,7 +117,7 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
             variant="ghost"
             size="icon-sm"
             onClick={nextMonth}
-            title="Mois suivant (→ ou D)"
+            title="Mois suivant"
           >
             <ChevronRight className="size-4" />
           </Button>

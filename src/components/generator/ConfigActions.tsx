@@ -37,7 +37,7 @@ export const ConfigActions: React.FC = () => {
         variant="outline"
         size="icon"
         onClick={setCurrentDate}
-        title="Date courante (T)"
+        title="Date courante"
         disabled={isCurrentDate}
       >
         <CalendarIcon className="size-4" />

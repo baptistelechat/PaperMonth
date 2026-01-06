@@ -5,7 +5,7 @@ import { Calendar as CalendarIcon, RotateCcw, Shuffle } from "lucide-react";
 import React, { useMemo } from "react";
 
 export const ConfigActions: React.FC = () => {
-  const { config, setCalendarConfig, resetConfig, randomizeConfig } =
+  const { config, setCurrentDate, resetConfig, randomizeConfig } =
     useWallpaperStore();
   const { calendar } = config;
 
@@ -31,18 +31,13 @@ export const ConfigActions: React.FC = () => {
     return JSON.stringify(configToCompare) === JSON.stringify(initialToCompare);
   }, [config]);
 
-  const handleCurrentMonth = () => {
-    const now = new Date();
-    setCalendarConfig({ month: now.getMonth(), year: now.getFullYear() });
-  };
-
   return (
     <ButtonGroup>
       <Button
         variant="outline"
         size="icon"
-        onClick={handleCurrentMonth}
-        title="Date courante"
+        onClick={setCurrentDate}
+        title="Date courante (T)"
         disabled={isCurrentDate}
       >
         <CalendarIcon className="size-4" />

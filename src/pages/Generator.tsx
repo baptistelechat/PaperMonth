@@ -2,6 +2,7 @@ import { ControlPanel } from "@/components/ControlPanel";
 import { ExportOverlay } from "@/components/generator/ExportOverlay";
 import { GeneratorHeader } from "@/components/generator/GeneratorHeader";
 import { PreviewArea } from "@/components/generator/PreviewArea";
+import { useAppShortcuts } from "@/hooks/useAppShortcuts";
 import { useExport } from "@/hooks/useExport";
 import { useUmami } from "@/hooks/useUmami";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
@@ -19,6 +20,9 @@ export const Generator: React.FC = () => {
   });
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
+
+  // Initialize global shortcuts
+  useAppShortcuts();
 
   const { exportWallpaper, exportYear } = useExport();
   const { track } = useUmami();

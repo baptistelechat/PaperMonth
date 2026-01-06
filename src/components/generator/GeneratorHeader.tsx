@@ -41,32 +41,9 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
   onExportYear,
 }) => {
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
-  const { config, setCalendarConfig, setDimensionsConfig } =
+  const { config, setDimensionsConfig, nextMonth, prevMonth } =
     useWallpaperStore();
   const { calendar, dimensions } = config;
-
-  // Navigation handlers
-  const handlePrevMonth = () => {
-    let newMonth = calendar.month - 1;
-    let newYear = calendar.year;
-
-    if (newMonth < 0) {
-      newMonth = 11;
-      newYear -= 1;
-    }
-    setCalendarConfig({ month: newMonth, year: newYear });
-  };
-
-  const handleNextMonth = () => {
-    let newMonth = calendar.month + 1;
-    let newYear = calendar.year;
-
-    if (newMonth > 11) {
-      newMonth = 0;
-      newYear += 1;
-    }
-    setCalendarConfig({ month: newMonth, year: newYear });
-  };
 
   // Resolution handlers
   const hasMultipleResolutions =
@@ -119,7 +96,12 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
     <header className="flex h-auto flex-col gap-4 border-b border-white/10 bg-zinc-900/50 p-4 backdrop-blur-md lg:h-16 lg:flex-row lg:items-center lg:justify-end lg:gap-2 lg:px-6 lg:py-0">
       <div className="hidden w-full justify-center lg:flex">
         <div className="flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 p-1">
-          <Button variant="ghost" size="icon-sm" onClick={handlePrevMonth}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={prevMonth}
+            title="Mois précédent (←, Q ou A)"
+          >
             <ChevronLeft className="size-4" />
           </Button>
           <div className="w-32 text-center text-sm font-medium capitalize select-none">
@@ -131,7 +113,12 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
               }
             )}
           </div>
-          <Button variant="ghost" size="icon-sm" onClick={handleNextMonth}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={nextMonth}
+            title="Mois suivant (→ ou D)"
+          >
             <ChevronRight className="size-4" />
           </Button>
         </div>

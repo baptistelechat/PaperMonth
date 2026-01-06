@@ -82,7 +82,7 @@ export const FullScreenPreview: React.FC<FullScreenPreviewProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="h-dvh w-screen max-w-none rounded-none border-none bg-zinc-950 p-0 text-white sm:max-w-none focus:outline-none"
+        className="h-dvh w-screen max-w-none rounded-none border-none bg-zinc-950 p-0 text-white focus:outline-none sm:max-w-none"
         showCloseButton={false}
       >
         <div
@@ -93,7 +93,7 @@ export const FullScreenPreview: React.FC<FullScreenPreviewProps> = ({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-4 z-60 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 md:right-8 md:top-8"
+            className="absolute top-4 right-4 z-60 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 md:top-8 md:right-8"
             onClick={() => onOpenChange(false)}
           >
             <X className="h-6 w-6" />
@@ -101,7 +101,7 @@ export const FullScreenPreview: React.FC<FullScreenPreviewProps> = ({
           </Button>
 
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-zinc-950/50 backdrop-blur-sm z-50">
+            <div className="absolute inset-0 z-50 flex items-center justify-center bg-zinc-950/50 backdrop-blur-sm">
               <Loader2 className="h-8 w-8 animate-spin text-white" />
             </div>
           )}
@@ -120,8 +120,8 @@ export const FullScreenPreview: React.FC<FullScreenPreviewProps> = ({
           </div>
 
           {/* Overlay Info */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none">
-            <div className="flex items-center gap-2 rounded-full bg-black/60 px-4 py-2 text-xs text-zinc-400 backdrop-blur-md border border-white/10">
+          <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-4 py-2 text-xs text-zinc-400 backdrop-blur-md">
               <Maximize2 className="h-3 w-3" />
               {Math.round(dimensions.width * dimensions.scale)} x{" "}
               {Math.round(dimensions.height * dimensions.scale)}

@@ -63,6 +63,7 @@ export const getInitialConfig = (): WallpaperConfig => ({
     width: 1920,
     height: 1080,
     scale: 1,
+    exportResolutions: [],
   },
   tips: {
     currentTips: getRandomTips(3, [

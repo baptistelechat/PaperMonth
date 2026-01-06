@@ -1,3 +1,4 @@
+import { getResolutionScale } from "@/constants/resolutions";
 import { saveAs } from "file-saver";
 import { toBlob, toPng } from "html-to-image";
 import JSZip from "jszip";
@@ -5,42 +6,130 @@ import { useCallback } from "react";
 import { getRandomTips, useWallpaperStore } from "./useWallpaperStore";
 
 export function useExport() {
-  const { config, setCalendarConfig, setTipsConfig } = useWallpaperStore();
-  const { width, height, scale, exportWidth, exportHeight } = config.dimensions;
+  const { config, setCalendarConfig, setTipsConfig, setDimensionsConfig } =
+    useWallpaperStore();
+  const { width, height, scale, exportWidth, exportHeight, exportResolutions } =
+    config.dimensions;
 
   const exportWallpaper = useCallback(
-    async (ref: React.RefObject<HTMLElement>, fileName: string) => {
+    async (
+      ref: React.RefObject<HTMLElement>,
+      fileName: string,
+      onProgress?: (current: number, total: number) => void
+    ) => {
       if (ref.current === null) {
         return;
       }
 
-      // Use the stored scale for export, or explicit dimensions if provided
-      const finalWidth = exportWidth ?? Math.round(width * scale);
-      const finalHeight = exportHeight ?? Math.round(height * scale);
+      // Check if we have multiple resolutions to export
+      const targets =
+        exportResolutions && exportResolutions.length > 0
+          ? exportResolutions
+          : [
+              {
+                width: exportWidth ?? Math.round(width * scale),
+                height: exportHeight ?? Math.round(height * scale),
+                label: "Default",
+              },
+            ];
 
-      try {
-        const dataUrl = await toPng(ref.current, {
-          cacheBust: true,
-          width: finalWidth,
-          height: finalHeight,
-          pixelRatio: 1,
-          style: {
-            transform: `scale(${scale})`,
-            transformOrigin: "top left",
-            width: `${width}px`,
-            height: `${height}px`,
-          },
-        });
+      if (targets.length === 1 && targets[0].label === "Default") {
+        // Simple single export
+        const finalWidth = targets[0].width;
+        const finalHeight = targets[0].height;
 
-        const link = document.createElement("a");
-        link.download = `${fileName}.png`;
-        link.href = dataUrl;
-        link.click();
-      } catch (err) {
-        console.error("Failed to export wallpaper", err);
+        try {
+          const dataUrl = await toPng(ref.current, {
+            cacheBust: true,
+            width: finalWidth,
+            height: finalHeight,
+            pixelRatio: 1,
+            style: {
+              transform: `scale(${scale})`,
+              transformOrigin: "top left",
+              width: `${width}px`,
+              height: `${height}px`,
+            },
+          });
+
+          const link = document.createElement("a");
+          link.download = `${fileName}.png`;
+          link.href = dataUrl;
+          link.click();
+        } catch (err) {
+          console.error("Failed to export wallpaper", err);
+        }
+      } else {
+        // Multi-resolution export (ZIP)
+        const zip = new JSZip();
+        const originalDimensions = { ...config.dimensions };
+
+        try {
+          for (let i = 0; i < targets.length; i++) {
+            const target = targets[i];
+            onProgress?.(i, targets.length);
+
+            // Update store to render correct aspect ratio
+            const referenceHeight = 1080;
+            const newScale = getResolutionScale(target.height);
+            const baseWidth =
+              Math.round((target.width / newScale) * 10000) / 10000;
+            const baseHeight = referenceHeight;
+
+            setDimensionsConfig({
+              width: baseWidth,
+              height: baseHeight,
+              scale: newScale,
+              exportWidth: target.width,
+              exportHeight: target.height,
+            });
+
+            // Wait for render
+            await new Promise((resolve) => setTimeout(resolve, 500));
+
+            const blob = await toBlob(ref.current, {
+              cacheBust: true,
+              width: target.width,
+              height: target.height,
+              pixelRatio: 1,
+              style: {
+                transform: `scale(${newScale})`,
+                transformOrigin: "top left",
+                width: `${baseWidth}px`,
+                height: `${baseHeight}px`,
+              },
+            });
+
+            if (blob) {
+              const suffix =
+                target.label !== "Default" && target.label !== "Custom"
+                  ? `_${target.label}`
+                  : `_${target.width}x${target.height}`;
+              zip.file(`${fileName}${suffix}.png`, blob);
+            }
+          }
+
+          const content = await zip.generateAsync({ type: "blob" });
+          saveAs(content, `${fileName}_Multi.zip`);
+        } catch (err) {
+          console.error("Failed to export multi-res", err);
+        } finally {
+          // Restore
+          setDimensionsConfig(originalDimensions);
+          onProgress?.(0, 0);
+        }
       }
     },
-    [width, height, scale, exportWidth, exportHeight]
+    [
+      width,
+      height,
+      scale,
+      exportWidth,
+      exportHeight,
+      exportResolutions,
+      config.dimensions,
+      setDimensionsConfig,
+    ]
   );
 
   const exportYear = useCallback(
@@ -56,24 +145,27 @@ export function useExport() {
 
       const zip = new JSZip();
       const originalConfig = { ...config };
+      const targets =
+        exportResolutions && exportResolutions.length > 0
+          ? exportResolutions
+          : [
+              {
+                width: exportWidth ?? Math.round(width * scale),
+                height: exportHeight ?? Math.round(height * scale),
+                label: "Default",
+              },
+            ];
 
-      // We need to keep the user's tips for the currently displayed month
-      // if it was manually edited. But here we assume if the user is exporting
-      // the year, they want the current state for the current month, and random for others.
-      // The store already holds the "current state" for the displayed month.
+      // Calculate total steps: 12 months * number of resolutions
+      const totalSteps = 12 * targets.length;
+      let currentStep = 0;
 
       const currentMonthIndex = originalConfig.calendar.month;
       const currentTips = originalConfig.tips.currentTips;
 
       try {
-        // Iterate through all 12 months
         for (let m = 0; m < 12; m++) {
-          if (abortSignal?.aborted) {
-            throw new Error("Export cancelled");
-          }
-
-          // Report progress at start of iteration (0/12, 1/12, ...)
-          onProgress?.(m, 12);
+          if (abortSignal?.aborted) throw new Error("Export cancelled");
 
           // Update month
           setCalendarConfig({ month: m, year });
@@ -83,53 +175,83 @@ export function useExport() {
             m === currentMonthIndex &&
             year === originalConfig.calendar.year
           ) {
-            // Restore original tips for the current month
             setTipsConfig({ currentTips });
           } else {
-            // Generate random tips for other months
             const newTips = getRandomTips(3, config.tips.selectedCategories);
             setTipsConfig({ currentTips: newTips });
           }
 
-          // Wait for render to update
-          // A short delay is needed for React to commit changes and DOM to update
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          // Loop through resolutions for this month
+          for (let r = 0; r < targets.length; r++) {
+            const target = targets[r];
+            onProgress?.(currentStep, totalSteps);
 
-          if (abortSignal?.aborted) {
-            throw new Error("Export cancelled");
+            if (targets.length > 1 || target.label !== "Default") {
+              // Only rescale if we are doing multi-res or custom
+              const referenceHeight = 1080;
+              const newScale = getResolutionScale(target.height);
+              const baseWidth =
+                Math.round((target.width / newScale) * 10000) / 10000;
+              const baseHeight = referenceHeight;
+
+              setDimensionsConfig({
+                width: baseWidth,
+                height: baseHeight,
+                scale: newScale,
+                exportWidth: target.width,
+                exportHeight: target.height,
+              });
+
+              await new Promise((resolve) => setTimeout(resolve, 300));
+            } else {
+              // If default, just wait a bit for month change
+              if (r === 0)
+                await new Promise((resolve) => setTimeout(resolve, 200));
+            }
+
+            // Ensure we use the CURRENT dimensions in store after potential update
+            const currentDims = useWallpaperStore.getState().config.dimensions;
+            const currentScale = currentDims.scale;
+            const currentW = currentDims.width;
+            const currentH = currentDims.height;
+
+            const blob = await toBlob(ref.current, {
+              cacheBust: true,
+              width: target.width,
+              height: target.height,
+              pixelRatio: 1,
+              style: {
+                transform: `scale(${currentScale})`,
+                transformOrigin: "top left",
+                width: `${currentW}px`,
+                height: `${currentH}px`,
+              },
+            });
+
+            if (blob) {
+              const monthStr = (m + 1).toString().padStart(2, "0");
+              let fileName = `PaperMonth_${year}_${monthStr}`;
+
+              if (targets.length > 1) {
+                // If multi-res, maybe put in folders or suffix?
+                // Suffix is safer for flat zip
+                const suffix =
+                  target.label !== "Default" && target.label !== "Custom"
+                    ? `_${target.label}`
+                    : `_${target.width}x${target.height}`;
+                fileName += suffix;
+              }
+
+              zip.file(`${fileName}.png`, blob);
+            }
+
+            currentStep++;
+            onProgress?.(currentStep, totalSteps);
           }
-
-          const finalWidth = exportWidth ?? Math.round(width * scale);
-          const finalHeight = exportHeight ?? Math.round(height * scale);
-
-          const blob = await toBlob(ref.current, {
-            cacheBust: true,
-            width: finalWidth,
-            height: finalHeight,
-            pixelRatio: 1,
-            style: {
-              transform: `scale(${scale})`,
-              transformOrigin: "top left",
-              width: `${width}px`,
-              height: `${height}px`,
-            },
-          });
-
-          if (blob) {
-            // Format: PaperMonth_2025_01.png
-            const monthStr = (m + 1).toString().padStart(2, "0");
-            zip.file(`PaperMonth_${year}_${monthStr}.png`, blob);
-          }
-
-          // Report progress after completion (1/12, 2/12...)
-          onProgress?.(m + 1, 12);
         }
 
-        if (abortSignal?.aborted) {
-          throw new Error("Export cancelled");
-        }
+        if (abortSignal?.aborted) throw new Error("Export cancelled");
 
-        // Generate and save zip
         const content = await zip.generateAsync({ type: "blob" });
         saveAs(content, `PaperMonth_${year}_Year.zip`);
       } catch (err) {
@@ -139,9 +261,10 @@ export function useExport() {
           console.error("Failed to export year", err);
         }
       } finally {
-        // Restore original state
         setCalendarConfig(originalConfig.calendar);
         setTipsConfig(originalConfig.tips);
+        setDimensionsConfig(originalConfig.dimensions);
+        onProgress?.(0, 0);
       }
     },
     [
@@ -151,8 +274,10 @@ export function useExport() {
       scale,
       exportWidth,
       exportHeight,
+      exportResolutions,
       setCalendarConfig,
       setTipsConfig,
+      setDimensionsConfig,
     ]
   );
 

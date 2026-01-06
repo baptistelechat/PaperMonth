@@ -57,6 +57,7 @@ export interface DimensionsConfig {
   scale: number;
   exportWidth?: number;
   exportHeight?: number;
+  exportResolutions?: { width: number; height: number; label: string }[];
 }
 
 import { Tip, TipCategory } from "@/data/tips";

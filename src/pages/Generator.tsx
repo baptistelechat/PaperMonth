@@ -59,7 +59,9 @@ export const Generator: React.FC = () => {
     // But if we wanted to support export-only scaling, we could pass overrideWidth/Height here
     // based on a different selection than the view dimensions.
     // For now, let's assume the user wants to export what they see (dimensions in store).
-    await exportWallpaper(canvasRef, fileName);
+    await exportWallpaper(canvasRef, fileName, (current, total) => {
+      setExportProgress({ current, total });
+    });
     setIsExporting(false);
     setExportProgress({ current: 0, total: 0 });
   };
@@ -107,7 +109,7 @@ export const Generator: React.FC = () => {
       <ControlPanel />
 
       {/* Main Content */}
-      <div className="relative flex min-h-[50vh] md:min-h-[70vh] min-w-0 flex-1 flex-col bg-zinc-950 lg:min-h-0">
+      <div className="relative flex min-h-[50vh] min-w-0 flex-1 flex-col bg-zinc-950 md:min-h-[70vh] lg:min-h-0">
         <GeneratorHeader
           isExporting={isExporting}
           onExportMonth={handleExportMonth}

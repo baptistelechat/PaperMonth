@@ -20,10 +20,10 @@ export const ExportOverlay: React.FC<ExportOverlayProps> = ({
   if (!isExporting) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm cursor-wait">
-      <div className="flex flex-col items-center gap-4 rounded-lg bg-zinc-900 p-8 shadow-2xl border border-white/10 w-80">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
-        <div className="text-center w-full space-y-2">
+    <div className="fixed inset-0 z-50 flex cursor-wait flex-col items-center justify-center bg-black/60 backdrop-blur-sm">
+      <div className="flex w-80 flex-col items-center gap-4 rounded-lg border border-white/10 bg-zinc-900 p-8 shadow-2xl">
+        <Loader2 className="text-primary h-12 w-12 animate-spin" />
+        <div className="w-full space-y-2 text-center">
           <h3 className="text-lg font-semibold text-white">
             Exportation en cours...
           </h3>
@@ -33,14 +33,12 @@ export const ExportOverlay: React.FC<ExportOverlayProps> = ({
                 value={(progress.current / progress.total) * 100}
                 className="h-2"
               />
-              <p className="text-sm text-zinc-400 animate-pulse">
-                Génération du mois{" "}
-                {Math.min(progress.current + 1, progress.total)} sur{" "}
-                {progress.total} en cours
+              <p className="animate-pulse text-sm text-zinc-400">
+                Génération {progress.current} sur {progress.total}
               </p>
             </>
           ) : (
-            <p className="text-sm text-zinc-400 animate-pulse">
+            <p className="animate-pulse text-sm text-zinc-400">
               Veuillez patienter pendant la génération
             </p>
           )}
@@ -51,7 +49,7 @@ export const ExportOverlay: React.FC<ExportOverlayProps> = ({
           <Button
             variant="destructive"
             size="sm"
-            className="w-full mt-2"
+            className="mt-2 w-full"
             onClick={onCancel}
           >
             Annuler

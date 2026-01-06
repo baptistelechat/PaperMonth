@@ -48,7 +48,7 @@ export const PreviewArea: React.FC<PreviewAreaProps> = ({
             transformOrigin: "center",
             boxShadow: "0 0 100px rgba(0,0,0,0.5)",
           }}
-          className="transition-transform duration-200 ease-out cursor-pointer lg:cursor-default"
+          className="cursor-pointer transition-transform duration-200 ease-out lg:cursor-default"
         >
           <WallpaperCanvas ref={canvasRef} />
 
@@ -59,7 +59,7 @@ export const PreviewArea: React.FC<PreviewAreaProps> = ({
         </div>
 
         {/* Zoom Info */}
-        <div className="absolute right-6 bottom-4 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur flex items-center gap-2">
+        <div className="absolute right-6 bottom-4 flex items-center gap-2 rounded-full border border-white/10 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-400 backdrop-blur">
           <Settings2 className="size-3" />
           {Math.round(dimensions.width * dimensions.scale)}x
           {Math.round(dimensions.height * dimensions.scale)}px -{" "}

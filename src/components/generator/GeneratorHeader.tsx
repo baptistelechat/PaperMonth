@@ -14,28 +14,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  getResolutionScale,
+  RESOLUTION_PRESETS,
+} from "@/constants/resolutions";
 import { useWallpaperStore } from "@/hooks/useWallpaperStore";
 import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  CircleHelp,
   Download,
   Expand,
   Loader2,
 } from "lucide-react";
 import React, { useState } from "react";
-
-const RESOLUTION_PRESETS = [
-  {
-    label: "HD",
-    desc: "1280x720",
-    width: 1280,
-    height: 720,
-    scale: 1280 / 1920,
-  },
-  { label: "FHD", desc: "1920x1080", width: 1920, height: 1080, scale: 1 },
-  { label: "4K", desc: "3840x2160", width: 3840, height: 2160, scale: 2 },
-];
+import { ShortcutsDialog } from "../ShortcutsDialog";
 
 interface GeneratorHeaderProps {
   isExporting: boolean;
@@ -49,37 +43,31 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
   onExportYear,
 }) => {
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
-  const { config, setCalendarConfig, setDimensionsConfig } =
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
+  const { config, setDimensionsConfig, nextMonth, prevMonth } =
     useWallpaperStore();
   const { calendar, dimensions } = config;
 
-  // Navigation handlers
-  const handlePrevMonth = () => {
-    let newMonth = calendar.month - 1;
-    let newYear = calendar.year;
-
-    if (newMonth < 0) {
-      newMonth = 11;
-      newYear -= 1;
-    }
-    setCalendarConfig({ month: newMonth, year: newYear });
-  };
-
-  const handleNextMonth = () => {
-    let newMonth = calendar.month + 1;
-    let newYear = calendar.year;
-
-    if (newMonth > 11) {
-      newMonth = 0;
-      newYear += 1;
-    }
-    setCalendarConfig({ month: newMonth, year: newYear });
-  };
-
   // Resolution handlers
-  const currentPreset = RESOLUTION_PRESETS.find(
-    (p) => Math.abs(p.scale - dimensions.scale) < 0.01
-  );
+  const hasMultipleResolutions =
+    dimensions.exportResolutions && dimensions.exportResolutions.length > 0;
+
+  const currentPreset = hasMultipleResolutions
+    ? null
+    : RESOLUTION_PRESETS.find((p) => {
+        const currentExportWidth =
+          dimensions.exportWidth ??
+          Math.round(dimensions.width * dimensions.scale);
+        const currentExportHeight =
+          dimensions.exportHeight ??
+          Math.round(dimensions.height * dimensions.scale);
+
+        // Allow small rounding errors
+        return (
+          Math.abs(p.width - currentExportWidth) < 2 &&
+          Math.abs(p.height - currentExportHeight) < 2
+        );
+      });
 
   const handlePresetChange = (value: string) => {
     if (value === "Custom") {
@@ -88,7 +76,17 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
     }
     const preset = RESOLUTION_PRESETS.find((p) => p.label === value);
     if (preset) {
-      setDimensionsConfig({ width: 1920, height: 1080, scale: preset.scale });
+      const scale = getResolutionScale(preset.height);
+      const baseWidth = Math.round((preset.width / scale) * 10000) / 10000;
+
+      setDimensionsConfig({
+        width: baseWidth,
+        height: 1080,
+        scale: scale,
+        exportWidth: preset.width,
+        exportHeight: preset.height,
+        exportResolutions: [],
+      });
     }
   };
 
@@ -101,7 +99,12 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
     <header className="flex h-auto flex-col gap-4 border-b border-white/10 bg-zinc-900/50 p-4 backdrop-blur-md lg:h-16 lg:flex-row lg:items-center lg:justify-end lg:gap-2 lg:px-6 lg:py-0">
       <div className="hidden w-full justify-center lg:flex">
         <div className="flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900 p-1">
-          <Button variant="ghost" size="icon-sm" onClick={handlePrevMonth}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={prevMonth}
+            title="Mois précédent"
+          >
             <ChevronLeft className="size-4" />
           </Button>
           <div className="w-32 text-center text-sm font-medium capitalize select-none">
@@ -113,7 +116,12 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
               }
             )}
           </div>
-          <Button variant="ghost" size="icon-sm" onClick={handleNextMonth}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={nextMonth}
+            title="Mois suivant"
+          >
             <ChevronRight className="size-4" />
           </Button>
         </div>
@@ -132,10 +140,12 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
             <SelectValue>
               <span className="flex items-center gap-2">
                 <span className="font-medium">
-                  {currentPreset ? currentPreset.label : "Custom"}
+                  {currentPreset ? currentPreset.label : "Personnaliser"}
                 </span>
                 <span className="text-muted-foreground text-xs">
-                  {displayWidth}x{displayHeight}
+                  {hasMultipleResolutions
+                    ? `(${dimensions.exportResolutions?.length})`
+                    : `${displayWidth}x${displayHeight}`}
                 </span>
               </span>
             </SelectValue>
@@ -151,11 +161,14 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
                 </div>
               </SelectItem>
             ))}
-            <SelectItem value="Custom">
+            <SelectItem
+              value="Custom"
+              onPointerUp={() => setIsCustomDialogOpen(true)}
+            >
               <div className="flex flex-col text-left">
-                <span className="font-medium">Custom</span>
+                <span className="font-medium">Personnaliser</span>
                 <span className="text-muted-foreground text-xs">
-                  Définir manuellement
+                  Multi-écrans & sur mesure
                 </span>
               </div>
             </SelectItem>
@@ -202,7 +215,16 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className=" lg:hidden flex w-full items-center justify-center text-muted-foreground gap-2">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setIsShortcutsOpen(true)}
+          title="Raccourcis clavier"
+        >
+          <CircleHelp className="size-5" />
+        </Button>
+
+        <div className=" text-muted-foreground flex w-full items-center justify-center gap-2 lg:hidden">
           <Expand className="size-3" />
           <p className="text-xs">Clique sur l'aperçu pour agrandir</p>
         </div>
@@ -211,6 +233,10 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
       <CustomResolutionDialog
         open={isCustomDialogOpen}
         onOpenChange={setIsCustomDialogOpen}
+      />
+      <ShortcutsDialog
+        open={isShortcutsOpen}
+        onOpenChange={setIsShortcutsOpen}
       />
     </header>
   );

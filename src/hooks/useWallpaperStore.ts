@@ -24,9 +24,15 @@ interface WallpaperStore {
   removeWidget: (id: string) => void;
   resetConfig: () => void;
   randomizeConfig: () => void;
+  nextMonth: () => void;
+  prevMonth: () => void;
+  setCurrentDate: () => void;
 }
 
-export const getRandomTips = (count: number = 3, categories: TipCategory[] = []) => {
+export const getRandomTips = (
+  count: number = 3,
+  categories: TipCategory[] = []
+) => {
   let filteredTips = TIPS;
   if (categories.length > 0) {
     filteredTips = TIPS.filter((tip) => categories.includes(tip.category));
@@ -52,6 +58,8 @@ export const getInitialConfig = (): WallpaperConfig => ({
     type: "gradient",
     gradient: GRADIENT_PRESETS[17].className,
     overlayOpacity: 0.1,
+    blur: 0,
+    noise: 0,
     textColor: "light",
   },
   typography: {
@@ -63,6 +71,7 @@ export const getInitialConfig = (): WallpaperConfig => ({
     width: 1920,
     height: 1080,
     scale: 1,
+    exportResolutions: [],
   },
   tips: {
     currentTips: getRandomTips(3, [
@@ -157,29 +166,35 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       // we should clear the export dimensions to avoid "sticking" to old custom resolutions
       // BUT updates might contain new exportWidth/Height, so we only clear if they are undefined in updates
       // and we are setting standard dims.
-      
-      // Actually, a simpler rule: if we are setting new width/height, we should probably clear export dims 
+
+      // Actually, a simpler rule: if we are setting new width/height, we should probably clear export dims
       // UNLESS they are explicitly provided in the updates.
       // This handles the case where user switches from Custom (with export dims) to FHD (standard dims).
-      
-      const newExportWidth = 'exportWidth' in updates ? updates.exportWidth : undefined;
-      const newExportHeight = 'exportHeight' in updates ? updates.exportHeight : undefined;
-      
+
+      const newExportWidth =
+        "exportWidth" in updates ? updates.exportWidth : undefined;
+      const newExportHeight =
+        "exportHeight" in updates ? updates.exportHeight : undefined;
+
       // If we are just updating scale (e.g. zoom), we want to keep export dims.
       // If we are updating width/height (preset change), we want to clear export dims unless provided.
-      const isDimensionChange = 'width' in updates || 'height' in updates;
-      
-      const finalExportWidth = isDimensionChange ? newExportWidth : (state.config.dimensions.exportWidth ?? newExportWidth);
-      const finalExportHeight = isDimensionChange ? newExportHeight : (state.config.dimensions.exportHeight ?? newExportHeight);
+      const isDimensionChange = "width" in updates || "height" in updates;
+
+      const finalExportWidth = isDimensionChange
+        ? newExportWidth
+        : state.config.dimensions.exportWidth ?? newExportWidth;
+      const finalExportHeight = isDimensionChange
+        ? newExportHeight
+        : state.config.dimensions.exportHeight ?? newExportHeight;
 
       return {
         config: {
           ...state.config,
-          dimensions: { 
-            ...state.config.dimensions, 
+          dimensions: {
+            ...state.config.dimensions,
             ...updates,
             exportWidth: finalExportWidth,
-            exportHeight: finalExportHeight
+            exportHeight: finalExportHeight,
           },
         },
       };
@@ -254,4 +269,58 @@ export const useWallpaperStore = create<WallpaperStore>((set) => ({
       },
     }));
   },
+  nextMonth: () =>
+    set((state) => {
+      let newMonth = state.config.calendar.month + 1;
+      let newYear = state.config.calendar.year;
+
+      if (newMonth > 11) {
+        newMonth = 0;
+        newYear += 1;
+      }
+      return {
+        config: {
+          ...state.config,
+          calendar: {
+            ...state.config.calendar,
+            month: newMonth,
+            year: newYear,
+          },
+        },
+      };
+    }),
+  prevMonth: () =>
+    set((state) => {
+      let newMonth = state.config.calendar.month - 1;
+      let newYear = state.config.calendar.year;
+
+      if (newMonth < 0) {
+        newMonth = 11;
+        newYear -= 1;
+      }
+      return {
+        config: {
+          ...state.config,
+          calendar: {
+            ...state.config.calendar,
+            month: newMonth,
+            year: newYear,
+          },
+        },
+      };
+    }),
+  setCurrentDate: () =>
+    set((state) => {
+      const now = new Date();
+      return {
+        config: {
+          ...state.config,
+          calendar: {
+            ...state.config.calendar,
+            month: now.getMonth(),
+            year: now.getFullYear(),
+          },
+        },
+      };
+    }),
 }));

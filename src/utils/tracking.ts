@@ -16,18 +16,32 @@ export const getExportTrackingData = (
       ? gradient.name
       : "Custom Gradient";
 
-  const finalWidth =
-    config.dimensions.exportWidth ??
-    Math.round(config.dimensions.width * config.dimensions.scale);
-  const finalHeight =
-    config.dimensions.exportHeight ??
-    Math.round(config.dimensions.height * config.dimensions.scale);
+  const exportResolutions = config.dimensions.exportResolutions;
+  const hasMultipleResolutions =
+    exportResolutions && exportResolutions.length > 0;
+
+  let dimensionsStr = "";
+
+  if (hasMultipleResolutions) {
+    dimensionsStr = exportResolutions
+      .map((r) => `${r.width}x${r.height}`)
+      .join(", ");
+  } else {
+    const finalWidth =
+      config.dimensions.exportWidth ??
+      Math.round(config.dimensions.width * config.dimensions.scale);
+    const finalHeight =
+      config.dimensions.exportHeight ??
+      Math.round(config.dimensions.height * config.dimensions.scale);
+    dimensionsStr = `${finalWidth}x${finalHeight}`;
+  }
 
   return {
     type: exportType,
+    resolution_count: hasMultipleResolutions ? exportResolutions.length : 1,
     year: config.calendar.year,
     month: exportType === "Month" ? config.calendar.month + 1 : undefined,
-    dimensions: `${finalWidth}x${finalHeight}`,
+    dimensions: dimensionsStr,
     show_holidays: config.calendar.showHolidays,
     show_school_holidays: config.calendar.showSchoolHolidays,
     show_world_days: config.calendar.showWorldDays,

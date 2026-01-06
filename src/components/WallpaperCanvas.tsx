@@ -6,10 +6,10 @@ import { getWorldDaysForYear } from "@/utils/worldDays";
 import { Sparkles } from "lucide-react";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
+import { WidgetContainer } from "./widgets/components/WidgetContainer";
 import { WidgetTitle } from "./widgets/components/WidgetTitle";
 import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
 import { TipWidget } from "./widgets/TipWidget";
-import { WidgetContainer } from "./widgets/components/WidgetContainer";
 import { ZoneWidget } from "./widgets/ZoneWidget";
 
 // We use forwardRef to allow the parent to capture the canvas for export
@@ -90,17 +90,38 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
     <div
       ref={ref}
       id="wallpaper-canvas"
-      className={cn(
-        "relative overflow-hidden flex flex-col p-16 pb-28 select-none justify-center",
-        backgroundClass
-      )}
+      className="relative flex flex-col justify-center overflow-hidden p-16 pb-28 select-none"
       style={{
-        ...backgroundStyle,
         width: `${width}px`,
         height: `${height}px`,
         fontFamily: typography.applyToAll ? typography.fontFamily : undefined,
       }}
     >
+      {/* Background Layer */}
+      <div
+        className={cn(
+          "absolute inset-0 transition-all duration-300 ease-in-out",
+          backgroundClass
+        )}
+        style={{
+          ...backgroundStyle,
+          filter: background.blur ? `blur(${background.blur}px)` : "none",
+          transform: background.blur ? "scale(1.01)" : "scale(1)", // Scale up to hide blur edges
+        }}
+      />
+
+      {/* Noise Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          opacity: background.noise ?? 0,
+          backgroundImage: "url(/noise.svg)",
+          backgroundRepeat: "repeat",
+          backgroundSize: "128px", // Small size to repeat frequently
+          mixBlendMode: "overlay", // Better blending with colors
+        }}
+      />
+
       {/* Overlay */}
       <div
         className={cn(

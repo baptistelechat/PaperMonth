@@ -42,6 +42,8 @@ export interface BackgroundConfig {
   gradient?: string; // Tailwind class or CSS gradient
   imageUrl?: string;
   overlayOpacity: number; // 0-1
+  blur?: number; // 0-40px
+  noise?: number; // 0-1 (opacity of noise layer)
   textColor: "light" | "dark";
 }
 
@@ -57,6 +59,7 @@ export interface DimensionsConfig {
   scale: number;
   exportWidth?: number;
   exportHeight?: number;
+  exportResolutions?: { width: number; height: number; label: string }[];
 }
 
 import { Tip, TipCategory } from "@/data/tips";

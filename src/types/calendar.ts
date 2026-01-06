@@ -43,6 +43,7 @@ export interface BackgroundConfig {
   imageUrl?: string;
   overlayOpacity: number; // 0-1
   blur?: number; // 0-40px
+  noise?: number; // 0-1 (opacity of noise layer)
   textColor: "light" | "dark";
 }
 

@@ -53,6 +53,7 @@ export const getInitialConfig = (): WallpaperConfig => ({
     gradient: GRADIENT_PRESETS[17].className,
     overlayOpacity: 0.1,
     blur: 0,
+    noise: 0,
     textColor: "light",
   },
   typography: {

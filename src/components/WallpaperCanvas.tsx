@@ -6,10 +6,10 @@ import { getWorldDaysForYear } from "@/utils/worldDays";
 import { Sparkles } from "lucide-react";
 import React, { forwardRef, useMemo } from "react";
 import { CalendarGrid } from "./widgets/Calendar/CalendarGrid";
+import { WidgetContainer } from "./widgets/components/WidgetContainer";
 import { WidgetTitle } from "./widgets/components/WidgetTitle";
 import { KeyDatesWidget } from "./widgets/KeyDatesWidget";
 import { TipWidget } from "./widgets/TipWidget";
-import { WidgetContainer } from "./widgets/components/WidgetContainer";
 import { ZoneWidget } from "./widgets/ZoneWidget";
 
 // We use forwardRef to allow the parent to capture the canvas for export
@@ -107,6 +107,18 @@ export const WallpaperCanvas = forwardRef<HTMLDivElement>((_, ref) => {
           ...backgroundStyle,
           filter: background.blur ? `blur(${background.blur}px)` : "none",
           transform: background.blur ? "scale(1.01)" : "scale(1)", // Scale up to hide blur edges
+        }}
+      />
+
+      {/* Noise Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          opacity: background.noise ?? 0,
+          backgroundImage: "url(/noise.svg)",
+          backgroundRepeat: "repeat",
+          backgroundSize: "128px", // Small size to repeat frequently
+          mixBlendMode: "overlay", // Better blending with colors
         }}
       />
 

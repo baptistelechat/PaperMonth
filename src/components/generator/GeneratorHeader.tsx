@@ -23,11 +23,13 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  CircleHelp,
   Download,
   Expand,
   Loader2,
 } from "lucide-react";
 import React, { useState } from "react";
+import { ShortcutsDialog } from "../ShortcutsDialog";
 
 interface GeneratorHeaderProps {
   isExporting: boolean;
@@ -41,6 +43,7 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
   onExportYear,
 }) => {
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const { config, setDimensionsConfig, nextMonth, prevMonth } =
     useWallpaperStore();
   const { calendar, dimensions } = config;
@@ -212,6 +215,15 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
           </DropdownMenuContent>
         </DropdownMenu>
 
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setIsShortcutsOpen(true)}
+          title="Raccourcis clavier"
+        >
+          <CircleHelp className="size-5" />
+        </Button>
+
         <div className=" text-muted-foreground flex w-full items-center justify-center gap-2 lg:hidden">
           <Expand className="size-3" />
           <p className="text-xs">Clique sur l'aperçu pour agrandir</p>
@@ -221,6 +233,10 @@ export const GeneratorHeader: React.FC<GeneratorHeaderProps> = ({
       <CustomResolutionDialog
         open={isCustomDialogOpen}
         onOpenChange={setIsCustomDialogOpen}
+      />
+      <ShortcutsDialog
+        open={isShortcutsOpen}
+        onOpenChange={setIsShortcutsOpen}
       />
     </header>
   );
